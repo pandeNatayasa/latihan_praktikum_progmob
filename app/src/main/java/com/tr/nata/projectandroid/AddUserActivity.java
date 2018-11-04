@@ -17,7 +17,7 @@ import retrofit2.Callback;
 public class AddUserActivity extends AppCompatActivity{
 
     private Button btnAdd;
-    private EditText etUserName,etUserEmail,etUserPassword;
+    private EditText etUserName,etUserEmail,etUserPassword,etUserJenisKelamin, etUserNoTelp, etUserTanggalLahir;
 
     ApiService service;
 
@@ -32,6 +32,9 @@ public class AddUserActivity extends AppCompatActivity{
         etUserName = findViewById(R.id.etUserName);
         etUserEmail = findViewById(R.id.etUserMail);
         etUserPassword=findViewById(R.id.etUserPassword);
+        etUserJenisKelamin=findViewById(R.id.etUserJenisKelamin);
+        etUserNoTelp=findViewById(R.id.etUserNoTelp);
+        etUserTanggalLahir=findViewById(R.id.etUserTanggalLahir);
 
         btnAdd=findViewById(R.id.register);
         btnAdd.setOnClickListener(new View.OnClickListener() {
@@ -46,8 +49,11 @@ public class AddUserActivity extends AppCompatActivity{
         String name = etUserName.getText().toString();
         String email = etUserEmail.getText().toString();
         String password = etUserPassword.getText().toString();
+        String jenis_kelamin = etUserJenisKelamin.getText().toString();
+        String no_telp=etUserNoTelp.getText().toString();
+        String tanggal_lahir=etUserTanggalLahir.getText().toString();
 
-        service.addUser(name,email,password)
+        service.addUser(name,email,password,jenis_kelamin,no_telp,tanggal_lahir)
                 .enqueue(new Callback<Response>() {
                     @Override
                     public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
