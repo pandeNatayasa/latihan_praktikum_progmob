@@ -5,22 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".LoginActivity">
+    tools:context=".AddUserActivity">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="''Login Into Your Acount''"
+        android:text="''Register Into Your Acount''"
         android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="#b7b9bd"
-        android:id="@+id/tema"
+        android:id="@+id/headerRegister"
         android:textAlignment="center"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="30dp"/>
 
     <EditText
-        android:id="@+id/etMail"
+        android:id="@+id/etUserName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="E-Mail"
@@ -33,7 +33,20 @@
         android:layout_marginRight="16dp"/>
 
     <EditText
-        android:id="@+id/etPassword"
+        android:id="@+id/etUserMail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="E-Mail"
+        android:textSize="17sp"
+        android:textColor="#b7b9bd"
+        android:textColorHint="#b7b9bd"
+        android:inputType="textEmailAddress"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="16dp"/>
+
+    <EditText
+        android:id="@+id/etUserPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -47,15 +60,14 @@
         android:layout_marginBottom="20dp"/>
 
     <Button
-        android:id="@+id/signIn"
+        android:id="@+id/register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Masuk"
+        android:text="Register"
         android:textColor="#b7b9bd"
         android:textSize="17sp"
         android:elevation="40dp"
         android:layout_margin="16dp"/>
-
 
 
 </LinearLayout>
