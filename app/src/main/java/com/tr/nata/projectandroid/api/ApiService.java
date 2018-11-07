@@ -1,10 +1,9 @@
 package com.tr.nata.projectandroid.api;
 
 import com.tr.nata.projectandroid.model.Response;
+import com.tr.nata.projectandroid.model.ResponseLogin;
 import com.tr.nata.projectandroid.model.user;
-import com.tr.nata.projectandroid.model.userLogin;
 //import okhttp3.ResponseBody;
-import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -15,7 +14,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("login")
-    Call<userLogin>login(
+    Call<ResponseLogin>login(
             @Field("email") String email,
             @Field("password") String password
     );
@@ -31,5 +30,10 @@ public interface ApiService {
             @Field("tanggal_lahir")String tanggal_lahir
             );
 
+    @FormUrlEncoded
+    @POST("data_user")
+    Call<user>dataUser(
+            @Field("email") String email
+            );
 
 }

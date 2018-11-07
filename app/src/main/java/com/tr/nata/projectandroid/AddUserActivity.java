@@ -27,7 +27,7 @@ public class AddUserActivity extends AppCompatActivity{
         setContentView(R.layout.activity_add_user);
         setTitle("Add User");
 
-        service = ApiClient.getService();
+        service = ApiClient.getApiService();
 
         etUserName = findViewById(R.id.etUserName);
         etUserEmail = findViewById(R.id.etUserMail);

@@ -105,6 +105,14 @@
             android:text="Register"
             android:textColor="@color/colorPrimary"
             android:textStyle="bold"/>
+
+
     </LinearLayout>
+
+    <!--<TextView-->
+        <!--android:id="@+id/tv_pesan"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="pesan error"/>-->
 
 </LinearLayout>
