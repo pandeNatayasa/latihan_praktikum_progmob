@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tr.nata.projectandroid.api.ApiClient;
@@ -25,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText etEmail,etPassword;
     Button sigin;
     ApiService service, service1;
+    TextView tv_register;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
 
@@ -39,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
 
         etEmail=findViewById(R.id.etMail);
         etPassword=findViewById(R.id.etPassword);
+        tv_register=findViewById(R.id.tv_register);
 
         sigin=findViewById(R.id.signIn);
         sigin.setOnClickListener(new View.OnClickListener() {
@@ -48,6 +51,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        tv_register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentRegister = new Intent(LoginActivity.this,AddUserActivity.class);
+                startActivity(intentRegister);
+            }
+        });
 
     }
 
@@ -60,39 +70,46 @@ public class LoginActivity extends AppCompatActivity {
         call.enqueue(new Callback<ResponseLogin>() {
             @Override
             public void onResponse(Call<ResponseLogin> call, retrofit2.Response<ResponseLogin> response) {
-                Toast.makeText(getApplicationContext()," "+response.body().isStatus(),Toast.LENGTH_SHORT).show();
-                if (response.body().isStatus()){
-                    Toast.makeText(getApplicationContext(),"Login Berhasil",Toast.LENGTH_SHORT).show();
 
-                    SharedPreferences sharedPref = getSharedPreferences("login", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPref.edit();
-                    editor.putString("status_login", String.valueOf(response.body().isStatus()));
-                    editor.putString("nama_user_login", String.valueOf(response.body().getDataUser().getName()));
-                    editor.putString("email_user_login",String.valueOf(response.body().getDataUser().getEmail()));
-                    editor.putString("jk_user_login", String.valueOf(response.body().getDataUser().getJenisKelamin()));
-                    editor.putString("no_telp_user_login", String.valueOf(response.body().getDataUser().getNoTelp()));
-                    editor.putString("tanggal_lahir_user_login", String.valueOf(response.body().getDataUser().getTanggalLahir()));
-                    editor.apply();
+                if (response.isSuccessful()){
+                    Toast.makeText(getApplicationContext()," "+response.body().isStatus(),Toast.LENGTH_SHORT).show();
+                    if (response.body().isStatus()){
+                        Toast.makeText(getApplicationContext(),"Login Berhasil",Toast.LENGTH_SHORT).show();
 
-                    String status = sharedPref.getString("status_login","");
-                    Toast.makeText(getApplicationContext(),"status : "+status,Toast.LENGTH_SHORT).show();
+                        SharedPreferences sharedPref = getSharedPreferences("login", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putString("status_login", String.valueOf(response.body().isStatus()));
+                        editor.putString("nama_user_login", String.valueOf(response.body().getDataUser().getName()));
+                        editor.putString("email_user_login",String.valueOf(response.body().getDataUser().getEmail()));
+                        editor.putString("jk_user_login", String.valueOf(response.body().getDataUser().getJenisKelamin()));
+                        editor.putString("no_telp_user_login", String.valueOf(response.body().getDataUser().getNoTelp()));
+                        editor.putString("tanggal_lahir_user_login", String.valueOf(response.body().getDataUser().getTanggalLahir()));
+                        editor.apply();
 
-                    String token = response.body().getToken();
-                    Toast.makeText(getApplicationContext(),"token : "+token,Toast.LENGTH_SHORT).show();
+                        String status = sharedPref.getString("status_login","");
+                        Toast.makeText(getApplicationContext(),"status : "+status,Toast.LENGTH_SHORT).show();
 
-                    String nama = response.body().getDataUser().getName();
-                    Toast.makeText(getApplicationContext(),"nama : "+nama,Toast.LENGTH_SHORT).show();
+                        String token = response.body().getToken();
+                        Toast.makeText(getApplicationContext(),"token : "+token,Toast.LENGTH_SHORT).show();
 
-                    Bundle bundle = new Bundle();
-                    bundle.putString("namaUser", nama);
+                        String nama = response.body().getDataUser().getName();
+                        Toast.makeText(getApplicationContext(),"nama : "+nama,Toast.LENGTH_SHORT).show();
 
-                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("namaUser", nama);
 
+                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+
+                    }else {
+                        Toast.makeText(getApplicationContext(),"login gagal",Toast.LENGTH_SHORT).show();
+                    }
                 }else {
-                    Toast.makeText(getApplicationContext(),"login gagal",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Username atau Password Salah",Toast.LENGTH_SHORT).show();
                 }
+
+
             }
 
             @Override

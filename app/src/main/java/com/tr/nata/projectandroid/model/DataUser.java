@@ -1,32 +1,13 @@
 package com.tr.nata.projectandroid.model;
 
-
-import com.google.gson.annotations.SerializedName;
-
 public class DataUser{
-
-	@SerializedName("updated_at")
 	private String updatedAt;
-
-	@SerializedName("name")
 	private String name;
-
-	@SerializedName("created_at")
 	private String createdAt;
-
-	@SerializedName("id")
 	private int id;
-
-	@SerializedName("no_telp")
 	private String noTelp;
-
-	@SerializedName("jenis_kelamin")
 	private String jenisKelamin;
-
-	@SerializedName("email")
 	private String email;
-
-	@SerializedName("tanggal_lahir")
 	private String tanggalLahir;
 
 	public void setUpdatedAt(String updatedAt){

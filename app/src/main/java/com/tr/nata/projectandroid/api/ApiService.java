@@ -1,13 +1,18 @@
 package com.tr.nata.projectandroid.api;
 
+import com.tr.nata.projectandroid.model.DataKategoriItem;
 import com.tr.nata.projectandroid.model.Response;
+import com.tr.nata.projectandroid.model.ResponseKategori;
 import com.tr.nata.projectandroid.model.ResponseLogin;
 import com.tr.nata.projectandroid.model.user;
 //import okhttp3.ResponseBody;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public interface ApiService {
@@ -35,5 +40,9 @@ public interface ApiService {
     Call<user>dataUser(
             @Field("email") String email
             );
+
+//    @FormUrlEncoded
+    @GET("kategori")
+    Call<ResponseKategori>getKategori();
 
 }

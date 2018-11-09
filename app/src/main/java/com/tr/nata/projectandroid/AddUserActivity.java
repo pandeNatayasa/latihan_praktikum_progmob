@@ -1,5 +1,6 @@
 package com.tr.nata.projectandroid;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -60,16 +61,19 @@ public class AddUserActivity extends AppCompatActivity{
                         if (response.isSuccessful()) {
                             Toast.makeText(AddUserActivity.this,"Success",Toast.LENGTH_SHORT).show();
 
+                            Intent intent =new Intent(AddUserActivity.this,LoginActivity.class);
+                            startActivity(intent);
+
                         }else {
-                            Toast.makeText(AddUserActivity.this,"Error",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddUserActivity.this,"Register Failed",Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<Response> call, Throwable t) {
-                        Toast.makeText(AddUserActivity.this,"Error"+t,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddUserActivity.this,"Error Koneksi"+t,Toast.LENGTH_SHORT).show();
                     }
                 });
-        Toast.makeText(this,"Name : "+name+", email : "+email,Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this,"Name : "+name+", email : "+email,Toast.LENGTH_SHORT).show();
     }
 }
