@@ -33,7 +33,8 @@ public interface ApiService {
             @Field("password") String password,
             @Field("jenis_kelamin") String jenis_kelamin,
             @Field("no_telp") String no_telp,
-            @Field("tanggal_lahir")String tanggal_lahir
+            @Field("tanggal_lahir")String tanggal_lahir,
+            @Field("status")String status
             );
 
     @FormUrlEncoded

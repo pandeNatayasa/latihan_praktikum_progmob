@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tr.nata.projectandroid.api.ApiClient;
@@ -19,6 +20,7 @@ public class AddUserActivity extends AppCompatActivity{
 
     private Button btnAdd;
     private EditText etUserName,etUserEmail,etUserPassword,etUserJenisKelamin, etUserNoTelp, etUserTanggalLahir;
+    TextView tv_error;
 
     ApiService service;
 
@@ -37,6 +39,8 @@ public class AddUserActivity extends AppCompatActivity{
         etUserNoTelp=findViewById(R.id.etUserNoTelp);
         etUserTanggalLahir=findViewById(R.id.etUserTanggalLahir);
 
+        tv_error=findViewById(R.id.tv_error);
+
         btnAdd=findViewById(R.id.register);
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,8 +57,9 @@ public class AddUserActivity extends AppCompatActivity{
         String jenis_kelamin = etUserJenisKelamin.getText().toString();
         String no_telp=etUserNoTelp.getText().toString();
         String tanggal_lahir=etUserTanggalLahir.getText().toString();
+        String status = String.valueOf("0");
 
-        service.addUser(name,email,password,jenis_kelamin,no_telp,tanggal_lahir)
+        service.addUser(name,email,password,jenis_kelamin,no_telp,tanggal_lahir,status)
                 .enqueue(new Callback<Response>() {
                     @Override
                     public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
@@ -72,6 +77,7 @@ public class AddUserActivity extends AppCompatActivity{
                     @Override
                     public void onFailure(Call<Response> call, Throwable t) {
                         Toast.makeText(AddUserActivity.this,"Error Koneksi"+t,Toast.LENGTH_SHORT).show();
+                        tv_error.setText("eror : "+t);
                     }
                 });
 //        Toast.makeText(this,"Name : "+name+", email : "+email,Toast.LENGTH_SHORT).show();

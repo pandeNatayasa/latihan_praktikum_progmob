@@ -9,6 +9,7 @@ public class DataUser{
 	private String jenisKelamin;
 	private String email;
 	private String tanggalLahir;
+	private String status;
 
 	public void setUpdatedAt(String updatedAt){
 		this.updatedAt = updatedAt;
@@ -74,6 +75,14 @@ public class DataUser{
 		return tanggalLahir;
 	}
 
+	public void setStatusUser(String status){
+		this.status = status;
+	}
+
+	public String getStatusUser(){
+		return status;
+	}
+
 	@Override
  	public String toString(){
 		return 
@@ -84,8 +93,9 @@ public class DataUser{
 			",id = '" + id + '\'' + 
 			",no_telp = '" + noTelp + '\'' + 
 			",jenis_kelamin = '" + jenisKelamin + '\'' + 
-			",email = '" + email + '\'' + 
-			",tanggal_lahir = '" + tanggalLahir + '\'' + 
+			",email = '" + email + '\'' +
+			",tanggal_lahir = '" + tanggalLahir + '\'' +
+                    ",status = '" + status + '\'' +
 			"}";
 		}
 }

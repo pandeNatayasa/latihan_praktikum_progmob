@@ -74,33 +74,43 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful()){
                     Toast.makeText(getApplicationContext()," "+response.body().isStatus(),Toast.LENGTH_SHORT).show();
                     if (response.body().isStatus()){
-                        Toast.makeText(getApplicationContext(),"Login Berhasil",Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getApplicationContext(),"Login Berhasil",Toast.LENGTH_SHORT).show();
 
                         SharedPreferences sharedPref = getSharedPreferences("login", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPref.edit();
-                        editor.putString("status_login", String.valueOf(response.body().isStatus()));
+                        editor.putBoolean("status_login",response.body().isStatus());
+                        editor.putString("status_login_string", String.valueOf(response.body().isStatus()));
                         editor.putString("nama_user_login", String.valueOf(response.body().getDataUser().getName()));
                         editor.putString("email_user_login",String.valueOf(response.body().getDataUser().getEmail()));
                         editor.putString("jk_user_login", String.valueOf(response.body().getDataUser().getJenisKelamin()));
                         editor.putString("no_telp_user_login", String.valueOf(response.body().getDataUser().getNoTelp()));
                         editor.putString("tanggal_lahir_user_login", String.valueOf(response.body().getDataUser().getTanggalLahir()));
+                        editor.putString("status_user",String.valueOf(response.body().getDataUser().getStatusUser()));
                         editor.apply();
 
-                        String status = sharedPref.getString("status_login","");
-                        Toast.makeText(getApplicationContext(),"status : "+status,Toast.LENGTH_SHORT).show();
+                        String status = sharedPref.getString("status_login_string","");
+//                        Toast.makeText(getApplicationContext(),"status : "+status,Toast.LENGTH_SHORT).show();
 
                         String token = response.body().getToken();
                         Toast.makeText(getApplicationContext(),"token : "+token,Toast.LENGTH_SHORT).show();
 
                         String nama = response.body().getDataUser().getName();
-                        Toast.makeText(getApplicationContext(),"nama : "+nama,Toast.LENGTH_SHORT).show();
+                        String statusUser = response.body().getDataUser().getStatusUser();
+//                        Toast.makeText(getApplicationContext(),"nama : "+nama,Toast.LENGTH_SHORT).show();
 
-                        Bundle bundle = new Bundle();
-                        bundle.putString("namaUser", nama);
+                        if (statusUser.equals("1")){
+//                            Bundle bundle = new Bundle();
+//                            bundle.putString("namaUser", nama);
 
-                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                        intent.putExtras(bundle);
-                        startActivity(intent);
+                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+//                            intent.putExtras(bundle);
+                            startActivity(intent);
+                        }else {
+                            Toast.makeText(getApplicationContext(),"login admin",Toast.LENGTH_SHORT).show();
+                            Intent intent_admin=new Intent(LoginActivity.this,HomeAdminActivity.class);
+                            startActivity(intent_admin);
+                        }
+
 
                     }else {
                         Toast.makeText(getApplicationContext(),"login gagal",Toast.LENGTH_SHORT).show();
