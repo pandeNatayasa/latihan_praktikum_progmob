@@ -3,7 +3,9 @@ package com.tr.nata.projectandroid;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tr.nata.projectandroid.Adapter.kategoriAdapter;
+import com.tr.nata.projectandroid.Database.DatabaseHelper;
 import com.tr.nata.projectandroid.api.ApiClient;
 import com.tr.nata.projectandroid.api.ApiService;
 import com.tr.nata.projectandroid.model.DataKategoriItem;
@@ -34,6 +37,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private kategoriAdapter adapter;
+    DatabaseHelper myDb;
 
     private List<ResponseKategori> responseKategoris = new ArrayList<>();
 
@@ -50,6 +54,7 @@ public class HomeActivity extends AppCompatActivity {
         tv_namaUser = findViewById(R.id.tv_nama);
 
         service=ApiClient.getApiService();
+        myDb=new DatabaseHelper(this);
 
 //        SharedPreferences sharedPref = getSharedPreferences("login", Context.MODE_PRIVATE);
 //
@@ -71,6 +76,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
         Button btn_logout = (Button) findViewById(R.id.btn_logout);
+        Button btn_viewKategoriLokal = findViewById(R.id.btn_viewKategoriLokal);
 
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,14 +93,45 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        btn_viewKategoriLokal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Cursor res = myDb.getAllData();
+                if (res.getCount()==0){
+                    //show message
+                    showMessage("Eror","Nothing Found");
+                    return;
+                }
+                StringBuffer buffer = new StringBuffer();
+                while (res.moveToNext()){
+                    buffer.append("Id : "+res.getString(0)+"\n");
+                    buffer.append("Kategori : "+res.getString(1)+"\n");
+                }
+                //show all data
+                showMessage("Data",buffer.toString());
+            }
+        });
+
+        callKategoriLokal();
+        callApi();
+
+    }
+
+    private void callApi(){
         service.getKategori()
                 .enqueue(new Callback<ResponseKategori>() {
                     @Override
                     public void onResponse(Call<ResponseKategori> call, Response<ResponseKategori> response) {
                         if (response.isSuccessful()){
+                            DatabaseHelper dbHelper = new DatabaseHelper(HomeActivity.this);
 
+                            dbHelper.deleteKategori();
 
                             dataKategoriItems=response.body().getDataKategori();
+
+                            for (DataKategoriItem dataKategoriItem:dataKategoriItems){
+                                dbHelper.insertDataKategori(dataKategoriItem.getId(),dataKategoriItem.getKategori());
+                            }
                             setAdapter();
 //                            recyclerView.notifyAll();
 
@@ -114,14 +151,27 @@ public class HomeActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<ResponseKategori> call, Throwable t) {
                         Toast.makeText(getApplicationContext(),"login gagal koneksi",Toast.LENGTH_SHORT).show();
+
                     }
                 });
-
-
     }
 
     private void setAdapter(){
         adapter = new kategoriAdapter(this,dataKategoriItems);
         recyclerView.setAdapter(adapter);
+    }
+
+    private void callKategoriLokal(){
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        dataKategoriItems=dbHelper.selectKategori();
+        setAdapter();
+    }
+
+    public void showMessage(String title, String message){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.show();
     }
 }

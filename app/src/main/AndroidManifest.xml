@@ -25,6 +25,7 @@
         <activity android:name=".SubHomeActivity"></activity>
         <activity android:name=".DetailUserActivity"></activity>
         <activity android:name=".HomeAdminActivity"></activity>
+        <activity android:name=".AddKategoriAdminActivity"></activity>
     </application>
 
 </manifest>

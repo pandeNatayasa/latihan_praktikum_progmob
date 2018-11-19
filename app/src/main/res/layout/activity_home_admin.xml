@@ -10,6 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Welcome to home Admin"/>
+    <Button
+        android:id="@+id/btn_toAddKategori"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tambah Kategori"/>
 
     <Button
         android:id="@+id/btn_logout"

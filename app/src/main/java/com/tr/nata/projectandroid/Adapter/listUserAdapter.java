@@ -131,14 +131,14 @@ public class listUserAdapter extends RecyclerView.Adapter<listUserAdapter.ViewHo
                 String nama = dataUser.getName();
 //                    String nama ="aa";
                 String jasa = dataJasa.getPekerjaan();
-                String gaji = "0000000";
+                String gaji = dataJasa.getEstimasi_gaji().toString();
                 String usia = String.valueOf(dataJasa.getUsia());
                 String tanggal_lahir = dataUser.getTanggalLahir();
 //                String tanggal_lahir = "aaa";
                 String no_telp = String.valueOf(dataJasa.getNoTelp()) ;
                 String email = dataJasa.getEmail();
                 String status = dataJasa.getStatus();
-                String pendidikan = "belum isi di database";
+                String pendidikan = dataJasa.getPengalaman_kerja();
                 String alamat = dataJasa.getAlamat();
 
                 Toast.makeText(holder.itemView.getContext(),"no_telp : "+no_telp,Toast.LENGTH_SHORT).show();

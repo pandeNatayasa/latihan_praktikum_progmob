@@ -1,6 +1,8 @@
 package com.tr.nata.projectandroid.model;
 
 //import javax.annotation.Generated;
+import android.provider.BaseColumns;
+
 import com.google.gson.annotations.SerializedName;
 
 //@Generated("com.robohorse.robopojogenerator")
@@ -49,6 +51,12 @@ public class DataKategoriItem{
 
 	public int getId(){
 		return id;
+	}
+
+	public static class Entry implements BaseColumns{
+		public static final String TABLE_NAME_KATEGORI="category_table";
+		public static final String COLUMN_ID="id";
+		public static final String COLUMN_KATEGORI="kategori";
 	}
 
 	@Override

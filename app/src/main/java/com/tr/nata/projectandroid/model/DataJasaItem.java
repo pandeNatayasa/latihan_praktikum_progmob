@@ -1,20 +1,54 @@
 package com.tr.nata.projectandroid.model;
 
+import android.provider.BaseColumns;
+
+import com.google.gson.annotations.SerializedName;
+
 public class DataJasaItem{
+	@SerializedName("usia")
 	private int usia;
+
+	@SerializedName("id_kategori")
 	private int idKategori;
+
+	@SerializedName("id_user_admin")
 	private int idAdmin;
+
+	@SerializedName("created_at")
 	private Object createdAt;
+
+	@SerializedName("id_user")
 	private int idUser;
+
+	@SerializedName("alamat")
 	private String alamat;
+
+	@SerializedName("id_kecamatan")
 	private int idKecamatan;
+
+	@SerializedName("pekerjaan")
 	private String pekerjaan;
+
+	@SerializedName("updated_at")
 	private Object updatedAt;
+
+	@SerializedName("id")
 	private int id;
+
+	@SerializedName("no_telp")
 	private String noTelp;
+
+	@SerializedName("email")
 	private String email;
+
+	@SerializedName("status")
 	private String status;
 
+    @SerializedName("estimasi_gaji")
+    private int estimasi_gaji;
+
+    @SerializedName("pengalaman_kerja")
+    private String pengalaman_kerja;
 
 	public void setUsia(int usia){
 		this.usia = usia;
@@ -120,6 +154,36 @@ public class DataJasaItem{
 		return status;
 	}
 
+    public void setEstimasi_gaji(int estimasi_gaji){
+        this.estimasi_gaji=estimasi_gaji;
+    }
+
+    public Integer getEstimasi_gaji(){
+        return estimasi_gaji;
+    }
+
+    public void setPengalaman_kerja(String pengalaman_kerja){
+        this.pengalaman_kerja=pengalaman_kerja;
+    }
+
+    public String getPengalaman_kerja(){
+        return pengalaman_kerja;
+    }
+
+	public static class Entry implements BaseColumns {
+		public static final String TABLE_NAME_JASA="data_jasa_table";
+		public static final String COLUMN_ID="id";
+		public static final String COLUMN_ID_KATEGORI="id_kategori";
+		public static final String COLUMN_ID_USER="id_user";
+		public static final String COLUMN_PEKERJAAN="pekerjaan";
+		public static final String COLUMN_USIA="usia";
+		public static final String COLUMN_NO_TELP="no_telp";
+		public static final String COLUMN_EMAIL_JASA="email_jasa";
+		public static final String COLUMN_STATUS="status";
+		public static final String COLUMN_ALAMAT_JASA="alamat";
+		public static final String COLUMN_ID_KECAMATAN="id_kecamatan";
+	}
+
 	@Override
  	public String toString(){
 		return 
@@ -131,8 +195,10 @@ public class DataJasaItem{
 			",id_user = '" + idUser + '\'' + 
 			",alamat = '" + alamat + '\'' + 
 			",id_kecamatan = '" + idKecamatan + '\'' + 
-			",pekerjaan = '" + pekerjaan + '\'' + 
-			",updated_at = '" + updatedAt + '\'' + 
+			",pekerjaan = '" + pekerjaan + '\'' +
+                    ",estimasi_gaji = '" + estimasi_gaji + '\'' +
+                    ",pengalaman_kerja = '" + pengalaman_kerja + '\'' +
+                    ",updated_at = '" + updatedAt + '\'' +
 			",id = '" + id + '\'' + 
 			",no_telp = '" + noTelp + '\'' + 
 			",email = '" + email + '\'' + 

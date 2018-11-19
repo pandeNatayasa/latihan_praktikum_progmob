@@ -101,17 +101,16 @@ public class LoginActivity extends AppCompatActivity {
                         if (statusUser.equals("1")){
 //                            Bundle bundle = new Bundle();
 //                            bundle.putString("namaUser", nama);
-
                             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
 //                            intent.putExtras(bundle);
                             startActivity(intent);
+                            finish();
                         }else {
                             Toast.makeText(getApplicationContext(),"login admin",Toast.LENGTH_SHORT).show();
                             Intent intent_admin=new Intent(LoginActivity.this,HomeAdminActivity.class);
-                            startActivity(intent_admin);
+                            startActivity(Intent.parseIntent());
+                            finish();
                         }
-
-
                     }else {
                         Toast.makeText(getApplicationContext(),"login gagal",Toast.LENGTH_SHORT).show();
                     }
