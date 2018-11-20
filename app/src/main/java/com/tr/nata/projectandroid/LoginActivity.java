@@ -80,6 +80,8 @@ public class LoginActivity extends AppCompatActivity {
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putBoolean("status_login",response.body().isStatus());
                         editor.putString("status_login_string", String.valueOf(response.body().isStatus()));
+//                        editor.putString("id_user_login",String.valueOf(response.body().getDataUser().getId()));
+                        editor.putInt("id_user_login",response.body().getDataUser().getId());
                         editor.putString("nama_user_login", String.valueOf(response.body().getDataUser().getName()));
                         editor.putString("email_user_login",String.valueOf(response.body().getDataUser().getEmail()));
                         editor.putString("jk_user_login", String.valueOf(response.body().getDataUser().getJenisKelamin()));

@@ -2,6 +2,7 @@ package com.tr.nata.projectandroid.api;
 
 import com.tr.nata.projectandroid.model.Response;
 import com.tr.nata.projectandroid.model.ResponseDataJasa;
+import com.tr.nata.projectandroid.model.ResponseDataJasaUser;
 import com.tr.nata.projectandroid.model.ResponseKategori;
 import com.tr.nata.projectandroid.model.ResponseLogin;
 import com.tr.nata.projectandroid.model.user;
@@ -49,5 +50,8 @@ public interface ApiService {
 
     @GET("showDataJasa/{id}")
     Call<ResponseDataJasa>showDataJasaByKategori(@Path("id") int id_kategori);
+
+    @GET("showDataJasaUser/{id}")
+    Call<List<ResponseDataJasaUser>>showDataJasaUser(@Path("id") int id_user);
 
 }
