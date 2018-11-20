@@ -108,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
                         }else {
                             Toast.makeText(getApplicationContext(),"login admin",Toast.LENGTH_SHORT).show();
                             Intent intent_admin=new Intent(LoginActivity.this,HomeAdminActivity.class);
-                            startActivity(Intent.parseIntent());
+                            startActivity(intent_admin);
                             finish();
                         }
                     }else {

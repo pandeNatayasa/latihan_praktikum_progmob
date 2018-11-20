@@ -200,12 +200,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor=sqLiteDatabase.query(DataJasaItem.Entry.TABLE_NAME_JASA,null,COLUMN_ID_KATEGORI+"="+id,null ,null, null,null);
         int count = cursor.getCount();
         if (count>0){
+            cursor.moveToFirst();
             while (cursor.moveToNext()){
-                int id_kategori = cursor.getInt(cursor.getColumnIndex(DataJasaItem.Entry.COLUMN_ID));
+                int id_data_jasa = cursor.getInt(cursor.getColumnIndex(DataJasaItem.Entry.COLUMN_ID));
                 String pekerjaan = cursor.getString(cursor.getColumnIndex(DataJasaItem.Entry.COLUMN_PEKERJAAN));
 
                 DataJasaItem temp = new DataJasaItem();
-                temp.setId(id_kategori);
+                temp.setId(id_data_jasa);
                 temp.setPekerjaan(pekerjaan);
                 dataJasaItems.add(temp);
             }

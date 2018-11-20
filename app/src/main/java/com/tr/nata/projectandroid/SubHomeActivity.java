@@ -2,9 +2,12 @@ package com.tr.nata.projectandroid;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +32,7 @@ public class SubHomeActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private listUserAdapter listUserAdapter;
     private Bundle bundle;
+    private Button btn_view_jasa;
 
     private List<DataJasaItem> dataJasaItems = new ArrayList<>();
     private List<DataUserItem> dataUserItems=new ArrayList<>();
@@ -44,6 +48,7 @@ public class SubHomeActivity extends AppCompatActivity {
 
         tv_nama_kategori=(TextView)findViewById(R.id.tv_nama_kategori);
         tv_pesan=(TextView)findViewById(R.id.tv_pesan);
+        btn_view_jasa=findViewById(R.id.btn_data_jasa);
 
         bundle = getIntent().getExtras();
         tv_nama_kategori.setText(bundle.getString("namaKategori"));
@@ -52,9 +57,28 @@ public class SubHomeActivity extends AppCompatActivity {
         myDb=new DatabaseHelper(this);
 
         recyclerView = (RecyclerView)findViewById(R.id.recyclerview_list_user);
+
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        btn_view_jasa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Cursor res = myDb.getAllDataJasa();
+                if (res.getCount()==0){
+                    //show message
+                    showMessage("Eror","Nothing Found");
+                    return;
+                }
+                StringBuffer buffer = new StringBuffer();
+                while (res.moveToNext()){
+                    buffer.append("Nama : "+res.getString(4)+"\n");
+                    buffer.append("Pekerjaan : "+res.getString(5)+"\n");
+                }
+                //show all data
+                showMessage("Data",buffer.toString());
+            }
+        });
         callDataLokal();
         callApi();
 //                .enqueue(new Callback<List<ResponseDataJasa>>() {
@@ -196,6 +220,14 @@ public class SubHomeActivity extends AppCompatActivity {
             curDataUser.close();
         }
         setAdapter();
+    }
+
+    public void showMessage(String title, String message){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.show();
     }
 
 }
