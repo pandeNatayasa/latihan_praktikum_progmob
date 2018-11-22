@@ -71,6 +71,7 @@ public class HomeActivity extends AppCompatActivity {
 
         fragment=new FragmentHome();
         getSupportFragmentManager().beginTransaction().replace(R.id.frag_layout,fragment).commit();
+//        finish();
         //yang digunakan
 //        tv_namaUser = findViewById(R.id.tv_nama);
 //
@@ -158,6 +159,7 @@ public class HomeActivity extends AppCompatActivity {
                             break;
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.frag_layout,fragment).commit();
+//                    finish();
                     return true;
                 }
             };

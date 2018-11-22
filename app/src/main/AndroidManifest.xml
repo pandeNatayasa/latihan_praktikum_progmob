@@ -18,7 +18,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
+
+        <!--contoh menghilangkan action bar-->
+        <activity android:name=".MainActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
+
         <activity android:name=".LoginActivity"></activity>
         <activity android:name=".AddUserActivity"></activity>
         <activity android:name=".HomeActivity"></activity>
@@ -26,6 +31,7 @@
         <activity android:name=".DetailUserActivity"></activity>
         <activity android:name=".HomeAdminActivity"></activity>
         <activity android:name=".AddKategoriAdminActivity"></activity>
+
         <service android:name=".Firebase.MessagingService"
             android:stopWithTask="false">
             <intent-filter>

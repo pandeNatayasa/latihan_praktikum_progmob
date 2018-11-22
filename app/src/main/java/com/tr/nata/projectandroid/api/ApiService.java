@@ -54,4 +54,19 @@ public interface ApiService {
     @GET("showDataJasaUser/{id}")
     Call<List<ResponseDataJasaUser>>showDataJasaUser(@Path("id") int id_user);
 
+    @FormUrlEncoded
+    @POST("store_data_jasa")
+    Call<Response>newDataJasaUser(
+            @Field("id_kategori") int id_kategori,
+            @Field("id_user") int id_user,
+            @Field("pekerjaan") String pekerjaan,
+            @Field("estimasi_gaji") int estimasi_gaji,
+            @Field("pengalaman_kerja") String pengalaman_kerja,
+            @Field("usia") int usia,
+            @Field("no_telp") String no_telp,
+            @Field("email") String email,
+            @Field("status") String status,
+            @Field("alamat") String alamat,
+            @Field("id_kecamatan") int id_kecamatan
+    );
 }
