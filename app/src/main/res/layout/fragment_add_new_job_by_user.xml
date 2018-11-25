@@ -6,6 +6,33 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_Add_new"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Add New"
+                android:textSize="20dp"
+                android:textColor="@color/colorWhite"/>
+
+            <ImageView
+                android:id="@+id/img_new_job_to_profille"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_person_white"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="30dp"/>
+        </RelativeLayout>
+
+
+    </android.support.v7.widget.Toolbar>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -185,6 +212,17 @@
                 <!--android:textColorHint="#b7b9bd"-->
                 <!--android:textSize="17sp"-->
                 <!--/>-->
+
+            <Button
+                android:id="@+id/btn_save_new_job"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SAVE"
+                android:textSize="20dp"
+                android:background="@color/colorAccent"
+                android:textColor="@color/colorWhite"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"/>
 
             <TextView
                 android:id="@+id/tv_error"

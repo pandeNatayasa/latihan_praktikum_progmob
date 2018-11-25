@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbarLayout_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/rly_pertama"
+            android:layout_width="match_parent"
+            android:layout_height="220dp">
+
+            <ImageView
+                android:id="@+id/img_foto_profille"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:src="@drawable/background_profille"
+                />
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbarid_profille"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/img_logout"
+                        android:layout_margin="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_exit_to_app_white"
+                        android:layout_alignParentEnd="true"/>
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.Toolbar>
+
+            <LinearLayout
+                android:id="@+id/btn_beranda_profille"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_alignParentBottom="true"
+                android:padding="10dp"
+                android:layout_marginLeft="20dp"
+                tools:ignore="OnClick"
+                >
+                <ImageView
+                    android:id="@+id/img_home_profille_to_beranda"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_home_black_24dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Beranda"
+                    android:textColor="@color/colorWhite"
+                    android:layout_gravity="center_vertical"/>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_layout_profille"
+            android:layout_below="@+id/rly_pertama"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/colorPrimary"
+            app:tabGravity="fill"
+            app:tabMode="fixed"
+            app:tabTextColor="@color/tabtext_color"
+            app:tabIndicatorColor="@color/tabindicator_color"
+            app:tabIndicatorHeight="4dp"
+            />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_proille"
+            android:layout_width="200px"
+            android:layout_height="200px"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="5dp"
+            android:src="@drawable/contact"/>
+
+
+        <TextView
+            android:id="@+id/tv_nama_proflle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nama profille"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/colorWhite"/>
+
+    </LinearLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager_1"
+        android:layout_below="@id/appbarLayout_id"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" >
+
+    </android.support.v4.view.ViewPager>
+        <!--app:tabTextAppearance="?android:attr/textAppearanceMedium"-->
+        <!--android:layout_height="?android:actionBarSize"-->
+        <!--android:background="@color/common_google_signin_btn_text_light"-->
+        <!--android:scrollbars="horizontal"-->
+        <!--app:tabGravity="fill"-->
+        <!--app:tabMode="fixed"-->
+        <!--/>-->
+
+    <!--<android.support.v4.view.ViewPager-->
+        <!--android:layout_below="@id/tab_layout_profille"-->
+        <!--android:id="@+id/viewPager_1"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+        <!--android:background="@color/colorWhite"/>-->
+
+
+
+
+    <!--<LinearLayout-->
+        <!--android:id="@+id/ly_profille"-->
+        <!--android:layout_below="@+id/tab_layout_profille"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="vertical">-->
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:layout_marginLeft="20px"-->
+            <!--android:layout_marginRight="20px"-->
+            <!--android:layout_marginBottom="30px"-->
+            <!--android:layout_marginTop="10dp">-->
+
+            <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Nama"-->
+                <!--android:layout_weight="3"-->
+                <!--/>-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/tv_name_profille"-->
+
+                <!--android:layout_weight="2"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text=": Nama Anda"/>-->
+
+        <!--</LinearLayout>-->
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:layout_marginLeft="20px"-->
+            <!--android:layout_marginRight="20px"-->
+            <!--android:layout_marginBottom="30px">-->
+
+            <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Email"-->
+                <!--android:layout_weight="3"-->
+                <!--/>-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/tv_email_profille"-->
+
+                <!--android:layout_weight="2"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text=": Email Anda"/>-->
+
+        <!--</LinearLayout>-->
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:layout_marginLeft="20px"-->
+            <!--android:layout_marginRight="20px"-->
+            <!--android:layout_marginBottom="30px">-->
+
+            <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Jenis Kelamin"-->
+                <!--android:layout_weight="3"-->
+                <!--/>-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/tv_jk_profille"-->
+
+                <!--android:layout_weight="2"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text=": JK Anda"/>-->
+
+        <!--</LinearLayout>-->
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:layout_marginLeft="20px"-->
+            <!--android:layout_marginRight="20px"-->
+            <!--android:layout_marginBottom="30px">-->
+
+            <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="No Telp"-->
+                <!--android:layout_weight="3"-->
+                <!--/>-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/tv_notelp_profille"-->
+
+                <!--android:layout_weight="2"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text=": NoTelp Anda"/>-->
+
+        <!--</LinearLayout>-->
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:layout_marginLeft="20px"-->
+            <!--android:layout_marginRight="20px"-->
+            <!--android:layout_marginBottom="30px">-->
+
+            <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Tanggal Lahir"-->
+                <!--android:layout_weight="3"-->
+                <!--/>-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/tv_tanggal_lahir_profille"-->
+
+                <!--android:layout_weight="2"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text=": TGL Lahir Anda"/>-->
+
+        <!--</LinearLayout>-->
+
+
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Profille User Here"/>-->
+
+    <!--</LinearLayout>-->
+
+</RelativeLayout>

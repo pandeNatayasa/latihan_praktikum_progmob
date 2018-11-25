@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/nav_list"
-        android:title=""
-        android:icon="@drawable/ic_list_black_24dp"
-        />
     <item
         android:id="@+id/nav_home"
         android:title=""
         android:icon="@drawable/ic_home_black_24dp"
-    />
+        />
     <item
-        android:id="@+id/nav_profille"
+        android:id="@+id/nav_list"
         android:title=""
-        android:icon="@drawable/ic_person_black_24dp"
+        android:icon="@drawable/ic_playlist_add_white"
+        />
+    <item
+        android:id="@+id/nav_favorite"
+        android:title=""
+        android:icon="@drawable/ic_favorite_white"
         />
 
 </menu>

@@ -23,8 +23,6 @@ public class DataJasaItem{
 	@SerializedName("alamat")
 	private String alamat;
 
-	@SerializedName("id_kecamatan")
-	private int idKecamatan;
 
 	@SerializedName("pekerjaan")
 	private String pekerjaan;
@@ -96,14 +94,6 @@ public class DataJasaItem{
 
 	public String getAlamat(){
 		return alamat;
-	}
-
-	public void setIdKecamatan(int idKecamatan){
-		this.idKecamatan = idKecamatan;
-	}
-
-	public int getIdKecamatan(){
-		return idKecamatan;
 	}
 
 	public void setPekerjaan(String pekerjaan){
@@ -193,8 +183,7 @@ public class DataJasaItem{
 			",id_admin = '" + idAdmin + '\'' + 
 			",created_at = '" + createdAt + '\'' + 
 			",id_user = '" + idUser + '\'' + 
-			",alamat = '" + alamat + '\'' + 
-			",id_kecamatan = '" + idKecamatan + '\'' + 
+			",alamat = '" + alamat + '\'' +
 			",pekerjaan = '" + pekerjaan + '\'' +
                     ",estimasi_gaji = '" + estimasi_gaji + '\'' +
                     ",pengalaman_kerja = '" + pengalaman_kerja + '\'' +

@@ -13,14 +13,14 @@ import android.widget.TextView;
 
 import com.tr.nata.projectandroid.R;
 
-public class FragmentProfille extends Fragment {
+public class FragmentProfilleDetail extends Fragment {
 
     TextView tv_name, tv_email, tv_jenis_kelamin, tv_notelp, tv_tanggal_lahir;
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.fragment_profille,container,false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view=inflater.inflate(R.layout.fragment_profille_detail,container,false);
 
         tv_name=view.findViewById(R.id.tv_name_profille);
         tv_email=view.findViewById(R.id.tv_email_profille);

@@ -5,9 +5,24 @@
     android:layout_height="match_parent"
     >
 
+    <android.support.v7.widget.Toolbar
+    android:id="@+id/toolbar_home"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/holo_blue_dark"
+    android:minHeight="?attr/actionBarSize"
+    app:theme="@style/AppTheme"
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentLeft="true">
+
+    </android.support.v7.widget.Toolbar>
+
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar_home">
 
         <LinearLayout
             android:layout_width="match_parent"

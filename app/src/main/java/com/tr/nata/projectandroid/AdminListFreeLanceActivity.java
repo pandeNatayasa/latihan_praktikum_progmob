@@ -1,4 +1,4 @@
-package com.tr.nata.projectandroid.fragment;
+package com.tr.nata.projectandroid;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -7,8 +7,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,9 +18,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.tr.nata.projectandroid.Adapter.ListDataJasaInUserAdapter;
 import com.tr.nata.projectandroid.Database.DatabaseHelper;
-import com.tr.nata.projectandroid.R;
 import com.tr.nata.projectandroid.api.ApiClient;
 import com.tr.nata.projectandroid.api.ApiService;
 import com.tr.nata.projectandroid.model.ResponseDataJasaUser;
@@ -32,7 +32,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FragmentListFrelance extends Fragment {
+public class AdminListFreeLanceActivity extends AppCompatActivity {
 
     TextView tv_error;
     FloatingActionButton fab_add_job;
@@ -41,7 +41,7 @@ public class FragmentListFrelance extends Fragment {
     private ListDataJasaInUserAdapter adapter;
     DatabaseHelper myDb;
 
-//    String id_kategori,id_user,pekerjaan,estimasi_gaji,pengalaman_kerja,
+    //    String id_kategori,id_user,pekerjaan,estimasi_gaji,pengalaman_kerja,
 //            usia,no_telp,email,status,alamat,id_kecamatan;
     AlertDialog.Builder dialog;
     LayoutInflater inflater_add_new;
@@ -55,7 +55,6 @@ public class FragmentListFrelance extends Fragment {
     ApiService service,service_add_new;
 
     @Nullable
-    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_list_frelance,container,false);
 
@@ -69,7 +68,7 @@ public class FragmentListFrelance extends Fragment {
 
         recyclerView=view.findViewById(R.id.recyclerview_data_jasa_user);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         fab_add_job=view.findViewById(R.id.fab_add_job);
 
 //        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar_home);
@@ -153,7 +152,7 @@ public class FragmentListFrelance extends Fragment {
 //    }
 
     private void callApi(){
-        SharedPreferences sharedPref = this.getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = this.getSharedPreferences("login", Context.MODE_PRIVATE);
 //        Integer id_user_login = Integer.parseInt(sharedPref.getString("id_user_login",""));
         Integer id_user_login = sharedPref.getInt("id_user_login",0);
 
@@ -166,13 +165,13 @@ public class FragmentListFrelance extends Fragment {
                             setAdapter();
 
                         }else {
-                            Toast.makeText(getActivity().getApplicationContext(),"suksess tapi gagal",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"suksess tapi gagal",Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<List<ResponseDataJasaUser>> call, Throwable t) {
-                        Toast.makeText(getActivity().getApplicationContext(),"gagal koneksi"+t,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"gagal koneksi"+t,Toast.LENGTH_SHORT).show();
                         tv_error.setText("error : "+t);
                     }
                 });
@@ -198,12 +197,12 @@ public class FragmentListFrelance extends Fragment {
     }
 
     private void setAdapter(){
-        adapter=new ListDataJasaInUserAdapter(getActivity(),dataJasaUsers);
+        adapter=new ListDataJasaInUserAdapter(this,dataJasaUsers);
         recyclerView.setAdapter(adapter);
     }
 
     private void callApiAddNew(){
-        SharedPreferences sharedPref = this.getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = this.getSharedPreferences("login", Context.MODE_PRIVATE);
 
         int id_user = sharedPref.getInt("id_user_login",0);
         int id_kategori = Integer.parseInt(String.valueOf(et_id_kategori.getText()));
@@ -234,20 +233,20 @@ public class FragmentListFrelance extends Fragment {
                     @Override
                     public void onResponse(Call<com.tr.nata.projectandroid.model.Response> call, retrofit2.Response<com.tr.nata.projectandroid.model.Response> response) {
                         if (response.isSuccessful()){
-                            Toast.makeText(getActivity().getApplicationContext(),"Data Jasa Berhasil Disimpan",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"Data Jasa Berhasil Disimpan",Toast.LENGTH_SHORT).show();
                             callApi();
 //                            Intent intent = new Intent(AddJobActivity.this,HomeActivity.class);
 //                            startActivity(intent);
 //                            Fragment fragment = new FragmentListFrelance();
 //                            getSupportFragmentManager().beginTransaction().add(R.id.frag_layout,fragment).addToBackStack(FragmentListFrelance.class.getSimpleName()).commit();
                         }else {
-                            Toast.makeText(getActivity().getApplicationContext(),"Data Jasa Gagal Disimpan",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"Data Jasa Gagal Disimpan",Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<com.tr.nata.projectandroid.model.Response> call, Throwable t) {
-                        Toast.makeText(getActivity().getApplicationContext(),"Error : "+t,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"Error : "+t,Toast.LENGTH_SHORT).show();
                     }
                 });
     }

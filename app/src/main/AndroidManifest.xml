@@ -31,6 +31,7 @@
         <activity android:name=".DetailUserActivity"></activity>
         <activity android:name=".HomeAdminActivity"></activity>
         <activity android:name=".AddKategoriAdminActivity"></activity>
+        <activity android:name=".TryPerofilleActivity"></activity>
 
         <service android:name=".Firebase.MessagingService"
             android:stopWithTask="false">

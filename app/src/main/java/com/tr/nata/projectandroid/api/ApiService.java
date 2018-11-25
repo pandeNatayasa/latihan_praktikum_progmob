@@ -66,7 +66,6 @@ public interface ApiService {
             @Field("no_telp") String no_telp,
             @Field("email") String email,
             @Field("status") String status,
-            @Field("alamat") String alamat,
-            @Field("id_kecamatan") int id_kecamatan
+            @Field("alamat") String alamat
     );
 }

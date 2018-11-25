@@ -48,7 +48,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //pembuatan database
     public DatabaseHelper(Context context){
-        super(context,DATABASE_NAME,null,2);
+        super(context,DATABASE_NAME,null,3);
     }
 
     //pembuatan tabel
@@ -162,7 +162,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //Untuk Tabel Data Jasa
     public boolean insertDataJasa(int id,int id_kategori,int id_user,String pekerjaan,
-                                  int usia,String no_telp,String email_jasa,String status,String alamat_jasa,int id_kecamatan){
+                                  int usia,String no_telp,String email_jasa,String status,String alamat_jasa){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_ID,id);
@@ -174,7 +174,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COLUMN_EMAIL_JASA,email_jasa);
         contentValues.put(COLUMN_STATUS,status);
         contentValues.put(COLUMN_ALAMAT_JASA,alamat_jasa);
-        contentValues.put(COLUMN_ID_KECAMATAN,id_kecamatan);
         long result = db.insert(TABLE_NAME_JASA,null,contentValues);
 
         if (result==-1){

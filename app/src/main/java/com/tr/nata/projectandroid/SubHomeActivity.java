@@ -1,15 +1,22 @@
 package com.tr.nata.projectandroid;
 
+import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
 
 import com.tr.nata.projectandroid.Adapter.listUserAdapter;
 import com.tr.nata.projectandroid.Database.DatabaseHelper;
@@ -28,7 +35,7 @@ import retrofit2.Response;
 
 public class SubHomeActivity extends AppCompatActivity {
 
-    public TextView tv_nama_kategori,tv_pesan;
+    public TextView tv_pesan;
     private RecyclerView recyclerView;
     private listUserAdapter listUserAdapter;
     private Bundle bundle;
@@ -39,22 +46,28 @@ public class SubHomeActivity extends AppCompatActivity {
 
     ApiService service;
     DatabaseHelper myDb;
-    ApiClient apiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sub_home);
 
-        tv_nama_kategori=(TextView)findViewById(R.id.tv_nama_kategori);
         tv_pesan=(TextView)findViewById(R.id.tv_pesan);
         btn_view_jasa=findViewById(R.id.btn_data_jasa);
 
         bundle = getIntent().getExtras();
-        tv_nama_kategori.setText(bundle.getString("namaKategori"));
-
+        String nama_kategori = bundle.getString("namaKategori");
         service=ApiClient.getApiService();
         myDb=new DatabaseHelper(this);
+//        ViewCompat.setTransitionName(findViewById(R.id.app_bar_sub_home),);
+        CollapsingToolbarLayout  collapsingToolbarLayout= (CollapsingToolbarLayout)findViewById(R.id.collapsingtoolbar_subhome);
+        collapsingToolbarLayout.setTitle(nama_kategori);
+        collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.white));
+
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbarid_sub_home);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         recyclerView = (RecyclerView)findViewById(R.id.recyclerview_list_user);
 
@@ -79,61 +92,9 @@ public class SubHomeActivity extends AppCompatActivity {
                 showMessage("Data",buffer.toString());
             }
         });
-        callDataLokal();
-        callApi();
-//                .enqueue(new Callback<List<ResponseDataJasa>>() {
-//                    @Override
-//                    public void onResponse(Call<List<ResponseDataJasa>> call, Response<List<ResponseDataJasa>> response) {
-//                        if (response.isSuccessful()){
-//
-////                            dataJasaItems=response.body().getDataJasa();
-////                            dataJasaItems=response.body();
-////                            dataUserItems=response.body();
-//                            Toast.makeText(getApplicationContext(),"success anjing",Toast.LENGTH_SHORT).show();
-//                            if (response.body().size()>0){
-////                                dataJasaItems=response.body();
-//                                Toast.makeText(getApplicationContext(),"jumlah "+response.body().size(),Toast.LENGTH_SHORT).show();
-//                            }else {
-//                                tv_pesan.setText("Data kosong");
-//                            }
-//
-//                        }else {
-//                            Toast.makeText(getApplicationContext(),"something went wrong",Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<List<ResponseDataJasa>> call, Throwable t) {
-//                        Toast.makeText(getApplicationContext(),"eror : "+t,Toast.LENGTH_SHORT).show();
-//                        tv_pesan.setText("error : "+t);
-//                    }
-//                });
-//                .enqueue(new Callback<List<ResponseDataJasa>>() {
-//                    @Override
-//                    public void onResponse(Call<List<ResponseDataJasa>> call, Response<List<ResponseDataJasa>> response) {
-//                        if (response.isSuccessful()){
-//                            if (response.body().size()>0){
-//                                dataJasaItems=response.body().getDataJasa();
-//                                dataUserItems=response.body();
-//                                Toast.makeText(getApplicationContext(),"success anjing",Toast.LENGTH_SHORT).show();
-////                            listUserAdapter.notifyDataSetChanged();
-//                                setAdapter();
-//                            }else {
-//                                tv_pesan.setText("Data kosong");
-//
-//                            }
-//
-//                        }else {
-//                            Toast.makeText(getApplicationContext(),"something went wrong",Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<List<ResponseDataJasa>> call, Throwable t) {
-//                        Toast.makeText(getApplicationContext(),"eror : "+t,Toast.LENGTH_SHORT).show();
-//                    }
-//                });
 
+//        callDataLokal();
+        callApi();
     }
 
     private void callApi(){
@@ -164,7 +125,7 @@ public class SubHomeActivity extends AppCompatActivity {
                                 for (DataJasaItem dataJasaItem:dataJasaItems){
                                     myDb.insertDataJasa(dataJasaItem.getId(),dataJasaItem.getIdKategori(),dataJasaItem.getIdUser(),
                                             dataJasaItem.getPekerjaan(),dataJasaItem.getUsia(),dataJasaItem.getNoTelp(),dataJasaItem.getEmail(),
-                                            dataJasaItem.getStatus(),dataJasaItem.getAlamat(),dataJasaItem.getIdKecamatan());
+                                            dataJasaItem.getStatus(),dataJasaItem.getAlamat());
                                 }
                                 setAdapter();
                             } else {
@@ -228,6 +189,21 @@ public class SubHomeActivity extends AppCompatActivity {
         builder.setTitle(title);
         builder.setMessage(message);
         builder.show();
+    }
+
+//    @Override
+//    public void onFragmentInteraction(Uri uri) {
+//
+//    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if(id == android.R.id.home){
+            this.finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

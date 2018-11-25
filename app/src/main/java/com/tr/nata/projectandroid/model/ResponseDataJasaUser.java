@@ -24,9 +24,6 @@ public class ResponseDataJasaUser{
 	@SerializedName("alamat")
 	private String alamat;
 
-	@SerializedName("id_kecamatan")
-	private int idKecamatan;
-
 	@SerializedName("id_user_admin")
 	private int idUserAdmin;
 
@@ -100,14 +97,6 @@ public class ResponseDataJasaUser{
 
 	public String getAlamat(){
 		return alamat;
-	}
-
-	public void setIdKecamatan(int idKecamatan){
-		this.idKecamatan = idKecamatan;
-	}
-
-	public int getIdKecamatan(){
-		return idKecamatan;
 	}
 
 	public void setIdUserAdmin(int idUserAdmin){
@@ -191,8 +180,7 @@ public class ResponseDataJasaUser{
 			",created_at = '" + createdAt + '\'' + 
 			",id_user = '" + idUser + '\'' + 
 			",status_validasi = '" + statusValidasi + '\'' + 
-			",alamat = '" + alamat + '\'' + 
-			",id_kecamatan = '" + idKecamatan + '\'' + 
+			",alamat = '" + alamat + '\'' +
 			",id_user_admin = '" + idUserAdmin + '\'' + 
 			",estimasi_gaji = '" + estimasiGaji + '\'' + 
 			",pekerjaan = '" + pekerjaan + '\'' + 

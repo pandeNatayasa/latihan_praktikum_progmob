@@ -1,43 +1,18 @@
 package com.tr.nata.projectandroid;
 
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.tr.nata.projectandroid.Adapter.kategoriAdapter;
-import com.tr.nata.projectandroid.Database.DatabaseHelper;
 import com.tr.nata.projectandroid.api.ApiClient;
-import com.tr.nata.projectandroid.api.ApiService;
 import com.tr.nata.projectandroid.fragment.FragmentHome;
-import com.tr.nata.projectandroid.fragment.FragmentListFrelance;
-import com.tr.nata.projectandroid.fragment.FragmentProfille;
-import com.tr.nata.projectandroid.model.DataKategoriItem;
-import com.tr.nata.projectandroid.model.ResponseKategori;
-import com.tr.nata.projectandroid.model.user;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.tr.nata.projectandroid.fragment.FragmentNewJob;
+import com.tr.nata.projectandroid.fragment.FragmentFavorite;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -66,8 +41,18 @@ public class HomeActivity extends AppCompatActivity {
 
         btn_nav_menu=findViewById(R.id.btn_nav_menu);
         btn_nav_menu.setOnNavigationItemSelectedListener(navListener);
+//        Toolbar toolbar = findViewById(R.id.toolbar_home);
+//        setSupportActionBar(toolbar);
+//        setSupportActionBar(toolbar);
 //        fragment = new Fragment();
 //        getSupportFragmentManager().beginTransaction().replace(R.id.frag_layout,fragment).commit();
+
+//        bottomBar.getbar().setBackgroundColor(getResources().getColor(R.color.bottom_))
+//        setupBottomNavigationView();
+//        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.btn_nav_menu);
+//        BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
+
+
 
         fragment=new FragmentHome();
         getSupportFragmentManager().beginTransaction().replace(R.id.frag_layout,fragment).commit();
@@ -142,6 +127,23 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+//    private void setupBottomNavigationView() {
+//        BottomNavigationView bottomNavigationView=(BottomNavigationView)findViewById(R.id.btn_nav_menu);
+//        bottomNavigationView.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
+//            @Override
+//            public void onNavigationItemReselected(@NonNull MenuItem menuItem) {
+//                switch (menuItem.getItemId()){
+//                    case
+//                }
+//            }
+//        });
+//    }
+
+//    public boolean onCreateOptionsMenu(Menu menu){
+//        getMenuInflater().inflate(R.menu.toolbar_menu,menu);
+//        return true;
+//    }
+
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
@@ -150,12 +152,16 @@ public class HomeActivity extends AppCompatActivity {
                     switch (menuItem.getItemId()){
                         case R.id.nav_home:
                             fragment = new FragmentHome();
+//                            getSupportFragmentManager().beginTransaction().replace(R.id.frag_layout,fragment).commit();
                             break;
                         case R.id.nav_list:
-                            fragment=new FragmentListFrelance();
+                            fragment=new FragmentNewJob();
+//                            getSupportFragmentManager().beginTransaction().replace(R.id.frag_layout,fragment).commit();
                             break;
-                        case R.id.nav_profille:
-                            fragment=new FragmentProfille();
+                        case R.id.nav_favorite:
+                            fragment=new FragmentFavorite();
+//                            Intent intent = new Intent(getApplicationContext(),TryPerofilleActivity.class);
+//                            startActivity(intent);
                             break;
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.frag_layout,fragment).commit();
@@ -163,21 +169,22 @@ public class HomeActivity extends AppCompatActivity {
                     return true;
                 }
             };
-    @Override
-    public void onBackPressed(){
-        new AlertDialog.Builder(this)
-                .setTitle("Really Exit")
-                .setMessage("Are you sure want to exit ?")
-                .setNegativeButton(android.R.string.no,null)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        HomeActivity.super.onBackPressed();
-                        finishAffinity();
-                        System.exit(0);
-                    }
-                }).create().show();
-    }
+//    @Override
+//    public void onBackPressed(){
+//        new AlertDialog.Builder(this)
+//                .setTitle("Really Exit")
+//                .setMessage("Are you sure want to exit ?")
+//                .setNegativeButton(android.R.string.no,null)
+//                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        HomeActivity.super.onBackPressed();
+//                        finishAffinity();
+//                        System.exit(0);
+//                    }
+//                }).create().show();
+//    }
+
 
 //    private void callApi(){
 //        service.getKategori()

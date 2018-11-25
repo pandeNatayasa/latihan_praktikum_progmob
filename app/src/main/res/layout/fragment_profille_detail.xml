@@ -1,35 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    >
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/img_proille"
-        android:layout_width="250px"
-        android:layout_height="250px"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp"
-        android:src="@drawable/contact"/>
+    <ImageView
+        android:id="@+id/img_edit_profille"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_edit_black_24dp"
+        android:layout_alignParentEnd="true"
+        android:padding="20dp"/>
 
     <LinearLayout
+        android:id="@+id/ly_profille"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="20px"
-        android:layout_marginRight="20px"
-        android:layout_marginBottom="30px">
+        android:padding="20dp"
+        android:orientation="vertical">
 
-        <TextView
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="20px"
+            android:layout_marginRight="20px"
+            android:layout_marginBottom="30px"
+            android:layout_marginTop="10dp">
+
+            <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Nama"
             android:layout_weight="3"
             />
 
-        <TextView
+            <TextView
             android:id="@+id/tv_name_profille"
 
             android:layout_weight="2"
@@ -37,23 +44,23 @@
             android:layout_height="wrap_content"
             android:text=": Nama Anda"/>
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="20px"
-        android:layout_marginRight="20px"
-        android:layout_marginBottom="30px">
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="20px"
+            android:layout_marginRight="20px"
+            android:layout_marginBottom="30px">
 
-        <TextView
+            <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Email"
             android:layout_weight="3"
             />
 
-        <TextView
+            <TextView
             android:id="@+id/tv_email_profille"
 
             android:layout_weight="2"
@@ -61,23 +68,23 @@
             android:layout_height="wrap_content"
             android:text=": Email Anda"/>
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="20px"
-        android:layout_marginRight="20px"
-        android:layout_marginBottom="30px">
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="20px"
+            android:layout_marginRight="20px"
+            android:layout_marginBottom="30px">
 
-        <TextView
+            <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Jenis Kelamin"
             android:layout_weight="3"
             />
 
-        <TextView
+            <TextView
             android:id="@+id/tv_jk_profille"
 
             android:layout_weight="2"
@@ -85,23 +92,23 @@
             android:layout_height="wrap_content"
             android:text=": JK Anda"/>
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="20px"
-        android:layout_marginRight="20px"
-        android:layout_marginBottom="30px">
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="20px"
+            android:layout_marginRight="20px"
+            android:layout_marginBottom="30px">
 
-        <TextView
+            <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="No Telp"
             android:layout_weight="3"
             />
 
-        <TextView
+            <TextView
             android:id="@+id/tv_notelp_profille"
 
             android:layout_weight="2"
@@ -109,23 +116,23 @@
             android:layout_height="wrap_content"
             android:text=": NoTelp Anda"/>
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="20px"
-        android:layout_marginRight="20px"
-        android:layout_marginBottom="30px">
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="20px"
+            android:layout_marginRight="20px"
+            android:layout_marginBottom="30px">
 
-        <TextView
+            <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Tanggal Lahir"
             android:layout_weight="3"
             />
 
-        <TextView
+            <TextView
             android:id="@+id/tv_tanggal_lahir_profille"
 
             android:layout_weight="2"
@@ -133,13 +140,9 @@
             android:layout_height="wrap_content"
             android:text=": TGL Lahir Anda"/>
 
+        </LinearLayout>
+
     </LinearLayout>
 
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Profille User Here"/>
-
-
-</LinearLayout>
+</RelativeLayout>
