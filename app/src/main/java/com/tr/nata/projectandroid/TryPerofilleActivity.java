@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.tr.nata.projectandroid.Helper.ViewPagerAdapter;
 
@@ -22,6 +23,7 @@ public class TryPerofilleActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private AppBarLayout appBarLayout;
     ImageView img_logout;
+    private TextView tv_nama_profille;
 //    private ViewPager viewPager;
 
     private int[] tabIcons = {
@@ -46,6 +48,12 @@ public class TryPerofilleActivity extends AppCompatActivity {
 
         appBarLayout=findViewById(R.id.appbarLayout_id);
         img_logout=findViewById(R.id.img_logout);
+
+        tv_nama_profille=findViewById(R.id.tv_nama_proflle_inProfille);
+        SharedPreferences sharedPref = getSharedPreferences("login", Context.MODE_PRIVATE);
+        String nama_user_login = sharedPref.getString("nama_user_login","");
+        tv_nama_profille.setText(nama_user_login);
+
         final ViewPager viewPager=findViewById(R.id.viewPager_1);
 
         final ViewPagerAdapter viewPagerAdapter=new ViewPagerAdapter(getSupportFragmentManager(),tabLayout.getTabCount());
@@ -89,12 +97,17 @@ public class TryPerofilleActivity extends AppCompatActivity {
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Boolean login = false;
                         SharedPreferences sharedPref = getSharedPreferences("login", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPref.edit();
-                        editor.putBoolean("status_login",login);
-                        editor.putString("status_login_string", String.valueOf(login));
-                        editor.apply();
+                        sharedPref.edit().clear().commit();
+
+//                        editor.putString("status_login_string", String.valueOf(response.body().isStatus()));
+//                        editor.putInt("id_user_login",response.body().getDataUser().getId());
+//                        editor.putString("nama_user_login", String.valueOf(response.body().getDataUser().getName()));
+//                        editor.putString("email_user_login",String.valueOf(response.body().getDataUser().getEmail()));
+//                        editor.putString("jk_user_login", String.valueOf(response.body().getDataUser().getJenisKelamin()));
+//                        editor.putString("no_telp_user_login", String.valueOf(response.body().getDataUser().getNoTelp()));
+//                        editor.putString("tanggal_lahir_user_login", String.valueOf(response.body().getDataUser().getTanggalLahir()));
+//                        editor.putString("status_user",String.valueOf(response.body().getDataUser().getStatusUser()));
 
                         Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
                         startActivity(intent);

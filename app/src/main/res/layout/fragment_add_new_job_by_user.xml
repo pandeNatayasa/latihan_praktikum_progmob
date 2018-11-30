@@ -48,17 +48,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Kategori"/>
-            <EditText
-                android:id="@+id/et_kategori_new"
+            <!--<EditText-->
+                <!--android:id="@+id/et_kategori_new"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:hint="Id Kategori"-->
+                <!--android:textSize="17sp"-->
+                <!--android:textColor="#b7b9bd"-->
+                <!--android:textColorHint="#b7b9bd"-->
+                <!--android:inputType="text"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--/>-->
+            <Spinner
+                android:id="@+id/sp_kategori"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Id Kategori"
-                android:textSize="17sp"
-                android:textColor="#b7b9bd"
-                android:textColorHint="#b7b9bd"
-                android:inputType="text"
-                android:layout_alignParentRight="true"
-                />
+                android:spinnerMode="dropdown"></Spinner>
 
             <TextView
                 android:layout_marginTop="20dp"
@@ -167,17 +172,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Status"/>
-            <EditText
-                android:id="@+id/et_status_new"
+            <!--<EditText-->
+                <!--android:id="@+id/et_status_new"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:hint="Status"-->
+                <!--android:inputType="text"-->
+                <!--android:textColor="#b7b9bd"-->
+                <!--android:textColorHint="#b7b9bd"-->
+                <!--android:textSize="17sp"-->
+                <!--/>-->
+            <Spinner
+                android:id="@+id/sp_status_new"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:hint="Status"
-                android:inputType="text"
-                android:textColor="#b7b9bd"
-                android:textColorHint="#b7b9bd"
-                android:textSize="17sp"
-                />
+                android:spinnerMode="dropdown"
+                android:entries="@array/status_new"></Spinner>
 
             <TextView
                 android:layout_marginTop="20dp"

@@ -32,6 +32,7 @@ public class FragmentProfilleDataJasa extends Fragment {
     private RecyclerView recyclerView;
     private ListDataJasaInUserAdapter adapter;
     ApiService service,service_add_new;
+    String user_token;
 
     @Nullable
     @Override
@@ -46,6 +47,9 @@ public class FragmentProfilleDataJasa extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
+        user_token = sharedPref.getString("user_token","");
+
         callApi();
         return view;
     }
@@ -55,7 +59,7 @@ public class FragmentProfilleDataJasa extends Fragment {
 //        Integer id_user_login = Integer.parseInt(sharedPref.getString("id_user_login",""));
         Integer id_user_login = sharedPref.getInt("id_user_login", 0);
 
-        service.showDataJasaUser(id_user_login)
+        service.showDataJasaUser(id_user_login,user_token)
                 .enqueue(new Callback<List<ResponseDataJasaUser>>() {
                     @Override
                     public void onResponse(Call<List<ResponseDataJasaUser>> call, Response<List<ResponseDataJasaUser>> response) {

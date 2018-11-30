@@ -29,6 +29,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
                 Toast.makeText(SplashScreenActivity.this,"status : "+status_login,Toast.LENGTH_SHORT).show();
 
+
                 if (status_login.equals("true")){
                     if (status_user.equals("1")){
                         Intent homeIntent = new Intent(SplashScreenActivity.this,HomeActivity.class);

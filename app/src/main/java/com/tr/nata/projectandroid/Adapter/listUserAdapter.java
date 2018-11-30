@@ -128,6 +128,7 @@ public class listUserAdapter extends RecyclerView.Adapter<listUserAdapter.ViewHo
 //                DataJasaItem dataJasaItem = (DataJasaItem) itemView.getTag();
 //                DataUserItem dataUserItem = (DataUserItem) itemView.getTag();
 
+                int id_data_jasa = dataJasa.getId();
                 String nama = dataUser.getName();
 //                    String nama ="aa";
                 String jasa = dataJasa.getPekerjaan();
@@ -147,6 +148,7 @@ public class listUserAdapter extends RecyclerView.Adapter<listUserAdapter.ViewHo
 //                    String namaKategori = dataKategoriItem.getKategori();
 //                    int id = dataKategoriItem.getId();
                 Bundle bundle = new Bundle();
+                bundle.putInt("id_data_jasa",id_data_jasa);
                 bundle.putString("nama", nama);
                 bundle.putString("jasa",jasa);
                 bundle.putString("gaji",gaji);

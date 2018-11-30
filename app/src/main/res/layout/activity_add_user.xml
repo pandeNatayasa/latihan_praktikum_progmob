@@ -1,119 +1,245 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".AddUserActivity">
+    tools:context=".AddUserActivity"
+    android:background="@color/colorAccent">
 
-    <TextView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="''Register Into Your Acount''"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="#b7b9bd"
-        android:id="@+id/headerRegister"
-        android:textAlignment="center"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="30dp"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <EditText
-        android:id="@+id/etUserName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Nama"
-        android:textSize="17sp"
-        android:textColor="#b7b9bd"
-        android:textColorHint="#b7b9bd"
-        android:inputType="textPersonName"
-        android:layout_alignParentRight="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="16dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/etUserMail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="E-Mail"
-        android:textSize="17sp"
-        android:textColor="#b7b9bd"
-        android:textColorHint="#b7b9bd"
-        android:inputType="textEmailAddress"
-        android:layout_alignParentRight="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="16dp"/>
+            <ImageView
+                android:id="@+id/gambar"
+                android:layout_width="333px"
+                android:layout_height="150px"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="90px"
+                android:layout_marginBottom="20dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/logo" />
 
-    <EditText
-        android:id="@+id/etUserPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:textColor="#b7b9bd"
-        android:textColorHint="#b7b9bd"
-        android:textSize="17sp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="20dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="''Register Your Acount''"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorWhite"
+                android:id="@+id/headerRegister"
+                android:textAlignment="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="30dp"/>
 
-    <EditText
-        android:id="@+id/etUserJenisKelamin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:hint="Jenis Kelamin"
-        android:inputType="text"
-        android:textColor="#b7b9bd"
-        android:textColorHint="#b7b9bd"
-        android:textSize="17sp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="20dp"/>
+            <EditText
+                android:id="@+id/etUserName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nama"
+                android:textSize="17sp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textColorHint="#b7b9bd"
+                android:inputType="textPersonName"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:background="@drawable/et_regis"
+                android:drawableLeft="@drawable/ic_person_grey"
+                android:drawablePadding="10dp"/>
 
-    <EditText
-        android:id="@+id/etUserNoTelp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:hint="No Telp"
-        android:inputType="text"
-        android:textColor="#b7b9bd"
-        android:textColorHint="#b7b9bd"
-        android:textSize="17sp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="20dp"/>
-    <EditText
-        android:id="@+id/etUserTanggalLahir"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:hint="Tanggal Lahir"
-        android:inputType="date"
-        android:textColor="#b7b9bd"
-        android:textColorHint="#b7b9bd"
-        android:textSize="17sp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="20dp"/>
+            <EditText
+                android:id="@+id/etUserMail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="E-Mail"
+                android:textSize="17sp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textColorHint="#b7b9bd"
+                android:inputType="textEmailAddress"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:background="@drawable/et_regis"
+                android:drawableLeft="@drawable/ic_email_grey"
+                android:drawablePadding="10dp"/>
 
-    <Button
-        android:id="@+id/register"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Register"
-        android:textColor="#b7b9bd"
-        android:textSize="17sp"
-        android:elevation="40dp"
-        android:layout_margin="16dp"/>
+            <EditText
+                android:id="@+id/etUserPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:textColor="@color/colorPrimaryDark"
+                android:textColorHint="#b7b9bd"
+                android:textSize="17sp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:background="@drawable/et_regis"
+                android:drawableLeft="@drawable/ic_lock_grey"
+                android:drawablePadding="10dp"/>
 
-    <TextView
-        android:id="@+id/tv_error"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:textSize="17sp"
+                    android:textColor="@color/colorWhite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Jenis Kelamin : "
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginBottom="20dp"/>
+
+                <RadioGroup
+                    android:id="@+id/rgJenisKelamin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <RadioButton
+                        android:id="@+id/rbLakiLaki"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Laki-laki"
+                        android:textColor="@color/colorWhite"/>
+                    <RadioButton
+                        android:id="@+id/rbPerempuan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Perempuan"
+                        android:textColor="@color/colorWhite"/>
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/etUserNoTelp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:hint="No Telp"
+                android:inputType="text"
+                android:textColor="@color/colorPrimaryDark"
+                android:textColorHint="#b7b9bd"
+                android:textSize="17sp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:background="@drawable/et_regis"
+                android:drawableLeft="@drawable/ic_call_grey"
+                android:drawablePadding="10dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp">
+
+                <EditText
+                    android:id="@+id/etUserTanggalLahir"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:hint="Tanggal Lahir yyyy-mm-dd"
+                    android:inputType="date"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textColorHint="#b7b9bd"
+                    android:textSize="17sp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:background="@drawable/et_regis"
+                    android:drawableLeft="@drawable/ic_date_range_grey"
+                    android:drawablePadding="10dp"
+                    android:layout_weight="1"/>
+
+                <ImageView
+                    android:id="@+id/img_tanggal_lahir"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/btn_gradient"
+                    android:layout_weight="5"
+                    android:src="@drawable/ic_date_range_white"
+                    android:padding="8dp"/>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Register"
+                android:textColor="@color/colorWhite"
+                android:textSize="17sp"
+                android:elevation="40dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/btn_gradient"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Are you have account ? "
+                    android:textColor="@color/colorWhite"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tv_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" Login "
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold"
+                    android:layout_gravity="center_horizontal"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
 
 </LinearLayout>

@@ -60,13 +60,14 @@ public class FragmentHome extends Fragment {
     private List<DataKategoriItem> dataKategoriItems = new ArrayList<>();
 
     ApiService service;
+    String user_token;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_home,container,false);
 
-        tv_namaUser = view.findViewById(R.id.tv_nama);
+//        tv_namaUser = view.findViewById(R.id.tv_nama);
         home_to_profille=view.findViewById(R.id.img_profille_home_to_profille);
         toolbar=view.findViewById(R.id.toolbarid);
         tv_home_to_favorite=view.findViewById(R.id.tv_home_to_favorite);
@@ -75,16 +76,19 @@ public class FragmentHome extends Fragment {
         service=ApiClient.getApiService();
         myDb=new DatabaseHelper(getActivity());
 
-        SharedPreferences sharedPref = this.getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
-        String nama_user_login = sharedPref.getString("nama_user_login","");
-        tv_namaUser.setText(nama_user_login);
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
+        user_token = sharedPref.getString("user_token","");
+
+//        SharedPreferences sharedPref = this.getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
+//        String nama_user_login = sharedPref.getString("nama_user_login","");
+//        tv_namaUser.setText(nama_user_login);
 
         recyclerView=(RecyclerView)view.findViewById(R.id.recyclerview_kategori);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(this.getActivity(),2,GridLayoutManager.VERTICAL,false));
 
-        Button btn_logout = (Button) view.findViewById(R.id.btn_logout);
-        Button btn_viewKategoriLokal = view.findViewById(R.id.btn_viewKategoriLokal);
+//        Button btn_logout = (Button) view.findViewById(R.id.btn_logout);
+//        Button btn_viewKategoriLokal = view.findViewById(R.id.btn_viewKategoriLokal);
 
         home_to_profille.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,40 +128,40 @@ public class FragmentHome extends Fragment {
             }
         });
 
-        btn_logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Boolean login = false;
-                SharedPreferences sharedPref = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putBoolean("status_login",login);
-                editor.putString("status_login_string", String.valueOf(login));
-                editor.apply();
-
-                Intent intent = new Intent(getActivity(),MainActivity.class);
-                startActivity(intent);
-                getActivity().finish();
-            }
-        });
-
-        btn_viewKategoriLokal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Cursor res = myDb.getAllData();
-                if (res.getCount()==0){
-                    //show message
-                    showMessage("Eror","Nothing Found");
-                    return;
-                }
-                StringBuffer buffer = new StringBuffer();
-                while (res.moveToNext()){
-                    buffer.append("Id : "+res.getString(0)+"\n");
-                    buffer.append("Kategori : "+res.getString(1)+"\n");
-                }
-                //show all data
-                showMessage("Data",buffer.toString());
-            }
-        });
+//        btn_logout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Boolean login = false;
+//                SharedPreferences sharedPref = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
+//                SharedPreferences.Editor editor = sharedPref.edit();
+//                editor.putBoolean("status_login",login);
+//                editor.putString("status_login_string", String.valueOf(login));
+//                editor.apply();
+//
+//                Intent intent = new Intent(getActivity(),MainActivity.class);
+//                startActivity(intent);
+//                getActivity().finish();
+//            }
+//        });
+//
+//        btn_viewKategoriLokal.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Cursor res = myDb.getAllData();
+//                if (res.getCount()==0){
+//                    //show message
+//                    showMessage("Eror","Nothing Found");
+//                    return;
+//                }
+//                StringBuffer buffer = new StringBuffer();
+//                while (res.moveToNext()){
+//                    buffer.append("Id : "+res.getString(0)+"\n");
+//                    buffer.append("Kategori : "+res.getString(1)+"\n");
+//                }
+//                //show all data
+//                showMessage("Data",buffer.toString());
+//            }
+//        });
 
         callKategoriLokal();
         callApi();
@@ -189,7 +193,7 @@ public class FragmentHome extends Fragment {
 //    }
 
     private void callApi(){
-        service.getKategori()
+        service.getKategori(user_token)
                 .enqueue(new Callback<ResponseKategori>() {
                     @Override
                     public void onResponse(Call<ResponseKategori> call, Response<ResponseKategori> response) {

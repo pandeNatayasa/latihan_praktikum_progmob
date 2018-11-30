@@ -1,13 +1,11 @@
 package com.tr.nata.projectandroid.model;
 
-import android.provider.BaseColumns;
-
 import com.google.gson.annotations.SerializedName;
 
-public class DataKategoriItem{
+public class ResponseFavorite{
 
-	@SerializedName("logo_kategori")
-	private String logoKategori;
+	@SerializedName("id_data_jasa")
+	private int idDataJasa;
 
 	@SerializedName("updated_at")
 	private String updatedAt;
@@ -15,18 +13,18 @@ public class DataKategoriItem{
 	@SerializedName("created_at")
 	private String createdAt;
 
-	@SerializedName("kategori")
-	private String kategori;
-
 	@SerializedName("id")
 	private int id;
 
-	public void setLogoKategori(String logoKategori){
-		this.logoKategori = logoKategori;
+	@SerializedName("id_user")
+	private int idUser;
+
+	public void setIdDataJasa(int idDataJasa){
+		this.idDataJasa = idDataJasa;
 	}
 
-	public String getLogoKategori(){
-		return logoKategori;
+	public int getIdDataJasa(){
+		return idDataJasa;
 	}
 
 	public void setUpdatedAt(String updatedAt){
@@ -45,14 +43,6 @@ public class DataKategoriItem{
 		return createdAt;
 	}
 
-	public void setKategori(String kategori){
-		this.kategori = kategori;
-	}
-
-	public String getKategori(){
-		return kategori;
-	}
-
 	public void setId(int id){
 		this.id = id;
 	}
@@ -61,21 +51,23 @@ public class DataKategoriItem{
 		return id;
 	}
 
-	public static class Entry implements BaseColumns {
-		public static final String TABLE_NAME_KATEGORI="category_table";
-		public static final String COLUMN_ID="id";
-		public static final String COLUMN_KATEGORI="kategori";
+	public void setIdUser(int idUser){
+		this.idUser = idUser;
+	}
+
+	public int getIdUser(){
+		return idUser;
 	}
 
 	@Override
  	public String toString(){
 		return 
-			"DataKategoriItem{" + 
-			"logo_kategori = '" + logoKategori + '\'' + 
+			"ResponseFavorite{" + 
+			"id_data_jasa = '" + idDataJasa + '\'' + 
 			",updated_at = '" + updatedAt + '\'' + 
 			",created_at = '" + createdAt + '\'' + 
-			",kategori = '" + kategori + '\'' + 
 			",id = '" + id + '\'' + 
+			",id_user = '" + idUser + '\'' + 
 			"}";
 		}
 }

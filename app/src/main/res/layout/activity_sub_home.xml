@@ -41,7 +41,7 @@
 
 
                 <ImageView
-                    android:id="@+id/img_profille_home_to_profille"
+                    android:id="@+id/img_sub_home_to_profille"
                     android:layout_width="wrap_content"
                     android:layout_height="?attr/actionBarSize"
                     android:layout_alignParentEnd="true"
@@ -85,11 +85,11 @@
                 android:layout_height="wrap_content"
                 />
 
-            <Button
-                android:id="@+id/btn_data_jasa"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="view all data jasa"/>
+            <!--<Button-->
+                <!--android:id="@+id/btn_data_jasa"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="view all data jasa"/>-->
 
         </LinearLayout>
 

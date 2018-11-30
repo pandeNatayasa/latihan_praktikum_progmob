@@ -25,7 +25,9 @@
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbarid_profille"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:theme="@style/ToolbarColoredBackArrow"
+                app:popupTheme="@style/AppTheme">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -89,8 +91,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_proille"
-            android:layout_width="200px"
-            android:layout_height="200px"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="5dp"
@@ -98,7 +100,7 @@
 
 
         <TextView
-            android:id="@+id/tv_nama_proflle"
+            android:id="@+id/tv_nama_proflle_inProfille"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nama profille"

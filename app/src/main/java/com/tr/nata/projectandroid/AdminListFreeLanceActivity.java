@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -13,16 +11,19 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
 import com.tr.nata.projectandroid.Adapter.ListDataJasaInUserAdapter;
+import com.tr.nata.projectandroid.Adapter.dataJasaAdminAdapter;
 import com.tr.nata.projectandroid.Database.DatabaseHelper;
 import com.tr.nata.projectandroid.api.ApiClient;
 import com.tr.nata.projectandroid.api.ApiService;
+import com.tr.nata.projectandroid.model.DataJasaItem;
+import com.tr.nata.projectandroid.model.DataUserItem;
+import com.tr.nata.projectandroid.model.ResponseDataJasa;
 import com.tr.nata.projectandroid.model.ResponseDataJasaUser;
 
 import java.util.ArrayList;
@@ -34,175 +35,143 @@ import retrofit2.Response;
 
 public class AdminListFreeLanceActivity extends AppCompatActivity {
 
-    TextView tv_error;
-    FloatingActionButton fab_add_job;
-
+//    FloatingActionButton fab_add_job;
     private RecyclerView recyclerView;
-    private ListDataJasaInUserAdapter adapter;
+    private Bundle bundle;
+    private dataJasaAdminAdapter dataJasaAdapter;
     DatabaseHelper myDb;
+    TextView tv_pesan,tv_nama_kategori;
+    String user_token;
 
-    //    String id_kategori,id_user,pekerjaan,estimasi_gaji,pengalaman_kerja,
-//            usia,no_telp,email,status,alamat,id_kecamatan;
     AlertDialog.Builder dialog;
     LayoutInflater inflater_add_new;
     View dialogView;
     EditText et_id_kategori,et_pekerjaan,et_estimasi_gaji,et_pengalaman_kerja,
             et_usia,et_no_telp,et_email,et_status,et_alamat;
 
-
-    private List<ResponseDataJasaUser> dataJasaUsers = new ArrayList<>();
+    private List<DataJasaItem> dataJasaItems = new ArrayList<>();
+    private List<DataUserItem> dataUserItems=new ArrayList<>();
 
     ApiService service,service_add_new;
 
-    @Nullable
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.fragment_list_frelance,container,false);
-
-//        SharedPreferences sharedPref = this.getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
-//        Integer id_user_login = Integer.valueOf(sharedPref.getString("id_user_login",""));
-
-        tv_error=view.findViewById(R.id.tv_error_here);
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_inadmin_list_frelance);
 
         service=ApiClient.getApiService();
         service_add_new=ApiClient.getApiService();
 
-        recyclerView=view.findViewById(R.id.recyclerview_data_jasa_user);
+        bundle = getIntent().getExtras();
+        String nama_kategori = bundle.getString("namaKategori");
+        SharedPreferences sharedPref = getSharedPreferences("login", Context.MODE_PRIVATE);
+        user_token = sharedPref.getString("user_token","");
+
+        recyclerView=findViewById(R.id.recyclerview_data_jasa_user);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        fab_add_job=view.findViewById(R.id.fab_add_job);
+//        fab_add_job=findViewById(R.id.fab_add_job);
+        tv_pesan  = findViewById(R.id.tv_pesan_inSubHomeAdmin);
+        tv_nama_kategori=findViewById(R.id.tv_nama_kategori_inSubHomeAdmin);
 
-//        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar_home);
-//        HomeActivity main = (HomeActivity)getActivity();
-//        main.setSupportActionBar(toolbar);
+        tv_nama_kategori.setText(nama_kategori);
 
-        fab_add_job.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Toast.makeText(getActivity().getApplicationContext(),"Add Job",Toast.LENGTH_SHORT).show();
-//                Intent intent = new Intent(getActivity().getApplicationContext(),AddJobActivity.class);
-//                startActivity(intent);
-
-
-                dialog= new AlertDialog.Builder(view.getContext());
-                inflater_add_new= getLayoutInflater();//(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                dialogView = inflater_add_new.inflate(R.layout.activity_add_job,null);
-                dialog.setView(dialogView);
-                dialog.setCancelable(true);
-                dialog.setIcon(R.mipmap.ic_launcher);
-                dialog.setTitle("New Data Jasa");
-
-//                Button btn_new_job=dialogView.findViewById(R.id.btn_add_new_job);
-                et_id_kategori=dialogView.findViewById(R.id.et_kategori_new);
-                et_pekerjaan=dialogView.findViewById(R.id.et_pekerjaan_new);
-                et_estimasi_gaji=dialogView.findViewById(R.id.et_estimasi_gaji_new);
-                et_pengalaman_kerja=dialogView.findViewById(R.id.et_pengalaman_kerja_new);
-                et_usia=dialogView.findViewById(R.id.et_usia_new);
-                et_no_telp=dialogView.findViewById(R.id.et_no_telp_new);
-                et_email=dialogView.findViewById(R.id.et_email_new);
-                et_status=dialogView.findViewById(R.id.et_status_new);
-                et_alamat=dialogView.findViewById(R.id.et_alamat_new);
-
-                //membersihkan edit text
-                et_id_kategori.setText("");
-                et_pekerjaan.setText("");
-                et_estimasi_gaji.setText("");
-                et_pengalaman_kerja.setText("");
-                et_usia.setText("");
-                et_no_telp.setText(null);
-                et_email.setText(null);
-                et_status.setText(null);
-                et_alamat.setText(null);
-
-//                btn_new_job.setOnClickListener(new View.OnClickListener() {
+//        fab_add_job.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                Toast.makeText(getActivity().getApplicationContext(),"Add Job",Toast.LENGTH_SHORT).show();
+////                Intent intent = new Intent(getActivity().getApplicationContext(),AddJobActivity.class);
+////                startActivity(intent);
+//
+//
+//                dialog= new AlertDialog.Builder(view.getContext());
+//                inflater_add_new= getLayoutInflater();//(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//                dialogView = inflater_add_new.inflate(R.layout.activity_add_job,null);
+//                dialog.setView(dialogView);
+//                dialog.setCancelable(true);
+//                dialog.setIcon(R.mipmap.ic_launcher);
+//                dialog.setTitle("New Data Jasa");
+//
+////                Button btn_new_job=dialogView.findViewById(R.id.btn_add_new_job);
+//                et_id_kategori=dialogView.findViewById(R.id.et_kategori_new);
+//                et_pekerjaan=dialogView.findViewById(R.id.et_pekerjaan_new);
+//                et_estimasi_gaji=dialogView.findViewById(R.id.et_estimasi_gaji_new);
+//                et_pengalaman_kerja=dialogView.findViewById(R.id.et_pengalaman_kerja_new);
+//                et_usia=dialogView.findViewById(R.id.et_usia_new);
+//                et_no_telp=dialogView.findViewById(R.id.et_no_telp_new);
+//                et_email=dialogView.findViewById(R.id.et_email_new);
+//                et_status=dialogView.findViewById(R.id.et_status_new);
+//                et_alamat=dialogView.findViewById(R.id.et_alamat_new);
+//
+//                //membersihkan edit text
+//                et_id_kategori.setText("");
+//                et_pekerjaan.setText("");
+//                et_estimasi_gaji.setText("");
+//                et_pengalaman_kerja.setText("");
+//                et_usia.setText("");
+//                et_no_telp.setText(null);
+//                et_email.setText(null);
+//                et_status.setText(null);
+//                et_alamat.setText(null);
+//
+//                dialog.setPositiveButton("Save", new DialogInterface.OnClickListener() {
 //                    @Override
-//                    public void onClick(View view) {
+//                    public void onClick(DialogInterface dialogInterface, int i) {
 //                        callApiAddNew();
 //                    }
 //                });
-
-                dialog.setPositiveButton("Save", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        Toast.makeText(itemView.getContext(),"will be update soon",Toast.LENGTH_SHORT).show();
-
-                        callApiAddNew();
-
-                    }
-                });
-
-                dialog.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
-
-                dialog.show();
-
-            }
-        });
+//
+//                dialog.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        dialogInterface.dismiss();
+//                    }
+//                });
+//
+//                dialog.show();
+//
+//            }
+//        });
 
         callApi();
-        return view;
     }
 
-//    public boolean onCreateOptionsMenu(Menu menu){
-//        getActivity().getMenuInflater().inflate(R.menu.toolbar_menu,menu);
-//        return true;
-//    }
 
     private void callApi(){
-        SharedPreferences sharedPref = this.getSharedPreferences("login", Context.MODE_PRIVATE);
-//        Integer id_user_login = Integer.parseInt(sharedPref.getString("id_user_login",""));
-        Integer id_user_login = sharedPref.getInt("id_user_login",0);
-
-        service.showDataJasaUser(id_user_login)
-                .enqueue(new Callback<List<ResponseDataJasaUser>>() {
+        int id_kategori = bundle.getInt("id_kategori");
+        service.showDataJasaByKategoriForAdmin(id_kategori,user_token)
+                .enqueue(new Callback<ResponseDataJasa>() {
                     @Override
-                    public void onResponse(Call<List<ResponseDataJasaUser>> call, Response<List<ResponseDataJasaUser>> response) {
-                        if (response.isSuccessful()){
-                            dataJasaUsers= response.body();
-                            setAdapter();
+                    public void onResponse(Call<ResponseDataJasa> call, Response<ResponseDataJasa> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(), "success beb admin", Toast.LENGTH_SHORT).show();
+                            if (response.body().getDataJasa().size() > 0) {
+                                dataJasaItems = response.body().getDataJasa();
+                                dataUserItems = response.body().getDataUser();
+                                setAdapter();
 
+                            }else {
+                                tv_pesan.setText(" Data Kosong ");
+                            }
                         }else {
-                            Toast.makeText(getApplicationContext(),"suksess tapi gagal",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "something error", Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<List<ResponseDataJasaUser>> call, Throwable t) {
-                        Toast.makeText(getApplicationContext(),"gagal koneksi"+t,Toast.LENGTH_SHORT).show();
-                        tv_error.setText("error : "+t);
+                    public void onFailure(Call<ResponseDataJasa> call, Throwable t) {
+
                     }
                 });
-//        service.showDataJasaUser(id_user_login)
-//                .enqueue(new Callback<ResponseDataJasaUser>() {
-//                    @Override
-//                    public void onResponse(Call<ResponseDataJasaUser> call, Response<ResponseDataJasaUser> response) {
-//                        if (response.isSuccessful()){
-//                            dataJasaUsers= response.body();
-//                            setAdapter();
-//
-//                        }else {
-//                            Toast.makeText(getActivity().getApplicationContext(),"suksess tapi gagal",Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<ResponseDataJasaUser> call, Throwable t) {
-//                        Toast.makeText(getActivity().getApplicationContext(),"gagal koneksi"+t,Toast.LENGTH_SHORT).show();
-//                        tv_error.setText("error : "+t);
-//                    }
-//                });
     }
 
     private void setAdapter(){
-        adapter=new ListDataJasaInUserAdapter(this,dataJasaUsers);
-        recyclerView.setAdapter(adapter);
+        dataJasaAdapter = new dataJasaAdminAdapter(this,dataJasaItems,dataUserItems);
+        recyclerView.setAdapter(dataJasaAdapter);
     }
 
     private void callApiAddNew(){
-        SharedPreferences sharedPref = this.getSharedPreferences("login", Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = getSharedPreferences("login", Context.MODE_PRIVATE);
 
         int id_user = sharedPref.getInt("id_user_login",0);
         int id_kategori = Integer.parseInt(String.valueOf(et_id_kategori.getText()));
@@ -227,8 +196,7 @@ public class AdminListFreeLanceActivity extends AppCompatActivity {
 //        Toast.makeText(AddJobActivity.this,"alamat :"+alamat,Toast.LENGTH_SHORT).show();
 //        Toast.makeText(AddJobActivity.this,"id kecamatan :"+id_kecamatan,Toast.LENGTH_SHORT).show();
 //        Toast.makeText(AddJobActivity.this,"usia :"+usia,Toast.LENGTH_SHORT).show();
-
-        service.newDataJasaUser(id_kategori,id_user,pekerjaan,estimasi_gaji,pengalaman_kerja,usia,no_telp,email,status,alamat)
+        service.newDataJasaUser(id_kategori,id_user,pekerjaan,estimasi_gaji,pengalaman_kerja,usia,no_telp,email,status,alamat,user_token)
                 .enqueue(new Callback<com.tr.nata.projectandroid.model.Response>() {
                     @Override
                     public void onResponse(Call<com.tr.nata.projectandroid.model.Response> call, retrofit2.Response<com.tr.nata.projectandroid.model.Response> response) {

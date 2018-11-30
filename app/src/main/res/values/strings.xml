@@ -3,4 +3,12 @@
     <string name="home">Home</string>
     <string name="List">List</string>
     <string name="Profille">Profille</string>
+
+    <string-array name="status_new">
+        <item>single</item>
+        <item>duda</item>
+        <item>janda</item>
+        <item>jomblo</item>
+        <item>menikah</item>
+    </string-array>
 </resources>

@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".LoginActivity">
+    tools:context=".LoginActivity"
+    android:background="@color/colorAccent">
 
     <!--<TextView-->
         <!--android:layout_width="match_parent"-->
@@ -58,35 +59,57 @@
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="140dp"
+        android:layout_height="90dp"
         android:adjustViewBounds="true"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/logo"
+        android:layout_marginTop="50dp"/>
 
     <EditText
         android:id="@+id/etMail"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="70dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Email"
+        android:background="@drawable/et_regis"
         android:inputType="textEmailAddress"
-        android:padding="10dp"/>
+        android:textColor="@color/colorPrimaryDark"
+        android:paddingLeft="20dp"
+        android:padding="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:elevation="10dp"
+        android:drawableLeft="@drawable/ic_email_grey"
+        android:drawablePadding="10dp"/>
 
     <EditText
         android:id="@+id/etPassword"
         android:inputType="textPassword"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Password"
-        android:padding="10dp"/>
+        android:textColor="@color/colorPrimaryDark"
+        android:padding="10dp"
+        android:elevation="10dp"
+        android:background="@drawable/et_regis"
+        android:drawableLeft="@drawable/ic_lock_grey"
+        android:drawablePadding="10dp"/>
     <Button
         android:id="@+id/signIn"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="40dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="LOGIN"
         android:textStyle="bold"
-        android:textColor="@android:color/white"/>
+        android:background="@drawable/btn_gradient"
+        android:textColor="@android:color/white"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp"
+        />
 
     <LinearLayout
         android:layout_marginTop="15dp"
@@ -103,7 +126,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Register"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorWhite"
             android:textStyle="bold"/>
 
 

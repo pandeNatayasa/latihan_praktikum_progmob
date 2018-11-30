@@ -1,6 +1,8 @@
 package com.tr.nata.projectandroid;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -40,6 +42,8 @@ public class SubHomeActivity extends AppCompatActivity {
     private listUserAdapter listUserAdapter;
     private Bundle bundle;
     private Button btn_view_jasa;
+    ImageView img_subHome_to_profille;
+    String user_token;
 
     private List<DataJasaItem> dataJasaItems = new ArrayList<>();
     private List<DataUserItem> dataUserItems=new ArrayList<>();
@@ -53,7 +57,8 @@ public class SubHomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sub_home);
 
         tv_pesan=(TextView)findViewById(R.id.tv_pesan);
-        btn_view_jasa=findViewById(R.id.btn_data_jasa);
+//        btn_view_jasa=findViewById(R.id.btn_data_jasa);
+        img_subHome_to_profille=findViewById(R.id.img_sub_home_to_profille);
 
         bundle = getIntent().getExtras();
         String nama_kategori = bundle.getString("namaKategori");
@@ -74,22 +79,33 @@ public class SubHomeActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        btn_view_jasa.setOnClickListener(new View.OnClickListener() {
+        SharedPreferences sharedPref = getSharedPreferences("login", Context.MODE_PRIVATE);
+        user_token = sharedPref.getString("user_token","");
+
+//        btn_view_jasa.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Cursor res = myDb.getAllDataJasa();
+//                if (res.getCount()==0){
+//                    //show message
+//                    showMessage("Eror","Nothing Found");
+//                    return;
+//                }
+//                StringBuffer buffer = new StringBuffer();
+//                while (res.moveToNext()){
+//                    buffer.append("Nama : "+res.getString(4)+"\n");
+//                    buffer.append("Pekerjaan : "+res.getString(5)+"\n");
+//                }
+//                //show all data
+//                showMessage("Data",buffer.toString());
+//            }
+//        });
+
+        img_subHome_to_profille.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Cursor res = myDb.getAllDataJasa();
-                if (res.getCount()==0){
-                    //show message
-                    showMessage("Eror","Nothing Found");
-                    return;
-                }
-                StringBuffer buffer = new StringBuffer();
-                while (res.moveToNext()){
-                    buffer.append("Nama : "+res.getString(4)+"\n");
-                    buffer.append("Pekerjaan : "+res.getString(5)+"\n");
-                }
-                //show all data
-                showMessage("Data",buffer.toString());
+                Intent intent = new Intent(getApplicationContext(),TryPerofilleActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -99,7 +115,7 @@ public class SubHomeActivity extends AppCompatActivity {
 
     private void callApi(){
         int id_kategori = bundle.getInt("id_kategori");
-        service.showDataJasaByKategori(id_kategori)
+        service.showDataJasaByKategori(id_kategori,user_token)
                 .enqueue(new Callback<ResponseDataJasa>() {
                     @Override
                     public void onResponse(Call<ResponseDataJasa> call, Response<ResponseDataJasa> response) {
