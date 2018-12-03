@@ -13,9 +13,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Logo Kategori : "/>
+            android:text="Nama Kategori : "/>
         <EditText
-            android:id="@+id/et_logo_kategori"
+            android:id="@+id/et_addkategori"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />
@@ -27,19 +27,30 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nama Kategori : "/>
+            android:text="Logo : "/>
         <EditText
-            android:id="@+id/et_addkategori"
-            android:layout_width="match_parent"
+            android:id="@+id/et_logo_kategori"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="5"/>
+        <Button
+            android:id="@+id/btn_pilih_image_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select"
             />
     </LinearLayout>
-
+    <ImageView
+        android:id="@+id/img_new_logo_kategori"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center"/>
     <Button
         android:id="@+id/btn_addkategori"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tambah Kategori"/>
+        android:text="Tambah Kategori"
+        android:layout_gravity="center"/>
 
 
 </LinearLayout>

@@ -42,9 +42,9 @@ public class HomeAdminActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private kategoriAdminAdapter adapter;
     AlertDialog.Builder dialog;
-    LayoutInflater inflater_add_new;
-    View dialogView;
-    EditText et_nama_kategori, et_logo_kategori;
+//    LayoutInflater inflater_add_new;
+//    View dialogView;
+//    EditText et_nama_kategori, et_logo_kategori;
     String user_token;
 
     @Override
@@ -88,48 +88,51 @@ public class HomeAdminActivity extends AppCompatActivity {
         fab_add_kategori.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(HomeAdminActivity.this,"Add Job",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(HomeAdminActivity.this,AddKategoriAdminActivity.class);
+                startActivity(intent);
 //                Toast.makeText(getActivity().getApplicationContext(),"Add Job",Toast.LENGTH_SHORT).show();
 //                Intent intent = new Intent(getActivity().getApplicationContext(),AddJobActivity.class);
 //                startActivity(intent);
 
 
-                dialog= new AlertDialog.Builder(view.getContext());
-                inflater_add_new= getLayoutInflater();//(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                dialogView = inflater_add_new.inflate(R.layout.activity_add_kategory_admin,null);
-                dialog.setView(dialogView);
-                dialog.setCancelable(true);
-                dialog.setIcon(R.mipmap.ic_launcher);
-                dialog.setTitle("New Kategori");
-
-//                Button btn_new_job=dialogView.findViewById(R.id.btn_add_new_job);
-                et_nama_kategori=dialogView.findViewById(R.id.et_addkategori);
-                et_logo_kategori=dialogView.findViewById(R.id.et_logo_kategori);
-
-                //membersihkan edit text
-                et_nama_kategori.setText("");
-                et_logo_kategori.setText("");
-
-
-                dialog.setPositiveButton("Save", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        callApiAddNew();
-                        String kategori = et_nama_kategori.getText().toString();
-                        String logo_kategori = et_logo_kategori.getText().toString();
-
-                        callApiAddKategori(kategori,logo_kategori);
-
-                    }
-                });
-
-                dialog.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
-
-                dialog.show();
+//                dialog= new AlertDialog.Builder(view.getContext());
+//                inflater_add_new= getLayoutInflater();//(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//                dialogView = inflater_add_new.inflate(R.layout.activity_add_kategory_admin,null);
+//                dialog.setView(dialogView);
+//                dialog.setCancelable(true);
+//                dialog.setIcon(R.mipmap.ic_launcher);
+//                dialog.setTitle("New Kategori");
+//
+////                Button btn_new_job=dialogView.findViewById(R.id.btn_add_new_job);
+//                et_nama_kategori=dialogView.findViewById(R.id.et_addkategori);
+//                et_logo_kategori=dialogView.findViewById(R.id.et_logo_kategori);
+//
+//                //membersihkan edit text
+//                et_nama_kategori.setText("");
+//                et_logo_kategori.setText("");
+//
+//
+//                dialog.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+////                        callApiAddNew();
+//                        String kategori = et_nama_kategori.getText().toString();
+//                        String logo_kategori = et_logo_kategori.getText().toString();
+//
+//                        callApiAddKategori(kategori,logo_kategori);
+//
+//                    }
+//                });
+//
+//                dialog.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        dialogInterface.dismiss();
+//                    }
+//                });
+//
+//                dialog.show();
 
             }
         });
@@ -162,26 +165,26 @@ public class HomeAdminActivity extends AppCompatActivity {
                 });
     }
 
-    private void callApiAddKategori(String kategori, String logo_kategori){
-        serviceAddKategori.addKategori(kategori,logo_kategori,user_token)
-                .enqueue(new Callback<ResponseStoreKategori>() {
-                    @Override
-                    public void onResponse(Call<ResponseStoreKategori> call, Response<ResponseStoreKategori> response) {
-                        if (response.isSuccessful()){
-                            Toast.makeText(getApplicationContext(),"sukses menambahkan kategori baru",Toast.LENGTH_SHORT).show();
-                            dataKategoriItems=response.body().getDataKategori();
-                            setAdapter();
-                        }else {
-                            Toast.makeText(getApplicationContext(),"login gagal",Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResponseStoreKategori> call, Throwable t) {
-                        Toast.makeText(getApplicationContext(),"error"+t,Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
+//    private void callApiAddKategori(String kategori, String logo_kategori){
+//        serviceAddKategori.addKategori(kategori,logo_kategori,user_token)
+//                .enqueue(new Callback<ResponseStoreKategori>() {
+//                    @Override
+//                    public void onResponse(Call<ResponseStoreKategori> call, Response<ResponseStoreKategori> response) {
+//                        if (response.isSuccessful()){
+//                            Toast.makeText(getApplicationContext(),"sukses menambahkan kategori baru",Toast.LENGTH_SHORT).show();
+//                            dataKategoriItems=response.body().getDataKategori();
+//                            setAdapter();
+//                        }else {
+//                            Toast.makeText(getApplicationContext(),"login gagal",Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<ResponseStoreKategori> call, Throwable t) {
+//                        Toast.makeText(getApplicationContext(),"error"+t,Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//    }
 
     private void setAdapter(){
         adapter = new kategoriAdminAdapter(this,dataKategoriItems);
