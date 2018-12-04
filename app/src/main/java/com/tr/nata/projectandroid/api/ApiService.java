@@ -114,13 +114,22 @@ public interface ApiService {
     @DELETE("delete_kategori/{id}")
     Call<ResponseStoreKategori>deleteKategori(@Path("id") int id_kategori,@Query("token") String token);
 
-    @FormUrlEncoded
+//    @FormUrlEncoded
+//    @POST("update_kategori/{id}")
+//    Call<ResponseStoreKategori>updateKategori(
+//            @Path("id") int id_kategori,
+//            @Field("kategori") String kategori,
+//            @Field("logo_kategori") String logo_kategori,
+//            @Query("token") String token
+//    );
+
+    @Multipart
     @POST("update_kategori/{id}")
     Call<ResponseStoreKategori>updateKategori(
-            @Path("id") int id_kategori,
-            @Field("kategori") String kategori,
-            @Field("logo_kategori") String logo_kategori,
-            @Query("token") String token
+            @Part("id") RequestBody id_kategori,
+            @Part("kategori") RequestBody kategori,
+            @Part("logo_kategori") MultipartBody.Part logo_kategori,
+            @Part("token") RequestBody token
     );
 
 }

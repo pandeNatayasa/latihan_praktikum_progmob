@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -15,8 +16,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.tr.nata.projectandroid.Helper.ViewPagerAdapter;
+import com.yanzhenjie.album.Action;
+import com.yanzhenjie.album.Album;
+import com.yanzhenjie.album.AlbumFile;
+import com.yanzhenjie.album.api.widget.Widget;
+
+import java.util.ArrayList;
 
 public class TryPerofilleActivity extends AppCompatActivity {
 
@@ -24,7 +33,9 @@ public class TryPerofilleActivity extends AppCompatActivity {
     private AppBarLayout appBarLayout;
     ImageView img_logout;
     private TextView tv_nama_profille;
+    ImageView img_change_foto_profille;
 //    private ViewPager viewPager;
+    String path;
 
     private int[] tabIcons = {
             R.drawable.ic_view_list_white,
@@ -40,6 +51,7 @@ public class TryPerofilleActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText(""));
         tabLayout.addTab(tabLayout.newTab().setText(""));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        img_change_foto_profille=findViewById(R.id.img_change_fotoprofille);
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbarid_profille);
         setSupportActionBar(toolbar);
@@ -59,6 +71,15 @@ public class TryPerofilleActivity extends AppCompatActivity {
         final ViewPagerAdapter viewPagerAdapter=new ViewPagerAdapter(getSupportFragmentManager(),tabLayout.getTabCount());
         viewPager.setAdapter(viewPagerAdapter);
         viewPager.setOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+        img_change_foto_profille.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Intent intent = new Intent(getApplicationContext(), UpdateFotoProfille.class);
+//                startActivity(intent);
+                selectImage();
+            }
+        });
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -136,4 +157,39 @@ public class TryPerofilleActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    /**
+     * Select picture, from album.
+     */
+    private void selectImage() {
+        Album.image(this)
+                .singleChoice()
+                .camera(true)
+                .widget(
+                        Widget.newDarkBuilder(this)
+                                .build()
+                )
+                .onResult((Action<ArrayList<AlbumFile>>) result -> {
+                    path = result.get(0).getPath();
+                    Toast.makeText(TryPerofilleActivity.this,"path : "+path,Toast.LENGTH_SHORT).show();
+                    String filename = path.substring(path.lastIndexOf("/")+1);
+//                    et_logo_kategori.setText(filename);
+//                    mAlbumFiles = result;
+//                    Bundle bundle
+                    Intent intent = new Intent(getApplicationContext(),UpdateFotoProfille.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("path", path);
+                    bundle.putString("filename", filename);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                })
+                .onCancel(new Action<String>() {
+                    @Override
+                    public void onAction(@NonNull String result) {
+                        Toast.makeText(TryPerofilleActivity.this, "cancell", Toast.LENGTH_LONG).show();
+                    }
+                })
+                .start();
+    }
+
 }

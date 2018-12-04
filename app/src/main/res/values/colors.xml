@@ -10,4 +10,5 @@
     <color name="tabtext_color">#FFFFFF</color>
     <color name="tabindicator_color">#FFFF</color>
     <color name="colorGray">#CCCCCC</color>
+    <color name="colorGrey">#D9cecece</color>
 </resources>

@@ -18,12 +18,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.tr.nata.projectandroid.AdminListFreeLanceActivity;
 import com.tr.nata.projectandroid.R;
 import com.tr.nata.projectandroid.api.ApiClient;
 import com.tr.nata.projectandroid.api.ApiService;
 import com.tr.nata.projectandroid.model.DataKategoriItem;
 import com.tr.nata.projectandroid.model.ResponseStoreKategori;
+import com.tr.nata.projectandroid.updateKategoriAdminActivity;
 
 import java.util.List;
 
@@ -36,13 +38,13 @@ public class kategoriAdminAdapter extends RecyclerView.Adapter<kategoriAdminAdap
     private List<DataKategoriItem> dataKategoriItems;
     private Context context;
     private CardView cardListKategoriAdmin;
-    ImageView img_edit, img_delete;
+    ImageView img_edit, img_delete,img_logo_kategori;
     ApiService serviceDeleteKaegori,serviceEditKategori;
     View dialogView;
     AlertDialog.Builder dialog;
     LayoutInflater inflater_add_new;
     EditText et_nama_kategori, et_logo_kategori;
-    String user_token;
+    String user_token, namaKategori;
 
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -60,6 +62,7 @@ public class kategoriAdminAdapter extends RecyclerView.Adapter<kategoriAdminAdap
             cardListKategoriAdmin = itemView.findViewById(R.id.cardView_data_kategori_inHomeAdmin);
             img_delete=itemView.findViewById(R.id.btn_delete_data_kategori_inAdmin);
             img_edit=itemView.findViewById(R.id.btn_edit_data_kategori_inAdmin);
+            img_logo_kategori=itemView.findViewById(R.id.img_data_kategori_user);
 
             SharedPreferences sharedPref = itemView.getContext().getSharedPreferences("login", Context.MODE_PRIVATE);
             user_token = sharedPref.getString("user_token","");
@@ -70,7 +73,7 @@ public class kategoriAdminAdapter extends RecyclerView.Adapter<kategoriAdminAdap
                     DataKategoriItem dataKategoriItem = (DataKategoriItem) itemView.getTag();
 
                     Intent intent = new Intent(context,AdminListFreeLanceActivity.class);
-                    String namaKategori = dataKategoriItem.getKategori();
+                    namaKategori = dataKategoriItem.getKategori();
                     int id = dataKategoriItem.getId();
                     Bundle bundle = new Bundle();
                     bundle.putString("namaKategori", namaKategori);
@@ -84,9 +87,12 @@ public class kategoriAdminAdapter extends RecyclerView.Adapter<kategoriAdminAdap
             img_delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    DataKategoriItem dataKategoriItem = (DataKategoriItem) itemView.getTag();
+                    namaKategori = dataKategoriItem.getKategori();
+
                     new AlertDialog.Builder(itemView.getContext())
                             .setTitle("Really Delete")
-                            .setMessage("Are you sure want to delete ?")
+                            .setMessage("Are you sure want to delete kategori "+namaKategori+" ?")
                             .setNegativeButton(android.R.string.no,null)
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 @Override
@@ -126,70 +132,19 @@ public class kategoriAdminAdapter extends RecyclerView.Adapter<kategoriAdminAdap
             img_edit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    dialog= new AlertDialog.Builder(itemView.getContext());
-                    inflater_add_new= (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    dialogView = inflater_add_new.inflate(R.layout.activity_add_kategory_admin,null);
-                    dialog.setView(dialogView);
-                    dialog.setCancelable(true);
-                    dialog.setIcon(R.mipmap.ic_launcher);
-                    dialog.setTitle("Update Kategori");
-
-//                Button btn_new_job=dialogView.findViewById(R.id.btn_add_new_job);
-                    et_nama_kategori=dialogView.findViewById(R.id.et_addkategori);
-                    et_logo_kategori=dialogView.findViewById(R.id.et_logo_kategori);
-
                     DataKategoriItem dataKategoriItem = (DataKategoriItem) itemView.getTag();
-                    String namaKategori = dataKategoriItem.getKategori();
-                    String logoKategori = dataKategoriItem.getLogoKategori().toString();
-                    int id_kategori = dataKategoriItem.getId();
 
-                    //menseting isi edit text
-                    et_nama_kategori.setText(namaKategori);
-                    et_logo_kategori.setText(logoKategori);
+                    Intent intent = new Intent(context,updateKategoriAdminActivity.class);
+                    namaKategori = dataKategoriItem.getKategori();
+                    int id = dataKategoriItem.getId();
+                    String logo_kategori = dataKategoriItem.getLogoKategori();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("namaKategori", namaKategori);
+                    bundle.putString("logoKategori", logo_kategori);
+                    bundle.putInt("idKategori",id);
 
-
-                    dialog.setPositiveButton("Save", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-//                        callApiAddNew();
-                            String kategori = et_nama_kategori.getText().toString();
-                            String logo_kategori = et_logo_kategori.getText().toString();
-
-                            serviceEditKategori.updateKategori(id_kategori,kategori,logo_kategori,user_token)
-                                    .enqueue(new Callback<ResponseStoreKategori>() {
-                                        @Override
-                                        public void onResponse(Call<ResponseStoreKategori> call, Response<ResponseStoreKategori> response) {
-                                            if (response.isSuccessful()){
-                                                if (response.body().isStatus()){
-                                                    Toast.makeText(itemView.getContext(),"update success",Toast.LENGTH_SHORT).show();
-                                                    dialogInterface.dismiss();
-                                                }else {
-                                                    Toast.makeText(itemView.getContext(),"update gagal",Toast.LENGTH_SHORT).show();
-                                                }
-
-                                            }else {
-                                                Toast.makeText(itemView.getContext(),"something wrong",Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onFailure(Call<ResponseStoreKategori> call, Throwable t) {
-                                            Toast.makeText(itemView.getContext(),"error "+t,Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-//                            callApiAddKategori(kategori,logo_kategori);
-
-                        }
-                    });
-
-                    dialog.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
-                        }
-                    });
-
-                    dialog.show();
+                    intent.putExtras(bundle);
+                    context.startActivity(intent);
                 }
             });
         }
@@ -218,8 +173,8 @@ public class kategoriAdminAdapter extends RecyclerView.Adapter<kategoriAdminAdap
         Log.d("position","ke-"+position);
         DataKategoriItem dataKategoriItem = dataKategoriItems.get(position);
         holder.tv_nama_kategori.setText(dataKategoriItem.getKategori());
-
-
+        String url = "http://172.17.100.2:8000"+dataKategoriItem.getLogoKategori();
+        Glide.with(holder.itemView).load(url).into(img_logo_kategori);
     }
 
     @Override

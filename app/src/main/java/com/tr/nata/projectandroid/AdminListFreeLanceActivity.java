@@ -9,7 +9,9 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -72,9 +74,15 @@ public class AdminListFreeLanceActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 //        fab_add_job=findViewById(R.id.fab_add_job);
         tv_pesan  = findViewById(R.id.tv_pesan_inSubHomeAdmin);
-        tv_nama_kategori=findViewById(R.id.tv_nama_kategori_inSubHomeAdmin);
+//        tv_nama_kategori=findViewById(R.id.tv_nama_kategori_inSubHomeAdmin);
 
-        tv_nama_kategori.setText(nama_kategori);
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar_sub_home_admin);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setTitle(nama_kategori);
+
+//        tv_nama_kategori.setText(nama_kategori);
 
 //        fab_add_job.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -217,5 +225,14 @@ public class AdminListFreeLanceActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),"Error : "+t,Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if(id == android.R.id.home){
+            this.finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
