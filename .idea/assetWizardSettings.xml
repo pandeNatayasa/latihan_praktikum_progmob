@@ -18,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/image/ic_photo_camera_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/navigation/ic_check_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -28,8 +28,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="00b4db" />
-                            <entry key="outputName" value="ic_photo_camera_blue" />
+                            <entry key="color" value="b8b3b9" />
+                            <entry key="outputName" value="ic_check_grey" />
+                            <entry key="overrideSize" value="true" />
                             <entry key="sourceFile" value="C:\Users\nata" />
                           </map>
                         </option>

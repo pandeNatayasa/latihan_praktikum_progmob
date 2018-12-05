@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.tr.nata.projectandroid.Adapter.favoriteAdapter;
 import com.tr.nata.projectandroid.Helper.ViewPagerAdapter;
 import com.tr.nata.projectandroid.R;
@@ -38,7 +39,7 @@ import retrofit2.Response;
 public class FragmentFavorite extends Fragment {
 
     private AppBarLayout appBarLayout;
-    ImageView favorite_to_profille;
+    ImageView favorite_to_profille,img_profille_inFavorite;
     private RecyclerView recyclerView;
     private favoriteAdapter adapter;
     private List<ResponseFavorite> responseFavorites = new ArrayList<>();
@@ -60,9 +61,14 @@ public class FragmentFavorite extends Fragment {
         service=ApiClient.getApiService();
         tv_nama_profille=view.findViewById(R.id.tv_nama_proflle_inFavorite);
         tv_jumlah_favorite=view.findViewById(R.id.jumlah_favorite);
+        img_profille_inFavorite=view.findViewById(R.id.img_proille_infavorite);
 
         SharedPreferences sharedPref = this.getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
         String nama_user_login = sharedPref.getString("nama_user_login","");
+        String nama_foto_profille = sharedPref.getString("user_foto_profille","");
+
+        String url = "http://172.17.100.2:8000"+nama_foto_profille;
+        Glide.with(this).load(url).into(img_profille_inFavorite);
         tv_nama_profille.setText(nama_user_login);
 
         user_token = sharedPref.getString("user_token","");

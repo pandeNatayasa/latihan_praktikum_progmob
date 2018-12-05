@@ -33,7 +33,7 @@ public class TryPerofilleActivity extends AppCompatActivity {
     private AppBarLayout appBarLayout;
     ImageView img_logout;
     private TextView tv_nama_profille;
-    ImageView img_change_foto_profille;
+    ImageView img_change_foto_profille,img_fotoProfille;
 //    private ViewPager viewPager;
     String path;
 
@@ -52,6 +52,7 @@ public class TryPerofilleActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText(""));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         img_change_foto_profille=findViewById(R.id.img_change_fotoprofille);
+        img_fotoProfille=findViewById(R.id.img_foto_profille_inProfille);
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbarid_profille);
         setSupportActionBar(toolbar);
@@ -64,6 +65,9 @@ public class TryPerofilleActivity extends AppCompatActivity {
         tv_nama_profille=findViewById(R.id.tv_nama_proflle_inProfille);
         SharedPreferences sharedPref = getSharedPreferences("login", Context.MODE_PRIVATE);
         String nama_user_login = sharedPref.getString("nama_user_login","");
+        String foto_profille = sharedPref.getString("user_foto_profille","");
+        String url = "http://172.17.100.2:8000"+foto_profille;
+        Glide.with(this).load(url).into(img_fotoProfille);
         tv_nama_profille.setText(nama_user_login);
 
         final ViewPager viewPager=findViewById(R.id.viewPager_1);

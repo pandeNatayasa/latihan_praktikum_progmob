@@ -30,6 +30,9 @@ public class DataUser{
 	@SerializedName("status")
 	private String status;
 
+	@SerializedName("foto_profille")
+	private String foto_profille;
+
 	public void setUpdatedAt(String updatedAt){
 		this.updatedAt = updatedAt;
 	}
@@ -102,6 +105,14 @@ public class DataUser{
 		return status;
 	}
 
+	public void setFoto_profille(String foto_profille){
+		this.foto_profille = foto_profille;
+	}
+
+	public String getFoto_profille(){
+		return foto_profille;
+	}
+
 	@Override
  	public String toString(){
 		return 
@@ -113,6 +124,7 @@ public class DataUser{
 			",no_telp = '" + noTelp + '\'' + 
 			",jenis_kelamin = '" + jenisKelamin + '\'' + 
 			",email = '" + email + '\'' +
+					",foto_profille = '" + foto_profille + '\'' +
 			",tanggal_lahir = '" + tanggalLahir + '\'' +
                     ",status = '" + status + '\'' +
 			"}";

@@ -35,6 +35,8 @@
         <activity android:name=".AdminListFreeLanceActivity"></activity>
         <activity android:name=".updateKategoriAdminActivity"></activity>
         <activity android:name=".UpdateFotoProfille"></activity>
+        <activity android:name=".DetailUserInAdminActivity"></activity>
+        <activity android:name=".EditProfilleActivity"></activity>
 
         <service android:name=".Firebase.MessagingService"
             android:stopWithTask="false">

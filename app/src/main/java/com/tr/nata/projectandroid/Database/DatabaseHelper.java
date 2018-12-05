@@ -121,15 +121,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public List<DataKategoriItem> selectKategori(){
         List<DataKategoriItem> dataKategoriItems = new ArrayList<>();
 
-        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
-
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        String sqlquery = "select * from "+ TABLE_NAME_KATEGORI;
+//        Cursor cursor = sqLiteDatabase.query(sqlquery,);
         Cursor cursor=sqLiteDatabase.query(DataKategoriItem.Entry.TABLE_NAME_KATEGORI,null,null,null,null, null,null);
 
         int count = cursor.getCount();
 
-        if (count>0){
-//            cursor.moveToFirst();
-            while (cursor.moveToNext()){
+//        if (count>0){
+////            cursor.moveToFirst();
+//            while (cursor.moveToNext()){
+//                int id = cursor.getInt(cursor.getColumnIndex(DataKategoriItem.Entry.COLUMN_ID));
+//                String kategori = cursor.getString(cursor.getColumnIndex(DataKategoriItem.Entry.COLUMN_KATEGORI));
+//
+//                DataKategoriItem temp = new DataKategoriItem();
+//                temp.setId(id);
+//                temp.setKategori(kategori);
+//                dataKategoriItems.add(temp);
+//            }
+//
+//        }
+
+        //cara dari pak agung cahyawan
+        if (cursor.moveToFirst()){
+            do{
                 int id = cursor.getInt(cursor.getColumnIndex(DataKategoriItem.Entry.COLUMN_ID));
                 String kategori = cursor.getString(cursor.getColumnIndex(DataKategoriItem.Entry.COLUMN_KATEGORI));
 
@@ -137,7 +152,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 temp.setId(id);
                 temp.setKategori(kategori);
                 dataKategoriItems.add(temp);
-            }
+            }while (cursor.moveToNext());
 
         }
         cursor.close();

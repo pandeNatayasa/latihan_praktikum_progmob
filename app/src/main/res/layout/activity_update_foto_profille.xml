@@ -51,7 +51,7 @@
         <ImageView
             android:id="@+id/img_new_foto_profille"
             android:layout_width="300dp"
-            android:layout_height="300dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             />
     </LinearLayout>
@@ -61,7 +61,7 @@
         android:layout_height="wrap_content"
         android:text="Save Foto Profille"
         android:layout_gravity="center"
-        android:layout_below="@+id/ly_atas"
+        android:layout_alignParentBottom="true"
         />
 
 

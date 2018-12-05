@@ -89,6 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putString("tanggal_lahir_user_login", String.valueOf(response.body().getDataUser().getTanggalLahir()));
                         editor.putString("status_user",String.valueOf(response.body().getDataUser().getStatusUser()));
                         editor.putString("user_token",response.body().getToken());
+                        editor.putString("user_foto_profille",response.body().getDataUser().getFoto_profille());
                         editor.apply();
 
                         String status = sharedPref.getString("status_login_string","");

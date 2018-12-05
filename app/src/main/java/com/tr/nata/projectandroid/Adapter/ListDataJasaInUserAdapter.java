@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tr.nata.projectandroid.DetailUserActivity;
+import com.tr.nata.projectandroid.DetailUserInAdminActivity;
 import com.tr.nata.projectandroid.R;
 import com.tr.nata.projectandroid.model.ResponseDataJasaUser;
 
@@ -73,7 +74,7 @@ public class ListDataJasaInUserAdapter extends RecyclerView.Adapter<ListDataJasa
 
                     Toast.makeText(itemView.getContext(),"no_telp : "+no_telp,Toast.LENGTH_SHORT).show();
 
-                    Intent intent = new Intent(context,DetailUserActivity.class);
+                    Intent intent = new Intent(context,DetailUserInAdminActivity.class);
 //                    String namaKategori = dataKategoriItem.getKategori();
 //                    int id = dataKategoriItem.getId();
                     Bundle bundle = new Bundle();

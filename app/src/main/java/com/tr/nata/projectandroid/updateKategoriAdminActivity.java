@@ -41,7 +41,7 @@ public class updateKategoriAdminActivity extends AppCompatActivity {
 
     private Button btn_addkategori,btn_pilih_image;
     private EditText et_nama_kategori,et_logo_kategori;
-    private TextView tv_update_toolbar;
+    private TextView tv_update_toolbar,error;
     ImageView img_new_logo_kategori;
 
     String str_user_token,nama_kategori,logo_kategori;
@@ -57,6 +57,8 @@ public class updateKategoriAdminActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_kategory_admin);
 
         serviceUpdateKategori=ApiClient.getApiService();
+
+        error=findViewById(R.id.error_add_kategori);
 
         btn_addkategori=findViewById(R.id.btn_addkategori);
         et_nama_kategori=findViewById(R.id.et_addkategori);
@@ -111,22 +113,22 @@ public class updateKategoriAdminActivity extends AppCompatActivity {
 //                    Toast.makeText(AddKategoriAdminActivity.this,"Kategori gagal di simpan",Toast.LENGTH_SHORT).show();
 //                }
                 bundle = getIntent().getExtras();
-                String id_kategori=String.valueOf(bundle.getInt("idKategori"));
+                int id_kategori=bundle.getInt("idKategori");
                 logo_kategori=bundle.getString("logoKategori");
                 String str_kategori = et_nama_kategori.getText().toString();
 
-                RequestBody idKategori = RequestBody.create(MediaType.parse("text/plain"),id_kategori);
+//                RequestBody idKategori = RequestBody.create(MediaType.parse("text/plain"),id_kategori);
                 RequestBody kategori = RequestBody.create(MediaType.parse("text/plain"),str_kategori);
                 RequestBody user_token = RequestBody.create(MediaType.parse("text/plain"),str_user_token);
-                File file = new File(logo_kategori);
+                File file = new File(path);
                 RequestBody requestFile = RequestBody.create(MediaType.parse("logo_kategori"),file);
                 MultipartBody.Part logo_kategori = MultipartBody.Part.createFormData("logo_kategori", file.getName(),requestFile);
 
-                callApiUpdateKategori(idKategori,kategori,logo_kategori,user_token);
+                callApiUpdateKategori(id_kategori,kategori,logo_kategori,user_token);
             }
         });
     }
-    private void callApiUpdateKategori(RequestBody id_kategori,RequestBody kategori, MultipartBody.Part logo_kategori,RequestBody user_token){
+    private void callApiUpdateKategori(int id_kategori,RequestBody kategori, MultipartBody.Part logo_kategori,RequestBody user_token){
         serviceUpdateKategori.updateKategori(id_kategori,kategori,logo_kategori,user_token)
                 .enqueue(new Callback<ResponseStoreKategori>() {
                     @Override
@@ -137,12 +139,14 @@ public class updateKategoriAdminActivity extends AppCompatActivity {
                             startActivity(intent);
                         }else {
                             Toast.makeText(getApplicationContext(),"gagal mengupdate kategori "+nama_kategori,Toast.LENGTH_SHORT).show();
+
                         }
                     }
 
                     @Override
                     public void onFailure(Call<ResponseStoreKategori> call, Throwable t) {
                         Toast.makeText(getApplicationContext(),"error"+t,Toast.LENGTH_SHORT).show();
+                        error.setText("error : "+t);
                     }
                 });
     }

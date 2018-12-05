@@ -2,26 +2,30 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/img_edit_profille"
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarid_edit_profille"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_edit_black_24dp"
-        android:layout_alignParentEnd="true"
-        android:padding="20dp"/>
+        android:background="@color/colorPrimary"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit Profille"
+            android:textColor="@color/colorWhite"
+            android:textSize="18dp"/>
 
+    </android.support.v7.widget.Toolbar>
     <LinearLayout
         android:id="@+id/ly_profille"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="53dp"
+        android:layout_below="@+id/toolbarid_edit_profille"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,7 +34,8 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="20px"
             android:layout_marginBottom="30px"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            >
 
             <TextView
                 android:layout_width="match_parent"
@@ -38,9 +43,8 @@
                 android:layout_weight="3"
                 android:text="Nama" />
 
-            <TextView
-                android:id="@+id/tv_name_profille"
-
+            <EditText
+                android:id="@+id/et_name_profille"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
@@ -62,8 +66,8 @@
                 android:layout_weight="3"
                 android:text="Email" />
 
-            <TextView
-                android:id="@+id/tv_email_profille"
+            <EditText
+                android:id="@+id/et_email_profille"
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -86,8 +90,8 @@
                 android:layout_weight="3"
                 android:text="Jenis Kelamin" />
 
-            <TextView
-                android:id="@+id/tv_jk_profille"
+            <EditText
+                android:id="@+id/et_jk_profille"
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -110,8 +114,8 @@
                 android:layout_weight="3"
                 android:text="No Telp" />
 
-            <TextView
-                android:id="@+id/tv_notelp_profille"
+            <EditText
+                android:id="@+id/et_notelp_profille"
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -132,11 +136,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:text="Tanggal Lahir" />
+                android:text="Tanggal Lahir"
+                />
 
-            <TextView
-                android:id="@+id/tv_tanggal_lahir_profille"
-
+            <EditText
+                android:id="@+id/et_tanggal_lahir_profille"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
@@ -145,6 +149,14 @@
         </LinearLayout>
 
     </LinearLayout>
-
+    <Button
+        android:id="@+id/btn_save_edit_profille"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="Save"
+        android:textSize="20dp"
+        android:padding="10dp"
+        />
 
 </RelativeLayout>

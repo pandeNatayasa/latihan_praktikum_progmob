@@ -1,6 +1,7 @@
 package com.tr.nata.projectandroid.api;
 
 import com.tr.nata.projectandroid.model.Response;
+import com.tr.nata.projectandroid.model.ResponseChekFavorite;
 import com.tr.nata.projectandroid.model.ResponseDataJasa;
 import com.tr.nata.projectandroid.model.ResponseDataJasaUser;
 import com.tr.nata.projectandroid.model.ResponseFavorite;
@@ -126,10 +127,25 @@ public interface ApiService {
     @Multipart
     @POST("update_kategori/{id}")
     Call<ResponseStoreKategori>updateKategori(
-            @Part("id") RequestBody id_kategori,
+            @Part("id") int id_kategori,
             @Part("kategori") RequestBody kategori,
-            @Part("logo_kategori") MultipartBody.Part logo_kategori,
+            @Part MultipartBody.Part logo_kategori,
             @Part("token") RequestBody token
+    );
+
+    @Multipart
+    @POST("updateFotoProfille")
+    Call<Response>updateFotoProfille(
+            @Part MultipartBody.Part foto_profille,
+            @Part("token") RequestBody token
+    );
+
+    @FormUrlEncoded
+    @POST("checkFavorite")
+    Call<ResponseChekFavorite>checkFavorite(
+            @Field("id_user") int id_user,
+            @Field("id_data_jasa") int id_data_jasa,
+            @Query("token") String token
     );
 
 }
