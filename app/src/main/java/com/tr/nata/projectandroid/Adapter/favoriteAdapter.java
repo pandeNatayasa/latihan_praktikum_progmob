@@ -13,7 +13,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tr.nata.projectandroid.Database.DatabaseHelper;
 import com.tr.nata.projectandroid.R;
+import com.tr.nata.projectandroid.model.DataJasaItem;
+import com.tr.nata.projectandroid.model.DataUserItem;
 import com.tr.nata.projectandroid.model.ResponseDataJasaUser;
 import com.tr.nata.projectandroid.model.ResponseFavorite;
 
@@ -27,6 +30,7 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.ViewHo
 //    public TextView tv_data_user_inFavorite, tv_data_jasa_in_favorite;
     private CardView cardView_data_Favorite;
     ImageView img_delete;
+    DatabaseHelper mydb;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView tv_data_user_inFavorite, tv_data_jasa_inFavorite;
@@ -34,7 +38,7 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.ViewHo
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             context = itemView.getContext();
-
+            mydb = new DatabaseHelper(itemView.getContext());
             tv_data_user_inFavorite=itemView.findViewById(R.id.tv_data_user_inFavorite);
             tv_data_jasa_inFavorite=itemView.findViewById(R.id.tv_data_jasa_user_inFavorite);
             cardView_data_Favorite=itemView.findViewById(R.id.cardView_data_jasa_favorite);
@@ -84,8 +88,14 @@ public class favoriteAdapter extends RecyclerView.Adapter<favoriteAdapter.ViewHo
         holder.itemView.setTag(responseFavorites.get(position));
 
         ResponseFavorite responseFavorite = responseFavorites.get(position);
-        holder.tv_data_user_inFavorite.setText(String.valueOf(responseFavorite.getIdUser()));
-        holder.tv_data_jasa_inFavorite.setText(String.valueOf(responseFavorite.getIdDataJasa()));
+
+        DataUserItem dataUserItem = mydb.selectDataUser(responseFavorite.getIdUser());
+        DataJasaItem dataJasaItem = mydb.selectOneDatajasa(responseFavorite.getIdDataJasa());
+
+
+//        holder.tv_data_user_inFavorite.setText(String.valueOf(responseFavorite.getIdUser()));
+        holder.tv_data_user_inFavorite.setText(dataUserItem.getName());
+        holder.tv_data_jasa_inFavorite.setText(dataJasaItem.getPekerjaan());
 //        holder.textView_pekerjaan.setText(dataJasaUser.getPekerjaan());
     }
 

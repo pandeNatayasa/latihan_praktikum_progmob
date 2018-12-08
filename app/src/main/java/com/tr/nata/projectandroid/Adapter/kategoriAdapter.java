@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +35,7 @@ public class kategoriAdapter extends RecyclerView.Adapter<kategoriAdapter.ViewHo
     /////// belum diedit
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView tv_kategori_1;
-//        public ImageView imageView;
+        public ImageView imageView;
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
@@ -42,7 +43,7 @@ public class kategoriAdapter extends RecyclerView.Adapter<kategoriAdapter.ViewHo
             context = itemView.getContext();
 
             tv_kategori_1=(TextView) itemView.findViewById(R.id.tv_kategori_1);
-//            imageView = (ImageView) itemView.findViewById(R.id.img_kategori);
+            imageView = (ImageView) itemView.findViewById(R.id.img_kategori);
             listKategori=(CardView)itemView.findViewById(R.id.cardView_kategori);
 
             listKategori.setOnClickListener(new View.OnClickListener() {
@@ -105,7 +106,8 @@ public class kategoriAdapter extends RecyclerView.Adapter<kategoriAdapter.ViewHo
         Log.d("position","ke-"+position);
         DataKategoriItem dataKategoriItem = dataKategoriItems.get(position);
         holder.tv_kategori_1.setText(dataKategoriItem.getKategori());
-
+        String url = "http://172.17.100.2:8000"+dataKategoriItem.getLogoKategori();
+        Glide.with(holder.itemView).load(url).into(holder.imageView);
 
     }
 

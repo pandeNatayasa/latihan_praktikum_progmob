@@ -1,5 +1,7 @@
 package com.tr.nata.projectandroid.model;
 
+import android.provider.BaseColumns;
+
 import com.google.gson.annotations.SerializedName;
 
 public class ResponseFavorite{
@@ -57,6 +59,13 @@ public class ResponseFavorite{
 
 	public int getIdUser(){
 		return idUser;
+	}
+
+	public static class Entry implements BaseColumns {
+		public static final String TABLE_NAME_FAVORITE = "data_favorite_table";
+		public static final String COLUMN_ID="ID";
+		public static final String COLUMN_ID_USER_FAVORITE = "id_user";
+		public static final String COLUMN_ID_DATA_JASA_FAVORITE = "id_data_jasa";
 	}
 
 	@Override

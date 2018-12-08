@@ -162,16 +162,17 @@ public class DataJasaItem{
 
 	public static class Entry implements BaseColumns {
 		public static final String TABLE_NAME_JASA="data_jasa_table";
-		public static final String COLUMN_ID="id";
+		public static final String COLUMN_ID="ID";
 		public static final String COLUMN_ID_KATEGORI="id_kategori";
 		public static final String COLUMN_ID_USER="id_user";
 		public static final String COLUMN_PEKERJAAN="pekerjaan";
+		public static final String COLUMN_ESTIMASI_GAJI="estimasi_gaji";
 		public static final String COLUMN_USIA="usia";
 		public static final String COLUMN_NO_TELP="no_telp";
 		public static final String COLUMN_EMAIL_JASA="email_jasa";
 		public static final String COLUMN_STATUS="status";
 		public static final String COLUMN_ALAMAT_JASA="alamat";
-		public static final String COLUMN_ID_KECAMATAN="id_kecamatan";
+		public static final String COLUMN_PENGALAMAN_KERJA="pengalaman_kerja";
 	}
 
 	@Override

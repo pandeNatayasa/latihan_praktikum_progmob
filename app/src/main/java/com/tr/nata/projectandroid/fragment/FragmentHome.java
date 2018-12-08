@@ -225,7 +225,7 @@ public class FragmentHome extends Fragment {
 
                     @Override
                     public void onFailure(Call<ResponseKategori> call, Throwable t) {
-                        Toast.makeText(getActivity().getApplicationContext(),"login gagal koneksi",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity().getApplicationContext(),"Anda Sedang Ofline",Toast.LENGTH_SHORT).show();
 
                     }
                 });

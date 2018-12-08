@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.tr.nata.projectandroid.Adapter.favoriteAdapter;
+import com.tr.nata.projectandroid.Database.DatabaseHelper;
 import com.tr.nata.projectandroid.Helper.ViewPagerAdapter;
 import com.tr.nata.projectandroid.R;
 import com.tr.nata.projectandroid.TryPerofilleActivity;
@@ -46,12 +47,14 @@ public class FragmentFavorite extends Fragment {
     ApiService service;
     private TextView tv_nama_profille, tv_jumlah_favorite;
     String user_token;
-
+    DatabaseHelper myDb;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_favorite, container, false);
+
+        myDb=new DatabaseHelper(getActivity());
 
         favorite_to_profille = view.findViewById(R.id.img_favorite_to_profille);
         recyclerView=view.findViewById(R.id.recyclerview_favorite);
@@ -81,6 +84,7 @@ public class FragmentFavorite extends Fragment {
 //                getActivity().finish();
             }
         });
+        callFavoriteLocal();
         callApi();
 
         return view;
@@ -94,7 +98,13 @@ public class FragmentFavorite extends Fragment {
                     @Override
                     public void onResponse(Call<List<ResponseFavorite>> call, Response<List<ResponseFavorite>> response) {
                         if (response.isSuccessful()){
+                            myDb.deleteFavorite();
                             responseFavorites = response.body();
+
+                            for (ResponseFavorite responseFavorite:responseFavorites){
+                                myDb.insertDataFavorite(responseFavorite.getId(),responseFavorite.getIdUser(),responseFavorite.getIdDataJasa());
+                            }
+
                             int jumlah = responseFavorites.size();
                             tv_jumlah_favorite.setText(String.valueOf(jumlah));
                             setAdapter();
@@ -112,5 +122,12 @@ public class FragmentFavorite extends Fragment {
     private void setAdapter(){
         adapter = new favoriteAdapter(getActivity(),responseFavorites);
         recyclerView.setAdapter(adapter);
+    }
+
+    private void callFavoriteLocal(){
+        responseFavorites = myDb.getAllDataFavorite();
+        int jumlah = responseFavorites.size();
+        tv_jumlah_favorite.setText(String.valueOf(jumlah));
+        setAdapter();
     }
 }

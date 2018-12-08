@@ -109,7 +109,8 @@ public class SubHomeActivity extends AppCompatActivity {
             }
         });
 
-//        callDataLokal();
+        callDataLokal();
+        callJumlahDataJasaLokal();
         callApi();
     }
 
@@ -123,7 +124,7 @@ public class SubHomeActivity extends AppCompatActivity {
 
                             Toast.makeText(getApplicationContext(), "success beb", Toast.LENGTH_SHORT).show();
                             if (response.body().getDataJasa().size() > 0) {
-                                Toast.makeText(getApplicationContext(), "jumlah " + response.body().getDataJasa().size(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "jumlah data jasa " + response.body().getDataJasa().size(), Toast.LENGTH_SHORT).show();
                                 Toast.makeText(getApplicationContext(), "jumlah user " + response.body().getDataUser().size(), Toast.LENGTH_SHORT).show();
 
                                 myDb.deleteJasa(id_kategori);
@@ -137,11 +138,14 @@ public class SubHomeActivity extends AppCompatActivity {
                                 for (DataUserItem dataUserItem:dataUserItems){
                                     myDb.insertDataUser(dataUserItem.getId(),dataUserItem.getName(),dataUserItem.getEmail(),dataUserItem.getJenisKelamin(),
                                             dataUserItem.getNoTelp(),dataUserItem.getTanggalLahir());
+
                                 }
+                                Toast.makeText(getApplicationContext(), "pengalaman kerja : " + dataJasaItems.get(0).getPengalaman_kerja(), Toast.LENGTH_SHORT).show();
                                 for (DataJasaItem dataJasaItem:dataJasaItems){
-                                    myDb.insertDataJasa(dataJasaItem.getId(),dataJasaItem.getIdKategori(),dataJasaItem.getIdUser(),
+                                    boolean hasil = myDb.insertDataJasa(dataJasaItem.getId(),dataJasaItem.getIdKategori(),dataJasaItem.getIdUser(),
                                             dataJasaItem.getPekerjaan(),dataJasaItem.getUsia(),dataJasaItem.getNoTelp(),dataJasaItem.getEmail(),
-                                            dataJasaItem.getStatus(),dataJasaItem.getAlamat());
+                                            dataJasaItem.getStatus(),dataJasaItem.getAlamat(),dataJasaItem.getPengalaman_kerja(),dataJasaItem.getEstimasi_gaji());
+                                    Toast.makeText(getApplicationContext(), "hasil " + hasil, Toast.LENGTH_SHORT).show();
                                 }
                                 setAdapter();
                             } else {
@@ -155,6 +159,7 @@ public class SubHomeActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<ResponseDataJasa> call, Throwable t) {
                         Toast.makeText(getApplicationContext(),"eror : "+t,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"Anda Sedang Offline",Toast.LENGTH_SHORT).show();
 //                        tv_pesan.setText("error : "+t);
                     }
                 });
@@ -165,6 +170,12 @@ public class SubHomeActivity extends AppCompatActivity {
         recyclerView.setAdapter(listUserAdapter);
 
     }
+    private void callJumlahDataJasaLokal(){
+        int id_kategori = bundle.getInt("id_kategori");
+        String jumlah  = myDb.jumlah_data_jasa(id_kategori);
+        Toast.makeText(getApplicationContext(),"jumlah data jasa di SQLite:"+String.valueOf( jumlah),Toast.LENGTH_SHORT).show();
+    }
+
     private void callDataLokal(){
         int id_kategori = bundle.getInt("id_kategori");
         dataJasaItems=myDb.selectDatajasa(id_kategori);
@@ -177,7 +188,7 @@ public class SubHomeActivity extends AppCompatActivity {
             int count = curDataUser.getCount();
             if (count>0){
                 while (curDataUser.moveToNext()){
-                    int id = curDataUser.getInt(curDataUser.getColumnIndex(DataUserItem.Entry.COLUMN_ID));
+//                    int id = curDataUser.getInt(curDataUser.getColumnIndex(DataUserItem.Entry.COLUMN_ID));
                     String name = curDataUser.getString(curDataUser.getColumnIndex(DataUserItem.Entry.COLUMN_NAME_USER));
                     String email = curDataUser.getString(curDataUser.getColumnIndex(DataUserItem.Entry.COLUMN_EMAIL_USER));
                     String jk = curDataUser.getString(curDataUser.getColumnIndex(DataUserItem.Entry.COLUMN_JK_USER));
@@ -185,7 +196,7 @@ public class SubHomeActivity extends AppCompatActivity {
                     String tanggal_lahir = curDataUser.getString(curDataUser.getColumnIndex(DataUserItem.Entry.COLUMN_TANGGAL_LAHIR_USER));
 
                     DataUserItem temp = new DataUserItem();
-                    temp.setId(id);
+//                    temp.setId(id);
                     temp.setName(name);
                     temp.setEmail(email);
                     temp.setJenisKelamin(jk);
