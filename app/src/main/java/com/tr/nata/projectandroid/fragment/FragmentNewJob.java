@@ -136,6 +136,7 @@ public class FragmentNewJob extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(),TryPerofilleActivity.class);
+                intent.putExtra("Fragment_id",0);
                 startActivity(intent);
 //                getActivity().finish();
             }
@@ -179,7 +180,9 @@ public class FragmentNewJob extends Fragment {
                     public void onResponse(Call<Response> call, retrofit2.Response<com.tr.nata.projectandroid.model.Response> response) {
                         if (response.isSuccessful()){
                             Toast.makeText(getActivity().getApplicationContext(),"Data Jasa Berhasil Disimpan",Toast.LENGTH_SHORT).show();
-
+                            Intent intent = new Intent(getActivity(),TryPerofilleActivity.class);
+                            intent.putExtra("Fragment_id",0);
+                            startActivity(intent);
 //                            Intent intent = new Intent(AddJobActivity.this,HomeActivity.class);
 //                            startActivity(intent);
 //                            Fragment fragment = new FragmentListFrelance();

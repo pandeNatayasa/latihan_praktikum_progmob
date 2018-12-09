@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.tr.nata.projectandroid.api.ApiClient;
 import com.tr.nata.projectandroid.api.ApiService;
 import com.tr.nata.projectandroid.model.Response;
+import com.tr.nata.projectandroid.model.ResponseLogin;
 import com.yanzhenjie.album.Action;
 import com.yanzhenjie.album.Album;
 import com.yanzhenjie.album.AlbumFile;
@@ -102,10 +103,15 @@ public class UpdateFotoProfille extends AppCompatActivity {
 
     private void callApiUpdateFotoProfille(RequestBody id_user, MultipartBody.Part foto_profille,RequestBody user_token){
         serviceUpdateFotoProfille.updateFotoProfille(foto_profille,user_token)
-                .enqueue(new Callback<Response>() {
+                .enqueue(new Callback<ResponseLogin>() {
                     @Override
-                    public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+                    public void onResponse(Call<ResponseLogin> call, retrofit2.Response<ResponseLogin> response) {
                         if(response.isSuccessful()){
+                            SharedPreferences sharedPref = getSharedPreferences("login", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPref.edit();
+                            editor.putString("user_foto_profille",response.body().getDataUser().getFoto_profille());
+                            editor.apply();
+
                             Intent intent = new Intent(getApplicationContext(),TryPerofilleActivity.class);
                             startActivity(intent);
                         }else {
@@ -114,7 +120,7 @@ public class UpdateFotoProfille extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<Response> call, Throwable t) {
+                    public void onFailure(Call<ResponseLogin> call, Throwable t) {
                         Toast.makeText(UpdateFotoProfille.this,"error : "+t,Toast.LENGTH_SHORT).show();
                     }
                 });

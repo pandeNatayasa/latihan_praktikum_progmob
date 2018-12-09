@@ -1,5 +1,6 @@
 package com.tr.nata.projectandroid.api;
 
+import com.tr.nata.projectandroid.model.DataUser;
 import com.tr.nata.projectandroid.model.Response;
 import com.tr.nata.projectandroid.model.ResponseChekFavorite;
 import com.tr.nata.projectandroid.model.ResponseDataJasa;
@@ -135,7 +136,7 @@ public interface ApiService {
 
     @Multipart
     @POST("updateFotoProfille")
-    Call<Response>updateFotoProfille(
+    Call<ResponseLogin>updateFotoProfille(
             @Part MultipartBody.Part foto_profille,
             @Part("token") RequestBody token
     );
@@ -145,6 +146,30 @@ public interface ApiService {
     Call<ResponseChekFavorite>checkFavorite(
             @Field("id_user") int id_user,
             @Field("id_data_jasa") int id_data_jasa,
+            @Query("token") String token
+    );
+
+    @FormUrlEncoded
+    @POST("update_profille/{id}")
+    Call<ResponseLogin>update_profille(
+        @Path("id") int id_user,
+        @Field("name") String name,
+        @Field("email") String email,
+        @Field("jenis_kelamin") String jenis_kelamin,
+        @Field("no_telp") String no_telp,
+        @Field("tanggal_lahir") String tanggal_lahir,
+        @Query("token") String token
+    );
+
+    @GET("delete_data_jasa/{id}")
+    Call<Response>delete_data_jasa(
+        @Path("id") int id_data_jasa,
+        @Query("token") String token
+    );
+
+    @DELETE("delete_favorite/{id}")
+    Call<Response>delete_favorite(
+            @Path("id") int id_favorite,
             @Query("token") String token
     );
 

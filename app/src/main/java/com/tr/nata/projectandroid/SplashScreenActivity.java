@@ -26,11 +26,11 @@ public class SplashScreenActivity extends AppCompatActivity {
 //                Boolean status_login = sharedPref.getBoolean("status_login",false);
                 String status_login = sharedPref.getString("status_login_string","");
                 String status_user = sharedPref.getString("status_user","");
+                String user_token = sharedPref.getString("user_token","kosong");
 
                 Toast.makeText(SplashScreenActivity.this,"status : "+status_login,Toast.LENGTH_SHORT).show();
 
-
-                if (status_login.equals("true")){
+                if (!user_token.equals("kosong") && status_login.equals("true")){
                     if (status_user.equals("1")){
                         Intent homeIntent = new Intent(SplashScreenActivity.this,HomeActivity.class);
                         startActivity(homeIntent);

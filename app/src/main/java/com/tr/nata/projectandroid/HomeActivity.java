@@ -52,8 +52,6 @@ public class HomeActivity extends AppCompatActivity {
 //        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.btn_nav_menu);
 //        BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
 
-
-
         fragment=new FragmentHome();
         getSupportFragmentManager().beginTransaction().replace(R.id.frag_layout,fragment).commit();
 //        finish();

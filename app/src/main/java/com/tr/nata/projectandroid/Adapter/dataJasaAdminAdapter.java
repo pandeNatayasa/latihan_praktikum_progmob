@@ -90,12 +90,10 @@ public class dataJasaAdminAdapter extends RecyclerView.Adapter<dataJasaAdminAdap
 
                 int id_data_jasa = dataJasa.getId();
                 String nama = dataUser.getName();
-//                    String nama ="aa";
                 String jasa = dataJasa.getPekerjaan();
                 String gaji = dataJasa.getEstimasi_gaji().toString();
                 String usia = String.valueOf(dataJasa.getUsia());
                 String tanggal_lahir = dataUser.getTanggalLahir();
-//                String tanggal_lahir = "aaa";
                 String no_telp = String.valueOf(dataJasa.getNoTelp()) ;
                 String email = dataJasa.getEmail();
                 String status = dataJasa.getStatus();
@@ -141,8 +139,8 @@ public class dataJasaAdminAdapter extends RecyclerView.Adapter<dataJasaAdminAdap
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 Toast.makeText(holder.itemView.getContext(),"will be delete soon",Toast.LENGTH_SHORT).show();
 
-                                DataKategoriItem dataKategoriItem = (DataKategoriItem) holder.itemView.getTag();
-                                int id = dataKategoriItem.getId();
+//                                DataKategoriItem dataKategoriItem = (DataKategoriItem) holder.itemView.getTag();
+//                                int id = dataKategoriItem.getId();
 
                             }
                         }).create().show();
@@ -163,8 +161,8 @@ public class dataJasaAdminAdapter extends RecyclerView.Adapter<dataJasaAdminAdap
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 Toast.makeText(holder.itemView.getContext(),"will be update soon",Toast.LENGTH_SHORT).show();
 
-                                DataKategoriItem dataKategoriItem = (DataKategoriItem) holder.itemView.getTag();
-                                int id = dataKategoriItem.getId();
+//                                DataKategoriItem dataKategoriItem = (DataKategoriItem) holder.itemView.getTag();
+//                                int id = dataKategoriItem.getId();
 
                             }
                         }).create().show();

@@ -105,6 +105,7 @@ public class SubHomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(),TryPerofilleActivity.class);
+                intent.putExtra("Fragment_id",0);
                 startActivity(intent);
             }
         });

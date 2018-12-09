@@ -4,12 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -80,10 +82,29 @@ public class FragmentFavorite extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity().getApplicationContext(), TryPerofilleActivity.class);
+                intent.putExtra("Fragment_id",0);
                 startActivity(intent);
 //                getActivity().finish();
             }
         });
+
+        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.fragment_list_favorite_swipe);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary,R.color.colorPrimaryDark,R.color.colorPrimaryLight);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(true);
+                (new Handler()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeRefreshLayout.setRefreshing(false);
+                        callFavoriteLocal();
+                        callApi();
+                    }
+                },3000);
+            }
+        });
+
         callFavoriteLocal();
         callApi();
 
@@ -93,6 +114,7 @@ public class FragmentFavorite extends Fragment {
         SharedPreferences sharedPref = this.getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
 //        Integer id_user_login = Integer.parseInt(sharedPref.getString("id_user_login",""));
         Integer id_user_login = sharedPref.getInt("id_user_login", 0);
+        Toast.makeText(getActivity().getApplicationContext(),"id user "+String.valueOf(id_user_login)+" token : "+user_token,Toast.LENGTH_SHORT).show();
         service.showFavorite(id_user_login,user_token)
                 .enqueue(new Callback<List<ResponseFavorite>>() {
                     @Override

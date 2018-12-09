@@ -20,9 +20,16 @@ import android.widget.Toast;
 import com.tr.nata.projectandroid.DetailUserActivity;
 import com.tr.nata.projectandroid.DetailUserInAdminActivity;
 import com.tr.nata.projectandroid.R;
+import com.tr.nata.projectandroid.TryPerofilleActivity;
+import com.tr.nata.projectandroid.api.ApiClient;
+import com.tr.nata.projectandroid.api.ApiService;
+import com.tr.nata.projectandroid.model.Response;
 import com.tr.nata.projectandroid.model.ResponseDataJasaUser;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class ListDataJasaInUserAdapter extends RecyclerView.Adapter<ListDataJasaInUserAdapter.ViewHolder> {
 
@@ -37,14 +44,17 @@ public class ListDataJasaInUserAdapter extends RecyclerView.Adapter<ListDataJasa
     View dialogView;
     EditText et_id_kategori,et_pekerjaan,et_estimasi_gaji,et_pengalaman_kerja,
             et_usia,et_no_telp,et_email,et_status,et_alamat,et_id_kecamatan;
+    ApiService service;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView textView_pekerjaan;
+        String token;
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
 
             context = itemView.getContext();
+            service=ApiClient.getApiService();
 
             textView_pekerjaan=itemView.findViewById(R.id.tv_data_jasa_user_inProfille);
             cardViewDataJasa=itemView.findViewById(R.id.cardView_data_jasa_inProfille);
@@ -58,7 +68,7 @@ public class ListDataJasaInUserAdapter extends RecyclerView.Adapter<ListDataJasa
 
                     int id_user_login = sharedPref.getInt("id_user_login",0);
                     Toast.makeText(itemView.getContext(),"Pekerjaan : "+responseDataJasaUser.getPekerjaan(),Toast.LENGTH_SHORT).show();
-
+                    token = sharedPref.getString("user_token","");
                     String nama = sharedPref.getString("nama_user_login","");
 //                    String nama ="aa";
                     String jasa = responseDataJasaUser.getPekerjaan();
@@ -98,6 +108,11 @@ public class ListDataJasaInUserAdapter extends RecyclerView.Adapter<ListDataJasa
             img_delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    ResponseDataJasaUser responseDataJasaUser=(ResponseDataJasaUser) itemView.getTag();
+                    int id_data_jasa=responseDataJasaUser.getId();
+                    SharedPreferences sharedPref = itemView.getContext().getSharedPreferences("login", Context.MODE_PRIVATE);
+                    token = sharedPref.getString("user_token","");
                     new AlertDialog.Builder(itemView.getContext())
                             .setTitle("Really Delete")
                             .setMessage("Are you sure want to delete ?")
@@ -105,7 +120,29 @@ public class ListDataJasaInUserAdapter extends RecyclerView.Adapter<ListDataJasa
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    Toast.makeText(itemView.getContext(),"will be delete soon",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(itemView.getContext(),"token : "+String.valueOf(id_data_jasa) +"token "+token,Toast.LENGTH_SHORT).show();
+                                    service.delete_data_jasa(id_data_jasa,token)
+                                            .enqueue(new Callback<Response>() {
+                                                @Override
+                                                public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+                                                    if (response.isSuccessful()){
+//                                                        Intent intent = new Intent(itemView.getContext(),TryPerofilleActivity.class);
+//                                                        itemView.getContext().startActivity(intent);
+                                                        Toast.makeText(itemView.getContext(),"sukses ",Toast.LENGTH_SHORT).show();
+                                                        dataJasaUsers.remove(responseDataJasaUser);
+                                                        notifyDataSetChanged();
+                                                    }else {
+                                                        Toast.makeText(itemView.getContext(),"something error ",Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onFailure(Call<Response> call, Throwable t) {
+                                                    Toast.makeText(itemView.getContext(),"error "+t,Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+//                                    service.up
+
                                 }
                             }).create().show();
                 }

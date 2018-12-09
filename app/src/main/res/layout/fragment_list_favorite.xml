@@ -1,111 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_list_favorite_swipe"
+    >
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbarLayout_id"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:id="@+id/rly_pertama"
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbarLayout_id"
             android:layout_width="match_parent"
-            android:layout_height="240dp">
-
-            <ImageView
-                android:id="@+id/img_foto_profille"
-                android:layout_width="match_parent"
-                android:layout_height="240dp"
-                android:src="@drawable/background_profille"
-                />
-            <ImageView
-                android:id="@+id/img_favorite_to_profille"
-                android:layout_margin="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_person_white"
-                android:layout_alignParentEnd="true"/>
-
-            <LinearLayout
-                android:id="@+id/btn_beranda_profille"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_alignParentBottom="true"
-                android:padding="10dp"
-                android:layout_marginLeft="20dp"
-                tools:ignore="OnClick"
-                >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="List Favorite"
-                    android:textColor="@color/colorWhite"
-                    android:layout_gravity="center_vertical"/>
-                <TextView
-                    android:id="@+id/jumlah_favorite"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Label 1"
-                    android:textColor="@color/colorWhite"
-                    android:layout_gravity="center_vertical"/>
-
-            </LinearLayout>
-        </RelativeLayout>
-
-    </android.support.design.widget.AppBarLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/img_proille_infavorite"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="5dp"
-            android:src="@drawable/contact"/>
-
-        <TextView
-            android:id="@+id/tv_nama_proflle_inFavorite"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nama profille"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@color/colorWhite"/>
+            android:layout_marginBottom="15dp">
 
-    </LinearLayout>
+            <RelativeLayout
+                android:id="@+id/rly_pertama"
+                android:layout_width="match_parent"
+                android:layout_height="240dp">
 
-    <android.support.v4.widget.NestedScrollView
-        android:layout_below="@+id/appbarLayout_id"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                <ImageView
+                    android:id="@+id/img_foto_profille"
+                    android:layout_width="match_parent"
+                    android:layout_height="240dp"
+                    android:src="@drawable/background_profille"
+                    />
+                <ImageView
+                    android:id="@+id/img_favorite_to_profille"
+                    android:layout_margin="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_person_white"
+                    android:layout_alignParentEnd="true"/>
+
+                <LinearLayout
+                    android:id="@+id/btn_beranda_profille"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_alignParentBottom="true"
+                    android:padding="10dp"
+                    android:layout_marginLeft="20dp"
+                    tools:ignore="OnClick"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="List Favorite"
+                        android:textColor="@color/colorWhite"
+                        android:layout_gravity="center_vertical"/>
+                    <TextView
+                        android:id="@+id/jumlah_favorite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Label 1"
+                        android:textColor="@color/colorWhite"
+                        android:layout_gravity="center_vertical"/>
+
+                </LinearLayout>
+            </RelativeLayout>
+
+        </android.support.design.widget.AppBarLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_above="@+id/btn_nav_menu"
-            >
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerview_favorite"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scrollbars="horizontal">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_proille_infavorite"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="5dp"
+                android:src="@drawable/contact"/>
 
-            </android.support.v7.widget.RecyclerView>
+            <TextView
+                android:id="@+id/tv_nama_proflle_inFavorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nama profille"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/colorWhite"/>
+
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
 
+        <android.support.v4.widget.NestedScrollView
+            android:layout_below="@+id/appbarLayout_id"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-</RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_above="@+id/btn_nav_menu"
+                >
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerview_favorite"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbars="horizontal">
+
+                </android.support.v7.widget.RecyclerView>
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+
+    </RelativeLayout>
+
+</android.support.v4.widget.SwipeRefreshLayout>

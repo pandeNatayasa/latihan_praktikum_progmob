@@ -29,6 +29,7 @@ public class DetailUserActivity extends AppCompatActivity{
     ImageView img_add_to_favorite;
     ApiService service,serviceCheckFavorite;
     String user_token;
+    int jumlah=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,7 @@ public class DetailUserActivity extends AppCompatActivity{
 
         SharedPreferences sharedPref = getSharedPreferences("login", Context.MODE_PRIVATE);
 //        Integer id_user_login = Integer.parseInt(sharedPref.getString("id_user_login",""));
-        Integer id_user = sharedPref.getInt("id_user_login", 0);
+        int id_user = sharedPref.getInt("id_user_login", 0);
         user_token = sharedPref.getString("user_token","");
 
         Bundle bundle = getIntent().getExtras();
@@ -56,7 +57,6 @@ public class DetailUserActivity extends AppCompatActivity{
         btn_add_to_favorite=findViewById(R.id.btn_add_to_favorite);
         img_add_to_favorite=findViewById(R.id.img_add_to_favorite);
 
-
         tv_nama=(TextView)findViewById(R.id.tv_user_name);
         tv_jasa=(TextView)findViewById(R.id.tv_user_pekerjaan);
         tv_gaji=(TextView)findViewById(R.id.tv_user_gaji);
@@ -67,27 +67,6 @@ public class DetailUserActivity extends AppCompatActivity{
         tv_status=(TextView)findViewById(R.id.tv_user_status);
         tv_pendidikan=(TextView)findViewById(R.id.tv_user_pendidikan);
         tv_alamat=(TextView)findViewById(R.id.tv_user_alamat);
-
-        serviceCheckFavorite.checkFavorite(id_user,id_data_jasa,user_token)
-                .enqueue(new Callback<ResponseChekFavorite>() {
-                    @Override
-                    public void onResponse(Call<ResponseChekFavorite> call, retrofit2.Response<ResponseChekFavorite> response) {
-                        if (response.isSuccessful()){
-                            if (response.body().getJumlahFavorite() > 0){
-                                img_add_to_favorite.setImageResource(R.drawable.ic_check_blue);
-                            }else {
-                                img_add_to_favorite.setImageResource(R.drawable.ic_add_black_24dp);
-                            }
-                        }else {
-                            Toast.makeText(getApplicationContext(),"Something went wrong",Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResponseChekFavorite> call, Throwable t) {
-                        Toast.makeText(getApplicationContext(),"Error"+t,Toast.LENGTH_SHORT).show();
-                    }
-                });
 
         Toast.makeText(DetailUserActivity.this," jasa :"+jasa,Toast.LENGTH_SHORT).show();
 //        tv_jasa.setText(jasa);
@@ -102,29 +81,69 @@ public class DetailUserActivity extends AppCompatActivity{
         tv_pendidikan.setText(bundle.getString("pendidikan"));
         tv_alamat.setText(bundle.getString("alamat"));
 
+//        cekFavorite(id_user,id_data_jasa,user_token);
+        addToFavorite(id_user,id_data_jasa,user_token);
+    }
+
+    public int cekFavorite(int id_user, int id_data_jasa,String user_token){
+
+        serviceCheckFavorite.checkFavorite(id_user,id_data_jasa,user_token)
+                .enqueue(new Callback<ResponseChekFavorite>() {
+                    @Override
+                    public void onResponse(Call<ResponseChekFavorite> call, retrofit2.Response<ResponseChekFavorite> response) {
+                        if (response.isSuccessful()){
+                            jumlah = response.body().getJumlahFavorite();
+                            if (response.body().getJumlahFavorite() > 0){
+                                img_add_to_favorite.setImageResource(R.drawable.ic_check_blue);
+                            }else {
+                                img_add_to_favorite.setImageResource(R.drawable.ic_add_black_24dp);
+//                                addToFavorite(id_user,id_data_jasa,user_token);
+                            }
+                        }else {
+                            Toast.makeText(getApplicationContext(),"Something went wrong",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseChekFavorite> call, Throwable t) {
+                        Toast.makeText(getApplicationContext(),"Error"+t,Toast.LENGTH_SHORT).show();
+                    }
+                });
+        return jumlah;
+    }
+
+    public void addToFavorite(int id_user,int id_data_jasa, String user_token){
         btn_add_to_favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                service.addToFavorite(id_user,id_data_jasa,user_token)
-                        .enqueue(new Callback<Response>() {
-                            @Override
-                            public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
-                                if (response.isSuccessful()){
-                                    Toast.makeText(getApplicationContext(),"Ditambahkan ke Favorite",Toast.LENGTH_SHORT).show();
-                                }else {
-                                    Toast.makeText(getApplicationContext(),"Something went wrong",Toast.LENGTH_SHORT).show();
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<Response> call, Throwable t) {
-                                Toast.makeText(getApplicationContext(),"Error"+t,Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                int jumlah_favorite =cekFavorite(id_user,id_data_jasa,user_token);
+                if (jumlah_favorite==0){
+                    serviceAddToFavorite(id_user,id_data_jasa,user_token);
+                }
             }
         });
-
     }
+
+    public void serviceAddToFavorite(int id_user, int id_data_jasa,String user_token){
+        service.addToFavorite(id_user,id_data_jasa,user_token)
+                .enqueue(new Callback<Response>() {
+                    @Override
+                    public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+                        if (response.isSuccessful()){
+                            Toast.makeText(getApplicationContext(),"Ditambahkan ke Favorite",Toast.LENGTH_SHORT).show();
+                            cekFavorite(id_user,id_data_jasa,user_token);
+                        }else {
+                            Toast.makeText(getApplicationContext(),"Something went wrong",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Response> call, Throwable t) {
+                        Toast.makeText(getApplicationContext(),"Error"+t,Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();

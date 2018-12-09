@@ -47,6 +47,8 @@ public class TryPerofilleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profille);
 
+        int fragmentId = getIntent().getIntExtra("Fragment_id", 0);
+
         tabLayout = (TabLayout)findViewById(R.id.tab_layout_profille);
         tabLayout.addTab(tabLayout.newTab().setText(""));
         tabLayout.addTab(tabLayout.newTab().setText(""));
@@ -71,6 +73,13 @@ public class TryPerofilleActivity extends AppCompatActivity {
         tv_nama_profille.setText(nama_user_login);
 
         final ViewPager viewPager=findViewById(R.id.viewPager_1);
+
+//        Bundle bundle = new Bundle();
+//        bundle.putString("TARGET_FRAGMENT_ID", fragmentId);
+//        TabF tabFragment = new TabFragment();
+//        tabFragment.setArguments(bundle);
+//        getSupportFragmentManager().beginTransaction().replace(R.id.confrag, tabFragment).commit();
+//        tabLayout.setTabGravity(fragmentId);
 
         final ViewPagerAdapter viewPagerAdapter=new ViewPagerAdapter(getSupportFragmentManager(),tabLayout.getTabCount());
         viewPager.setAdapter(viewPagerAdapter);

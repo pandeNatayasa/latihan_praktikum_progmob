@@ -2,6 +2,8 @@ package com.tr.nata.projectandroid;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -35,13 +37,11 @@ public class AddUserActivity extends AppCompatActivity{
     RadioButton rbjenis_kelamin_Laki,rbjenis_kelamin_Perempuan;
     String jk="";
     TextView tv_login;
+    private static final String TAG = "AddUserActivity";
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
+    ImageView imgTanggalLahir;
 
     ApiService service;
-
-//    @BindView(R.id.img_tanggal_lahir)
-//    ImageView img_OpenDatePicker;
-//    @BindView(R.id.etUserTanggalLahir)
-//    EditText etTanggal;
 
     Calendar myCalendar;
 
@@ -69,6 +69,7 @@ public class AddUserActivity extends AppCompatActivity{
 
 //        jk = rbjenis_kelamin.getText().toString();
         tv_error=findViewById(R.id.tv_error);
+        imgTanggalLahir = findViewById(R.id.img_tanggal_lahir);
 
         btnAdd=findViewById(R.id.register);
         btnAdd.setOnClickListener(new View.OnClickListener() {
@@ -86,28 +87,33 @@ public class AddUserActivity extends AppCompatActivity{
             }
         });
 
-//        ButterKnife.bind(this);
-//        myCalendar = Calendar.getInstance();
+        imgTanggalLahir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
 
-//        img_OpenDatePicker.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                new DatePickerDialog(AddUserActivity.this, new DatePickerDialog.OnDateSetListener() {
-//                    @Override
-//                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-//                        myCalendar.set(Calendar.YEAR, year);
-//                        myCalendar.set(Calendar.MONTH, month);
-//                        myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-//
-//                        String formatTanggal = "yyyy-MM-dd";
-//                        SimpleDateFormat sdf = new SimpleDateFormat(formatTanggal);
-//                        etTanggal.setText(sdf.format(myCalendar.getTime()));
-//                    }
-//                },
-//                        myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-//                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-//            }
-//        });
+                DatePickerDialog dialog = new DatePickerDialog(
+                  AddUserActivity.this,
+                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        mDateSetListener,
+                        year,month,day
+                );
+
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+//                month = month+ 1;
+                String date = year + "-"+month+"-"+dayOfMonth;
+                etUserTanggalLahir.setText(date);
+            }
+        };
     }
 
     private void addUser(){

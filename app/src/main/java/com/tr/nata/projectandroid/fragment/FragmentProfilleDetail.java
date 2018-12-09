@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +21,7 @@ import com.tr.nata.projectandroid.R;
 public class FragmentProfilleDetail extends Fragment {
 
     TextView tv_name, tv_email, tv_jenis_kelamin, tv_notelp, tv_tanggal_lahir;
-    ImageView img_edit_profiile;
+    FloatingActionButton fab_edit_profiile;
 
     @Nullable
     @Override
@@ -32,7 +33,7 @@ public class FragmentProfilleDetail extends Fragment {
         tv_jenis_kelamin=view.findViewById(R.id.tv_jk_profille);
         tv_notelp=view.findViewById(R.id.tv_notelp_profille);
         tv_tanggal_lahir=view.findViewById(R.id.tv_tanggal_lahir_profille);
-        img_edit_profiile=view.findViewById(R.id.img_edit_profille);
+        fab_edit_profiile=view.findViewById(R.id.fab_edit_profille);
 
         SharedPreferences sharedPref = this.getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
         String nama_user_login = sharedPref.getString("nama_user_login","");
@@ -47,7 +48,7 @@ public class FragmentProfilleDetail extends Fragment {
         tv_notelp.setText(no_telp_user_login);
         tv_tanggal_lahir.setText(tanggal_lahir_user_login);
 
-        img_edit_profiile.setOnClickListener(new View.OnClickListener() {
+        fab_edit_profiile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(view.getContext(),"will be update",Toast.LENGTH_SHORT).show();
