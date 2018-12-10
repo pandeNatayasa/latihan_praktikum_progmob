@@ -2,6 +2,8 @@ package com.tr.nata.projectandroid.fragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -16,9 +18,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.tr.nata.projectandroid.Adapter.ListDataJasaInUserAdapter;
+import com.tr.nata.projectandroid.Database.DatabaseHelper;
 import com.tr.nata.projectandroid.R;
 import com.tr.nata.projectandroid.api.ApiClient;
 import com.tr.nata.projectandroid.api.ApiService;
+import com.tr.nata.projectandroid.model.DataJasaItem;
 import com.tr.nata.projectandroid.model.ResponseDataJasaUser;
 
 import java.util.ArrayList;
@@ -31,10 +35,12 @@ import retrofit2.Response;
 public class FragmentProfilleDataJasa extends Fragment {
 
     private List<ResponseDataJasaUser> dataJasaUsers = new ArrayList<>();
+    private List<DataJasaItem> dataJasaItems = new ArrayList<>();
     private RecyclerView recyclerView;
     private ListDataJasaInUserAdapter adapter;
     ApiService service,service_add_new;
     String user_token;
+    DatabaseHelper mydb;
 
     @Nullable
     @Override
@@ -67,7 +73,16 @@ public class FragmentProfilleDataJasa extends Fragment {
         SharedPreferences sharedPref = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
         user_token = sharedPref.getString("user_token","");
 
-        callApi();
+        mydb = new DatabaseHelper(this.getActivity());
+
+        if (isConnected()){
+            callApiLokal();
+            callApi();
+        }else {
+            Toast.makeText(getActivity().getApplicationContext(),"Anda Sedang Offline",Toast.LENGTH_SHORT).show();
+            callApiLokal();
+        }
+
         return view;
     }
 
@@ -81,7 +96,14 @@ public class FragmentProfilleDataJasa extends Fragment {
                     @Override
                     public void onResponse(Call<List<ResponseDataJasaUser>> call, Response<List<ResponseDataJasaUser>> response) {
                         if (response.isSuccessful()) {
+
+                            mydb.deleteJasainUser(id_user_login);
                             dataJasaUsers = response.body();
+                            for (ResponseDataJasaUser dataJasaUser:dataJasaUsers){
+                                mydb.insertDataJasa(dataJasaUser.getId(),dataJasaUser.getIdKategori(),dataJasaUser.getIdUser(),
+                                        dataJasaUser.getPekerjaan(),dataJasaUser.getUsia(),dataJasaUser.getNoTelp(),dataJasaUser.getEmail(),
+                                        dataJasaUser.getStatus(),dataJasaUser.getAlamat(),dataJasaUser.getPengalamanKerja(),dataJasaUser.getEstimasiGaji());
+                            }
                             setAdapter();
 
                         } else {
@@ -97,9 +119,25 @@ public class FragmentProfilleDataJasa extends Fragment {
                 });
     }
 
+    private void callApiLokal(){
+        SharedPreferences sharedPref = this.getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
+        int id_user_login = sharedPref.getInt("id_user_login", 0);
+        dataJasaUsers=mydb.selectDatajasainUser(id_user_login);
+        setAdapter();
+    }
+
     private void setAdapter(){
         adapter=new ListDataJasaInUserAdapter(getActivity(),dataJasaUsers);
         recyclerView.setAdapter(adapter);
+    }
+
+    private boolean isConnected() {
+        ConnectivityManager cm = (ConnectivityManager) this.getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean status = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+        return status;
     }
 
 }

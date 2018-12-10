@@ -2,6 +2,8 @@ package com.tr.nata.projectandroid;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tr.nata.projectandroid.Database.DatabaseHelper;
 import com.tr.nata.projectandroid.api.ApiClient;
 import com.tr.nata.projectandroid.api.ApiService;
 import com.tr.nata.projectandroid.model.Response;
@@ -30,6 +33,7 @@ public class DetailUserActivity extends AppCompatActivity{
     ApiService service,serviceCheckFavorite;
     String user_token;
     int jumlah=0;
+    DatabaseHelper mydb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +45,8 @@ public class DetailUserActivity extends AppCompatActivity{
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mydb=new DatabaseHelper(this);
 
         SharedPreferences sharedPref = getSharedPreferences("login", Context.MODE_PRIVATE);
 //        Integer id_user_login = Integer.parseInt(sharedPref.getString("id_user_login",""));
@@ -82,7 +88,13 @@ public class DetailUserActivity extends AppCompatActivity{
         tv_alamat.setText(bundle.getString("alamat"));
 
 //        cekFavorite(id_user,id_data_jasa,user_token);
-        addToFavorite(id_user,id_data_jasa,user_token);
+
+        Toast.makeText(this,"koneksi "+isConnected(),Toast.LENGTH_SHORT).show();
+        if (isConnected()){
+            addToFavorite(id_user,id_data_jasa,user_token);
+        }else {
+            cekFavoriteLokal(id_user,id_data_jasa);
+        }
     }
 
     public int cekFavorite(int id_user, int id_data_jasa,String user_token){
@@ -110,6 +122,24 @@ public class DetailUserActivity extends AppCompatActivity{
                     }
                 });
         return jumlah;
+    }
+
+    public void cekFavoriteLokal(int id_user, int id_data_jasa){
+        int jumlah = mydb.checkFavorite(id_user,id_data_jasa);
+        if(jumlah>0){
+            img_add_to_favorite.setImageResource(R.drawable.ic_check_blue);
+        }else {
+            img_add_to_favorite.setImageResource(R.drawable.ic_add_black_24dp);
+        }
+    }
+
+    private boolean isConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean status = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+        return status;
     }
 
     public void addToFavorite(int id_user,int id_data_jasa, String user_token){

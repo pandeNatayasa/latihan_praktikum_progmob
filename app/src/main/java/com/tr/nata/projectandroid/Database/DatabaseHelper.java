@@ -11,6 +11,7 @@ import com.tr.nata.projectandroid.model.DataJasaItem;
 import com.tr.nata.projectandroid.model.DataKategoriItem;
 import com.tr.nata.projectandroid.model.DataUser;
 import com.tr.nata.projectandroid.model.DataUserItem;
+import com.tr.nata.projectandroid.model.ResponseDataJasaUser;
 import com.tr.nata.projectandroid.model.ResponseFavorite;
 
 import java.util.ArrayList;
@@ -27,7 +28,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //Tabel Data Jasa
     public static final String TABLE_NAME_JASA = "data_jasa_table";
-//    public static final String COLUMN_ID = "ID";
     public static final String COLUMN_ID_KATEGORI = "id_kategori";
     public static final String COLUMN_ID_USER = "id_user";
     public static final String COLUMN_PEKERJAAN = "pekerjaan";
@@ -41,7 +41,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //Tabel Data User
     public static final String TABLE_NAME_USER = "data_user_table";
-    //    public static final String COLUMN_ID = "ID";
     public static final String COLUMN_NAME_USER = "name";
     public static final String COLUMN_EMAIL_USER="email";
     public static final String COLUMN_JK_USER = "jenis_kelamin";
@@ -225,6 +224,55 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.delete(DataJasaItem.Entry.TABLE_NAME_JASA,COLUMN_ID_KATEGORI+"="+id,null);
     }
 
+    public void deleteJasainUser(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(DataJasaItem.Entry.TABLE_NAME_JASA,COLUMN_ID_USER+"="+id,null);
+    }
+
+    public List<ResponseDataJasaUser> selectDatajasainUser(int id_user){
+        List<ResponseDataJasaUser> dataJasaItems = new ArrayList<>();
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        String sqlQuery1="select * from " + TABLE_NAME_JASA + " where " + COLUMN_ID_USER + " = " + id_user;
+
+        Cursor cursor1=sqLiteDatabase.rawQuery(sqlQuery1,null);
+        int count = cursor1.getCount();
+        int id_data_jasa = 0;
+        String pekerjaan= "a";
+        if (count>0){
+            cursor1.moveToFirst();
+
+            do{
+//                id_data_jasa = cursor1.getInt(cursor1.getColumnIndex(DataJasaItem.Entry.COLUMN_ID));
+                int id_user_data = cursor1.getInt(cursor1.getColumnIndex(DataJasaItem.Entry.COLUMN_ID_USER));
+                pekerjaan = cursor1.getString(cursor1.getColumnIndex(DataJasaItem.Entry.COLUMN_PEKERJAAN));
+                int estimasi_gaji = cursor1.getInt(cursor1.getColumnIndex(DataJasaItem.Entry.COLUMN_ESTIMASI_GAJI));
+                int usia = cursor1.getInt(cursor1.getColumnIndex(DataJasaItem.Entry.COLUMN_USIA));
+                String no_telp = cursor1.getString(cursor1.getColumnIndex(DataJasaItem.Entry.COLUMN_NO_TELP));
+                String email = cursor1.getString(cursor1.getColumnIndex(DataJasaItem.Entry.COLUMN_EMAIL_JASA));
+                String status = cursor1.getString(cursor1.getColumnIndex(DataJasaItem.Entry.COLUMN_STATUS));
+                String alamat = cursor1.getString(cursor1.getColumnIndex(DataJasaItem.Entry.COLUMN_ALAMAT_JASA));
+                String pengalaman_kerja = cursor1.getString(cursor1.getColumnIndex(DataJasaItem.Entry.COLUMN_PENGALAMAN_KERJA));
+
+                ResponseDataJasaUser temp = new ResponseDataJasaUser();
+//                temp.setId(id_data_jasa);
+                temp.setPekerjaan(pekerjaan);
+                temp.setEstimasiGaji(estimasi_gaji);
+                temp.setIdUser(id_user_data);
+                temp.setUsia(usia);
+                temp.setNoTelp(no_telp);
+                temp.setEmail(email);
+                temp.setStatus(status);
+                temp.setAlamat(alamat);
+                temp.setPengalamanKerja(pengalaman_kerja);
+                dataJasaItems.add(temp);
+            }while (cursor1.moveToNext());
+        }
+
+        cursor1.close();
+        sqLiteDatabase.close();
+        return dataJasaItems;
+    }
+
     public List<DataJasaItem> selectDatajasa(int id_kategori){
         List<DataJasaItem> dataJasaItems = new ArrayList<>();
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
@@ -365,14 +413,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery("select * from "+ TABLE_NAME_USER+" where "+COLUMN_ID+" = "+ id_user,null);
 
-//        dataUserItem.setId(res.getInt(res.getColumnIndex(DataUserItem.Entry.COLUMN_ID)));
-//        dataUserItem.setName(res.getString(res.getColumnIndex(DataUserItem.Entry.COLUMN_NAME_USER)));
-//        dataUserItem.setNoTelp(res.getString(res.getColumnIndex(DataUserItem.Entry.COLUMN_NAME_USER)));
-//        dataUserItem.setTanggalLahir(res.getString(res.getColumnIndex(DataUserItem.Entry.COLUMN_TANGGAL_LAHIR_USER)));
-//        dataUserItem.setJenisKelamin(res.getString(res.getColumnIndex(DataUserItem.Entry.COLUMN_JK_USER)));
-//        dataUserItem.setEmail(res.getString(res.getColumnIndex(DataUserItem.Entry.COLUMN_EMAIL_USER)));
-
-
         return res;
     }
 
@@ -475,6 +515,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void deleteFavorite(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(ResponseFavorite.Entry.TABLE_NAME_FAVORITE,null,null);
+    }
+
+    public int checkFavorite(int id_user,int id_data_jasa){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        String sqlQuery1="select * from " + TABLE_NAME_FAVORITE + " where " + COLUMN_ID_USER_FAVORITE + " = " + id_user + " and " + COLUMN_ID_DATA_JASA_FAVORITE + " = " + id_data_jasa;
+        Cursor cursor = sqLiteDatabase.rawQuery(sqlQuery1,null);
+        int jumlah = cursor.getCount();
+
+        return jumlah;
     }
 
 }

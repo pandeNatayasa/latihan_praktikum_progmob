@@ -3,6 +3,8 @@ package com.tr.nata.projectandroid.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -105,16 +107,22 @@ public class FragmentFavorite extends Fragment {
             }
         });
 
-        callFavoriteLocal();
-        callApi();
-
+        if (isConnected()){
+            callFavoriteLocal();
+            callApi();
+        }else {
+            Toast.makeText(getActivity().getApplicationContext()," Anda Sedang Offline : ",Toast.LENGTH_SHORT).show();
+            callFavoriteLocal();
+        }
         return view;
     }
     private void callApi(){
         SharedPreferences sharedPref = this.getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
-//        Integer id_user_login = Integer.parseInt(sharedPref.getString("id_user_login",""));
         Integer id_user_login = sharedPref.getInt("id_user_login", 0);
-        Toast.makeText(getActivity().getApplicationContext(),"id user "+String.valueOf(id_user_login)+" token : "+user_token,Toast.LENGTH_SHORT).show();
+
+//        Integer id_user_login = Integer.parseInt(sharedPref.getString("id_user_login",""));
+//        Toast.makeText(getActivity().getApplicationContext(),"id user "+String.valueOf(id_user_login)+" token : "+user_token,Toast.LENGTH_SHORT).show();
+
         service.showFavorite(id_user_login,user_token)
                 .enqueue(new Callback<List<ResponseFavorite>>() {
                     @Override
@@ -137,10 +145,19 @@ public class FragmentFavorite extends Fragment {
 
                     @Override
                     public void onFailure(Call<List<ResponseFavorite>> call, Throwable t) {
-                        Toast.makeText(getActivity().getApplicationContext()," eror : "+t,Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity().getApplicationContext()," eror : "+t,Toast.LENGTH_SHORT).show();
                     }
                 });
     }
+    private boolean isConnected() {
+        ConnectivityManager cm = (ConnectivityManager) this.getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean status = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+        return status;
+    }
+
     private void setAdapter(){
         adapter = new favoriteAdapter(getActivity(),responseFavorites);
         recyclerView.setAdapter(adapter);

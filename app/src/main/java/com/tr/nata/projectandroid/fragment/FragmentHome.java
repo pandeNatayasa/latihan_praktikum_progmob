@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -180,8 +182,14 @@ public class FragmentHome extends Fragment {
                 },3000);
             }
         });
-        callKategoriLokal();
-        callApi();
+
+        if (isConnected()){
+            callKategoriLokal();
+            callApi();
+        }else {
+            Toast.makeText(getActivity().getApplicationContext(),"Anda Sedang Ofline",Toast.LENGTH_SHORT).show();
+            callKategoriLokal();
+        }
 
         return view;
     }
@@ -208,6 +216,15 @@ public class FragmentHome extends Fragment {
 //
 //        return false;
 //    }
+
+    private boolean isConnected() {
+        ConnectivityManager cm = (ConnectivityManager) this.getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean status = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+        return status;
+    }
 
     private void callApi(){
         service.getKategori(user_token)
@@ -242,8 +259,7 @@ public class FragmentHome extends Fragment {
 
                     @Override
                     public void onFailure(Call<ResponseKategori> call, Throwable t) {
-                        Toast.makeText(getActivity().getApplicationContext(),"Anda Sedang Ofline",Toast.LENGTH_SHORT).show();
-
+//                        Toast.makeText(getActivity().getApplicationContext(),"Anda Sedang Ofline",Toast.LENGTH_SHORT).show();
                     }
                 });
     }
