@@ -71,6 +71,10 @@ public interface ApiService {
     Call<List<ResponseDataJasaUser>>showDataJasaUser(@Path("id") int id_user,@Query("token") String token);
 
     @FormUrlEncoded
+    @POST("update_status/{id}")
+    Call<ResponseDataJasaUser>updateDataJasaUser(@Path("id") int id_data_jasa,@Query("token") String token);
+
+    @FormUrlEncoded
     @POST("store_data_jasa")
     Call<Response>newDataJasaUser(
             @Field("id_kategori") int id_kategori,

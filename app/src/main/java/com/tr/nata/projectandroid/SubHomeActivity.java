@@ -145,7 +145,7 @@ public class SubHomeActivity extends AppCompatActivity {
                                 for (DataJasaItem dataJasaItem:dataJasaItems){
                                     boolean hasil = myDb.insertDataJasa(dataJasaItem.getId(),dataJasaItem.getIdKategori(),dataJasaItem.getIdUser(),
                                             dataJasaItem.getPekerjaan(),dataJasaItem.getUsia(),dataJasaItem.getNoTelp(),dataJasaItem.getEmail(),
-                                            dataJasaItem.getStatus(),dataJasaItem.getAlamat(),dataJasaItem.getPengalaman_kerja(),dataJasaItem.getEstimasi_gaji());
+                                            dataJasaItem.getStatus(),dataJasaItem.getStatusValidasi(),dataJasaItem.getAlamat(),dataJasaItem.getPengalaman_kerja(),dataJasaItem.getEstimasi_gaji());
                                     Toast.makeText(getApplicationContext(), "hasil " + hasil, Toast.LENGTH_SHORT).show();
                                 }
                                 setAdapter();

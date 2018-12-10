@@ -102,7 +102,7 @@ public class FragmentProfilleDataJasa extends Fragment {
                             for (ResponseDataJasaUser dataJasaUser:dataJasaUsers){
                                 mydb.insertDataJasa(dataJasaUser.getId(),dataJasaUser.getIdKategori(),dataJasaUser.getIdUser(),
                                         dataJasaUser.getPekerjaan(),dataJasaUser.getUsia(),dataJasaUser.getNoTelp(),dataJasaUser.getEmail(),
-                                        dataJasaUser.getStatus(),dataJasaUser.getAlamat(),dataJasaUser.getPengalamanKerja(),dataJasaUser.getEstimasiGaji());
+                                        dataJasaUser.getStatus(),dataJasaUser.getStatusValidasi(),dataJasaUser.getAlamat(),dataJasaUser.getPengalamanKerja(),dataJasaUser.getEstimasiGaji());
                             }
                             setAdapter();
 

@@ -147,6 +147,7 @@ public class AdminListFreeLanceActivity extends AppCompatActivity {
 
     private void callApi(){
         int id_kategori = bundle.getInt("id_kategori");
+        Toast.makeText(this,"id kategori :"+String.valueOf(id_kategori),Toast.LENGTH_SHORT).show();
         service.showDataJasaByKategoriForAdmin(id_kategori,user_token)
                 .enqueue(new Callback<ResponseDataJasa>() {
                     @Override

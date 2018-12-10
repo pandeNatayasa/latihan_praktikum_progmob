@@ -48,6 +48,9 @@ public class DataJasaItem{
     @SerializedName("pengalaman_kerja")
     private String pengalaman_kerja;
 
+	@SerializedName("status_validasi")
+	private String statusValidasi;
+
 	public void setUsia(int usia){
 		this.usia = usia;
 	}
@@ -156,6 +159,14 @@ public class DataJasaItem{
         this.pengalaman_kerja=pengalaman_kerja;
     }
 
+	public void setStatusValidasi(String statusValidasi){
+		this.statusValidasi = statusValidasi;
+	}
+
+	public String getStatusValidasi(){
+		return statusValidasi;
+	}
+
     public String getPengalaman_kerja(){
         return pengalaman_kerja;
     }
@@ -171,6 +182,7 @@ public class DataJasaItem{
 		public static final String COLUMN_NO_TELP="no_telp";
 		public static final String COLUMN_EMAIL_JASA="email_jasa";
 		public static final String COLUMN_STATUS="status";
+		public static final String COLUMN_STATUS_VALIDASI="status_validasi";
 		public static final String COLUMN_ALAMAT_JASA="alamat";
 		public static final String COLUMN_PENGALAMAN_KERJA="pengalaman_kerja";
 	}

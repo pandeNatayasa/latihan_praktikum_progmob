@@ -36,6 +36,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_NO_TELP="no_telp";
     public static final String COLUMN_EMAIL_JASA="email_jasa";
     public static final String COLUMN_STATUS="status";
+    public static final String COLUMN_STATUS_VALIDASI="status_validasi";
     public static final String COLUMN_ALAMAT_JASA="alamat";
     public static final String COLUMN_PENGALAMAN_KERJA="pengalaman_kerja";
 
@@ -55,7 +56,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //pembuatan database
     public DatabaseHelper(Context context){
-        super(context,DATABASE_NAME,null,10);
+        super(context,DATABASE_NAME,null,11);
     }
 
     //pembuatan tabel
@@ -64,7 +65,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("create table " + TABLE_NAME_KATEGORI + "(id integer primary key autoincrement, kategori text);");
 
         db.execSQL("create table " + TABLE_NAME_JASA + "(" +
-                COLUMN_ID +" integer primary key autoincrement," +
+                DataJasaItem.Entry._ID+" integer primary key autoincrement," +
+                COLUMN_ID +" integer," +
                 COLUMN_ID_KATEGORI+" integer," +
                 COLUMN_ID_USER+" integer," +
                 COLUMN_PEKERJAAN+" text," +
@@ -73,11 +75,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_NO_TELP+" text," +
                 COLUMN_EMAIL_JASA+" text," +
                 COLUMN_STATUS+" text," +
+                COLUMN_STATUS_VALIDASI+" text," +
                 COLUMN_ALAMAT_JASA+" text," +
                 COLUMN_PENGALAMAN_KERJA+" text);");
 
         db.execSQL("create table "+TABLE_NAME_USER+"(" +
-                COLUMN_ID+" integer primary key autoincrement," +
+                DataUserItem.Entry._ID+" integer primary key autoincrement," +
+                COLUMN_ID+" integer," +
                 COLUMN_NAME_USER+" text," +
                 COLUMN_EMAIL_USER+" text," +
                 COLUMN_JK_USER+" text," +
@@ -85,7 +89,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_TANGGAL_LAHIR_USER+" text);");
 
         db.execSQL("create table "+TABLE_NAME_FAVORITE+"(" +
-                COLUMN_ID+" integer primary key autoincrement," +
+                ResponseFavorite.Entry._ID+" integer primary key autoincrement," +
+                COLUMN_ID+" integer," +
                 COLUMN_ID_USER_FAVORITE+" integer," +
                 COLUMN_ID_DATA_JASA_FAVORITE+" integer);");
     }
@@ -191,7 +196,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //Untuk Tabel Data Jasa
     public boolean insertDataJasa(int id,int id_kategori,int id_user,String pekerjaan,
-                                  int usia,String no_telp,String email_jasa,String status,String alamat_jasa,String pengalaman_kerja,int estimasi_gaji){
+                                  int usia,String no_telp,String email_jasa,String status,String status_validasi,String alamat_jasa,String pengalaman_kerja,int estimasi_gaji){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_ID,id);
@@ -203,6 +208,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COLUMN_NO_TELP,no_telp);
         contentValues.put(COLUMN_EMAIL_JASA,email_jasa);
         contentValues.put(COLUMN_STATUS,status);
+        contentValues.put(COLUMN_STATUS_VALIDASI,status_validasi);
         contentValues.put(COLUMN_ALAMAT_JASA,alamat_jasa);
         contentValues.put(COLUMN_PENGALAMAN_KERJA,pengalaman_kerja);
         long result = db.insert(TABLE_NAME_JASA,null,contentValues);
@@ -227,6 +233,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void deleteJasainUser(int id){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(DataJasaItem.Entry.TABLE_NAME_JASA,COLUMN_ID_USER+"="+id,null);
+    }
+
+    public void deleteJasaOne(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(DataJasaItem.Entry.TABLE_NAME_JASA,COLUMN_ID+"="+id,null);
     }
 
     public List<ResponseDataJasaUser> selectDatajasainUser(int id_user){
