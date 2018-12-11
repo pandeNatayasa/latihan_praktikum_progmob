@@ -110,6 +110,8 @@ public class kategoriAdminAdapter extends RecyclerView.Adapter<kategoriAdminAdap
                                                         if (response.body().isStatus()){
                                                             Toast.makeText(itemView.getContext(),"delete success",Toast.LENGTH_SHORT).show();
                                                             dialogInterface.dismiss();
+                                                            dataKategoriItems.remove(dataKategoriItem);
+                                                            notifyDataSetChanged();
                                                         }else {
                                                             Toast.makeText(itemView.getContext(),"delete gagal",Toast.LENGTH_SHORT).show();
                                                         }

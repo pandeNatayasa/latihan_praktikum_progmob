@@ -29,7 +29,8 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar_sub_home_admin">
+        android:layout_below="@+id/toolbar_sub_home_admin"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"

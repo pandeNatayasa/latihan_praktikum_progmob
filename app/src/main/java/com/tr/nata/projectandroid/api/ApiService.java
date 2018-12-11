@@ -70,8 +70,7 @@ public interface ApiService {
     @GET("showDataJasaUser/{id}")
     Call<List<ResponseDataJasaUser>>showDataJasaUser(@Path("id") int id_user,@Query("token") String token);
 
-    @FormUrlEncoded
-    @POST("update_status/{id}")
+    @GET("update_status/{id}")
     Call<ResponseDataJasaUser>updateDataJasaUser(@Path("id") int id_data_jasa,@Query("token") String token);
 
     @FormUrlEncoded
@@ -132,7 +131,7 @@ public interface ApiService {
     @Multipart
     @POST("update_kategori/{id}")
     Call<ResponseStoreKategori>updateKategori(
-            @Part("id") int id_kategori,
+            @Path("id") int id_kategori,
             @Part("kategori") RequestBody kategori,
             @Part MultipartBody.Part logo_kategori,
             @Part("token") RequestBody token

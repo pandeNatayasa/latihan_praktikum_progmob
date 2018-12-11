@@ -142,7 +142,7 @@ public class listUserAdapter extends RecyclerView.Adapter<listUserAdapter.ViewHo
                 String pendidikan = dataJasa.getPengalaman_kerja();
                 String alamat = dataJasa.getAlamat();
 
-                Toast.makeText(holder.itemView.getContext(),"no_telp : "+no_telp,Toast.LENGTH_SHORT).show();
+//                Toast.makeText(holder.itemView.getContext(),"no_telp : "+no_telp,Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(context,DetailUserActivity.class);
 //                    String namaKategori = dataKategoriItem.getKategori();

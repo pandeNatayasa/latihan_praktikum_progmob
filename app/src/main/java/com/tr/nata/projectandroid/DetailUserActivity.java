@@ -74,7 +74,7 @@ public class DetailUserActivity extends AppCompatActivity{
         tv_pendidikan=(TextView)findViewById(R.id.tv_user_pendidikan);
         tv_alamat=(TextView)findViewById(R.id.tv_user_alamat);
 
-        Toast.makeText(DetailUserActivity.this," jasa :"+jasa,Toast.LENGTH_SHORT).show();
+//        Toast.makeText(DetailUserActivity.this," jasa :"+jasa,Toast.LENGTH_SHORT).show();
 //        tv_jasa.setText(jasa);
         tv_nama.setText(bundle.getString("nama"));
         tv_jasa.setText(bundle.getString("jasa"));

@@ -56,7 +56,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //pembuatan database
     public DatabaseHelper(Context context){
-        super(context,DATABASE_NAME,null,11);
+        super(context,DATABASE_NAME,null,12);
     }
 
     //pembuatan tabel

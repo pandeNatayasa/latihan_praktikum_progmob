@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.Api;
@@ -36,7 +37,8 @@ import retrofit2.Response;
 public class HomeAdminActivity extends AppCompatActivity {
 
     FloatingActionButton fab_add_kategori;
-    Button btn_logout,btn_toAddKategori;
+//    Button btn_toAddKategori;
+    ImageView btn_logout;
     ApiService service,serviceAddKategori;
     private List<DataKategoriItem> dataKategoriItems = new ArrayList<>();
     private RecyclerView recyclerView;
@@ -52,8 +54,8 @@ public class HomeAdminActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_admin);
 
-        btn_logout=(Button)findViewById(R.id.btn_logout);
-        btn_toAddKategori=findViewById(R.id.btn_toAddKategori);
+        btn_logout=findViewById(R.id.btn_logout);
+//        btn_toAddKategori=findViewById(R.id.btn_toAddKategori);
         recyclerView=findViewById(R.id.recyclerview_list_kategori_inHomeAdmin);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -69,21 +71,30 @@ public class HomeAdminActivity extends AppCompatActivity {
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences sharedPref = getSharedPreferences("login", Context.MODE_PRIVATE);
-                sharedPref.edit().clear().commit();
+                new AlertDialog.Builder(HomeAdminActivity.this)
+                        .setTitle("Really Logout")
+                        .setMessage("Are you sure want to logout ?")
+                        .setNegativeButton(android.R.string.no,null)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                SharedPreferences sharedPref = getSharedPreferences("login", Context.MODE_PRIVATE);
+                                sharedPref.edit().clear().commit();
 
-                Intent intent = new Intent(HomeAdminActivity.this,MainActivity.class);
-                startActivity(intent);
+                                Intent intent = new Intent(HomeAdminActivity.this,MainActivity.class);
+                                startActivity(intent);
+                            }
+                        }).create().show();
             }
         });
 
-        btn_toAddKategori.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent toAddKategori = new Intent(HomeAdminActivity.this,AddKategoriAdminActivity.class);
-                startActivity(toAddKategori);
-            }
-        });
+//        btn_toAddKategori.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent toAddKategori = new Intent(HomeAdminActivity.this,AddKategoriAdminActivity.class);
+//                startActivity(toAddKategori);
+//            }
+//        });
 
         fab_add_kategori.setOnClickListener(new View.OnClickListener() {
             @Override

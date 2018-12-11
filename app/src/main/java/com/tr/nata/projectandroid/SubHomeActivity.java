@@ -110,9 +110,10 @@ public class SubHomeActivity extends AppCompatActivity {
             }
         });
 
+        callApi();
         callDataLokal();
         callJumlahDataJasaLokal();
-        callApi();
+
     }
 
     private void callApi(){
@@ -123,10 +124,10 @@ public class SubHomeActivity extends AppCompatActivity {
                     public void onResponse(Call<ResponseDataJasa> call, Response<ResponseDataJasa> response) {
                         if (response.isSuccessful()) {
 
-                            Toast.makeText(getApplicationContext(), "success beb", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getApplicationContext(), "success beb", Toast.LENGTH_SHORT).show();
                             if (response.body().getDataJasa().size() > 0) {
-                                Toast.makeText(getApplicationContext(), "jumlah data jasa " + response.body().getDataJasa().size(), Toast.LENGTH_SHORT).show();
-                                Toast.makeText(getApplicationContext(), "jumlah user " + response.body().getDataUser().size(), Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(getApplicationContext(), "jumlah data jasa " + response.body().getDataJasa().size(), Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(getApplicationContext(), "jumlah user " + response.body().getDataUser().size(), Toast.LENGTH_SHORT).show();
 
                                 myDb.deleteJasa(id_kategori);
 
@@ -141,12 +142,12 @@ public class SubHomeActivity extends AppCompatActivity {
                                             dataUserItem.getNoTelp(),dataUserItem.getTanggalLahir());
 
                                 }
-                                Toast.makeText(getApplicationContext(), "pengalaman kerja : " + dataJasaItems.get(0).getPengalaman_kerja(), Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(getApplicationContext(), "pengalaman kerja : " + dataJasaItems.get(0).getPengalaman_kerja(), Toast.LENGTH_SHORT).show();
                                 for (DataJasaItem dataJasaItem:dataJasaItems){
                                     boolean hasil = myDb.insertDataJasa(dataJasaItem.getId(),dataJasaItem.getIdKategori(),dataJasaItem.getIdUser(),
                                             dataJasaItem.getPekerjaan(),dataJasaItem.getUsia(),dataJasaItem.getNoTelp(),dataJasaItem.getEmail(),
                                             dataJasaItem.getStatus(),dataJasaItem.getStatusValidasi(),dataJasaItem.getAlamat(),dataJasaItem.getPengalaman_kerja(),dataJasaItem.getEstimasi_gaji());
-                                    Toast.makeText(getApplicationContext(), "hasil " + hasil, Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(getApplicationContext(), "hasil " + hasil, Toast.LENGTH_SHORT).show();
                                 }
                                 setAdapter();
                             } else {
@@ -159,7 +160,7 @@ public class SubHomeActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<ResponseDataJasa> call, Throwable t) {
-                        Toast.makeText(getApplicationContext(),"eror : "+t,Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getApplicationContext(),"eror : "+t,Toast.LENGTH_SHORT).show();
                         Toast.makeText(getApplicationContext(),"Anda Sedang Offline",Toast.LENGTH_SHORT).show();
 //                        tv_pesan.setText("error : "+t);
                     }
@@ -174,14 +175,14 @@ public class SubHomeActivity extends AppCompatActivity {
     private void callJumlahDataJasaLokal(){
         int id_kategori = bundle.getInt("id_kategori");
         String jumlah  = myDb.jumlah_data_jasa(id_kategori);
-        Toast.makeText(getApplicationContext(),"jumlah data jasa di SQLite:"+String.valueOf( jumlah),Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getApplicationContext(),"jumlah data jasa di SQLite:"+String.valueOf( jumlah),Toast.LENGTH_SHORT).show();
     }
 
     private void callDataLokal(){
         int id_kategori = bundle.getInt("id_kategori");
         dataJasaItems=myDb.selectDatajasa(id_kategori);
         for (DataJasaItem dataJasaItem:dataJasaItems){
-            Toast.makeText(getApplicationContext(),"pekerjaan : "+dataJasaItem.getPekerjaan(),Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(),"pekerjaan : "+dataJasaItem.getPekerjaan(),Toast.LENGTH_SHORT).show();
         }
 
         for (DataJasaItem dataJasaItem:dataJasaItems){
