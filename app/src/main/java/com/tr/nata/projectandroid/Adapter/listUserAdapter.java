@@ -10,9 +10,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.tr.nata.projectandroid.DetailUserActivity;
 import com.tr.nata.projectandroid.R;
 import com.tr.nata.projectandroid.SubHomeActivity;
@@ -32,12 +34,14 @@ public class listUserAdapter extends RecyclerView.Adapter<listUserAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView nama_user, pekerjaan;
+        public ImageView img_foto_user;
 
         public ViewHolder(View itemView){
             super(itemView);
 
             context=itemView.getContext();
 
+            img_foto_user=itemView.findViewById(R.id.img_profille_user_subHome);
             nama_user=(TextView)itemView.findViewById(R.id.tv_nama_user);
             pekerjaan=(TextView)itemView.findViewById(R.id.tv_pekerjaan);
 
@@ -89,11 +93,6 @@ public class listUserAdapter extends RecyclerView.Adapter<listUserAdapter.ViewHo
 
     }
 
-//    public listUserAdapter(List<DataJasaItem> dataJasaItems,List<DataUserItem> dataUserItems,Context context){
-//        this.dataJasaItems =dataJasaItems;
-//        this.dataUserItems=dataUserItems;
-//        this.context=context;
-//    }
     public listUserAdapter(List<DataJasaItem> dataJasaItems,List<DataUserItem> dataUserItems,Context context){
         this.dataJasaItems =dataJasaItems;
         this.dataUserItems=dataUserItems;
@@ -120,6 +119,9 @@ public class listUserAdapter extends RecyclerView.Adapter<listUserAdapter.ViewHo
         Log.d("position","ke-"+position);
         holder.pekerjaan.setText(dataJasa.getPekerjaan());
         holder.nama_user.setText(dataUser.getName());
+
+        String url = "http://172.17.100.2:8000"+dataUser.getFoto_profille();
+        Glide.with(holder.itemView).load(url).into(holder.img_foto_user);
 
         listDataJasa.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -39,6 +41,7 @@ public class HomeAdminActivity extends AppCompatActivity {
     FloatingActionButton fab_add_kategori;
 //    Button btn_toAddKategori;
     ImageView btn_logout;
+    DatabaseHelper myDb;
     ApiService service,serviceAddKategori;
     private List<DataKategoriItem> dataKategoriItems = new ArrayList<>();
     private RecyclerView recyclerView;
@@ -61,6 +64,8 @@ public class HomeAdminActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         fab_add_kategori=findViewById(R.id.fab_add_kategori);
+
+        myDb=new DatabaseHelper(this);
 
         service=ApiClient.getApiService();
         serviceAddKategori=ApiClient.getApiService();
@@ -148,8 +153,30 @@ public class HomeAdminActivity extends AppCompatActivity {
             }
         });
 
-        callApi();
+        if (isConnected()){
+            callKategoriLokal();
+            callApi();
+        }else {
+            Toast.makeText(getApplicationContext(),"Anda Sedang Ofline",Toast.LENGTH_SHORT).show();
+            callKategoriLokal();
+        }
+//        callApi();
 
+    }
+
+    private boolean isConnected() {
+        ConnectivityManager cm = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean status = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+        return status;
+    }
+
+    private void callKategoriLokal(){
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        dataKategoriItems=dbHelper.selectKategori();
+        setAdapter();
     }
 
     private void callApi(){

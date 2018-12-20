@@ -25,6 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_NAME_KATEGORI = "category_table";
     public static final String COLUMN_ID = "ID";
     public static final String COLUMN_KATEGORI = "kategori";
+    public static final String COLUMN_LOGO_KATEGORI = "logo_kategori";
 
     //Tabel Data Jasa
     public static final String TABLE_NAME_JASA = "data_jasa_table";
@@ -43,6 +44,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //Tabel Data User
     public static final String TABLE_NAME_USER = "data_user_table";
     public static final String COLUMN_NAME_USER = "name";
+    public static final String COLUMN_FOTO_USER = "foto_user";
     public static final String COLUMN_EMAIL_USER="email";
     public static final String COLUMN_JK_USER = "jenis_kelamin";
     public static final String COLUMN_NO_TELP_USER="no_telp";
@@ -56,13 +58,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //pembuatan database
     public DatabaseHelper(Context context){
-        super(context,DATABASE_NAME,null,12);
+        super(context,DATABASE_NAME,null,19);
     }
 
     //pembuatan tabel
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " + TABLE_NAME_KATEGORI + "(id integer primary key autoincrement, kategori text);");
+        db.execSQL("create table " + TABLE_NAME_KATEGORI + "(" +
+                DataKategoriItem.Entry._ID+" integer primary key autoincrement, " +
+                COLUMN_ID+" integer,"+
+                COLUMN_LOGO_KATEGORI+" text," +
+                COLUMN_KATEGORI+" text);");
 
         db.execSQL("create table " + TABLE_NAME_JASA + "(" +
                 DataJasaItem.Entry._ID+" integer primary key autoincrement," +
@@ -82,6 +88,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("create table "+TABLE_NAME_USER+"(" +
                 DataUserItem.Entry._ID+" integer primary key autoincrement," +
                 COLUMN_ID+" integer," +
+                COLUMN_FOTO_USER+" integer," +
                 COLUMN_NAME_USER+" text," +
                 COLUMN_EMAIL_USER+" text," +
                 COLUMN_JK_USER+" text," +
@@ -105,11 +112,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //Tabel Kategori
-    public boolean insertDataKategori(int id,String kategori){
+    public boolean insertDataKategori(int id,String kategori,String logo_kategori){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_ID,id);
         contentValues.put(COLUMN_KATEGORI,kategori);
+        contentValues.put(COLUMN_LOGO_KATEGORI,logo_kategori);
         long result = db.insert(TABLE_NAME_KATEGORI,null,contentValues);
 
         if (result==-1){
@@ -166,10 +174,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do{
                 int id = cursor.getInt(cursor.getColumnIndex(DataKategoriItem.Entry.COLUMN_ID));
                 String kategori = cursor.getString(cursor.getColumnIndex(DataKategoriItem.Entry.COLUMN_KATEGORI));
-
+                String logo=cursor.getString(cursor.getColumnIndex(DataKategoriItem.Entry.COLUMN_LOGO_KATEGORI));
                 DataKategoriItem temp = new DataKategoriItem();
                 temp.setId(id);
                 temp.setKategori(kategori);
+                temp.setLogoKategori(logo);
                 dataKategoriItems.add(temp);
             }while (cursor.moveToNext());
 
@@ -314,6 +323,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 String status = cursor1.getString(cursor1.getColumnIndex(DataJasaItem.Entry.COLUMN_STATUS));
                 String alamat = cursor1.getString(cursor1.getColumnIndex(DataJasaItem.Entry.COLUMN_ALAMAT_JASA));
                 String pengalaman_kerja = cursor1.getString(cursor1.getColumnIndex(DataJasaItem.Entry.COLUMN_PENGALAMAN_KERJA));
+                String status_validasi = cursor1.getString(cursor1.getColumnIndex(DataJasaItem.Entry.COLUMN_STATUS_VALIDASI));
 
                 DataJasaItem temp = new DataJasaItem();
 //                temp.setId(id_data_jasa);
@@ -326,6 +336,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 temp.setStatus(status);
                 temp.setAlamat(alamat);
                 temp.setPengalaman_kerja(pengalaman_kerja);
+                temp.setStatusValidasi(status_validasi);
                 dataJasaItems.add(temp);
             }while (cursor1.moveToNext());
         }
@@ -402,11 +413,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //Untuk Tabel Data User
-    public boolean insertDataUser(int id,String name,String email,String jenis_kelamin, String no_telp,String tanggal_lahir){
+    public boolean insertDataUser(int id,String name,String foto,String email,String jenis_kelamin, String no_telp,String tanggal_lahir){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_ID,id);
         contentValues.put(COLUMN_NAME_USER,name);
+        contentValues.put(COLUMN_FOTO_USER,foto);
         contentValues.put(COLUMN_EMAIL_USER,email);
         contentValues.put(COLUMN_JK_USER,jenis_kelamin);
         contentValues.put(COLUMN_NO_TELP_USER,no_telp);
@@ -445,7 +457,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String jk = cursor.getString(cursor.getColumnIndex(DataUserItem.Entry.COLUMN_JK_USER));
         String no_telp = cursor.getString(cursor.getColumnIndex(DataUserItem.Entry.COLUMN_NO_TELP_USER));
         String tanggal_lahir = cursor.getString(cursor.getColumnIndex(DataUserItem.Entry.COLUMN_TANGGAL_LAHIR_USER));
-
+        String foto = cursor.getString(cursor.getColumnIndex(DataUserItem.Entry.COLUMN_FOTO_USER));
         DataUserItem temp = new DataUserItem();
 //        temp.setId(id);
         temp.setName(name);
@@ -453,6 +465,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         temp.setJenisKelamin(jk);
         temp.setNoTelp(no_telp);
         temp.setTanggalLahir(tanggal_lahir);
+        temp.setFoto_profille(foto);
 
 //        int count = cursor.getCount();
 //        if (count>0){

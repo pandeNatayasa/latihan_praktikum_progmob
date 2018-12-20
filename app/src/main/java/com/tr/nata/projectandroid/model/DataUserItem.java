@@ -12,6 +12,9 @@ public class DataUserItem{
 	@SerializedName("name")
 	private String name;
 
+	@SerializedName("foto_profille")
+	private String foto_profille;
+
 	@SerializedName("created_at")
 	private String createdAt;
 
@@ -36,6 +39,14 @@ public class DataUserItem{
 
 	public String getUpdatedAt(){
 		return updatedAt;
+	}
+
+	public void setFoto_profille(String foto_profille){
+		this.foto_profille = foto_profille;
+	}
+
+	public String getFoto_profille(){
+		return foto_profille;
 	}
 
 	public void setName(String name){
@@ -99,6 +110,7 @@ public class DataUserItem{
 		public static final String COLUMN_ID="id";
 		public static final String COLUMN_NAME_USER="name";
 		public static final String COLUMN_EMAIL_USER="email";
+		public static final String COLUMN_FOTO_USER = "foto_user";
 		public static final String COLUMN_JK_USER="jenis_kelamin";
 		public static final String COLUMN_NO_TELP_USER="no_telp";
 		public static final String COLUMN_TANGGAL_LAHIR_USER="tanggal_lahir";
@@ -114,8 +126,9 @@ public class DataUserItem{
 			",id = '" + id + '\'' + 
 			",no_telp = '" + noTelp + '\'' + 
 			",jenis_kelamin = '" + jenisKelamin + '\'' + 
-			",email = '" + email + '\'' + 
-			",tanggal_lahir = '" + tanggalLahir + '\'' + 
+			",email = '" + email + '\'' +
+					",foto_profille = '" + foto_profille + '\'' +
+					",tanggal_lahir = '" + tanggalLahir + '\'' +
 			"}";
 		}
 }

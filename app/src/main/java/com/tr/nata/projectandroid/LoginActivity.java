@@ -65,7 +65,10 @@ public class LoginActivity extends AppCompatActivity {
         final String email = etEmail.getText().toString();
         String password = etPassword.getText().toString();
 
-        Call<ResponseLogin> call = service.login(email, password);
+        SharedPreferences sharedPref = getSharedPreferences("fcm_token", Context.MODE_PRIVATE);
+        String fcm_token_user = sharedPref.getString("fcm_token_user","");
+
+        Call<ResponseLogin> call = service.login(email, password,fcm_token_user);
 
         call.enqueue(new Callback<ResponseLogin>() {
             @Override
@@ -80,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putBoolean("status_login",response.body().isStatus());
                         editor.putString("status_login_string", String.valueOf(response.body().isStatus()));
-//                        editor.putString("id_user_login",String.valueOf(response.body().getDataUser().getId()));
+//                        editor.putString("fcm",String.valueOf(response.body().getDataUser().getId()));
                         editor.putInt("id_user_login",response.body().getDataUser().getId());
                         editor.putString("nama_user_login", String.valueOf(response.body().getDataUser().getName()));
                         editor.putString("email_user_login",String.valueOf(response.body().getDataUser().getEmail()));
@@ -92,11 +95,16 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putString("user_foto_profille",response.body().getDataUser().getFoto_profille());
                         editor.apply();
 
+                        SharedPreferences shared = getSharedPreferences("on_back_pressed", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor2 = shared.edit();
+                        editor2.putInt("status_login",1);
+                        editor2.apply();
+
                         String status = sharedPref.getString("status_login_string","");
 //                        Toast.makeText(getApplicationContext(),"status : "+status,Toast.LENGTH_SHORT).show();
 
                         String token = response.body().getToken();
-                        Toast.makeText(getApplicationContext(),"token : "+token,Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getApplicationContext(),"token : "+token,Toast.LENGTH_SHORT).show();
 
                         String nama = response.body().getDataUser().getName();
                         String statusUser = response.body().getDataUser().getStatusUser();

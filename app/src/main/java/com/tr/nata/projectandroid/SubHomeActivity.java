@@ -25,6 +25,7 @@ import com.tr.nata.projectandroid.Database.DatabaseHelper;
 import com.tr.nata.projectandroid.api.ApiClient;
 import com.tr.nata.projectandroid.api.ApiService;
 import com.tr.nata.projectandroid.model.DataJasaItem;
+import com.tr.nata.projectandroid.model.DataKategoriItem;
 import com.tr.nata.projectandroid.model.DataUserItem;
 import com.tr.nata.projectandroid.model.ResponseDataJasa;
 
@@ -123,7 +124,6 @@ public class SubHomeActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<ResponseDataJasa> call, Response<ResponseDataJasa> response) {
                         if (response.isSuccessful()) {
-
 //                            Toast.makeText(getApplicationContext(), "success beb", Toast.LENGTH_SHORT).show();
                             if (response.body().getDataJasa().size() > 0) {
 //                                Toast.makeText(getApplicationContext(), "jumlah data jasa " + response.body().getDataJasa().size(), Toast.LENGTH_SHORT).show();
@@ -138,7 +138,7 @@ public class SubHomeActivity extends AppCompatActivity {
                                     myDb.deleteUser(dataUserItem.getId());
                                 }
                                 for (DataUserItem dataUserItem:dataUserItems){
-                                    myDb.insertDataUser(dataUserItem.getId(),dataUserItem.getName(),dataUserItem.getEmail(),dataUserItem.getJenisKelamin(),
+                                    myDb.insertDataUser(dataUserItem.getId(),dataUserItem.getName(),dataUserItem.getFoto_profille(),dataUserItem.getEmail(),dataUserItem.getJenisKelamin(),
                                             dataUserItem.getNoTelp(),dataUserItem.getTanggalLahir());
 
                                 }
@@ -196,6 +196,7 @@ public class SubHomeActivity extends AppCompatActivity {
                     String jk = curDataUser.getString(curDataUser.getColumnIndex(DataUserItem.Entry.COLUMN_JK_USER));
                     String no_telp = curDataUser.getString(curDataUser.getColumnIndex(DataUserItem.Entry.COLUMN_NO_TELP_USER));
                     String tanggal_lahir = curDataUser.getString(curDataUser.getColumnIndex(DataUserItem.Entry.COLUMN_TANGGAL_LAHIR_USER));
+                    String foto = curDataUser.getString(curDataUser.getColumnIndex(DataKategoriItem.Entry.COLUMN_LOGO_KATEGORI));
 
                     DataUserItem temp = new DataUserItem();
 //                    temp.setId(id);
@@ -204,6 +205,7 @@ public class SubHomeActivity extends AppCompatActivity {
                     temp.setJenisKelamin(jk);
                     temp.setNoTelp(no_telp);
                     temp.setTanggalLahir(tanggal_lahir);
+                    temp.setFoto_profille(foto);
                     dataUserItems.add(temp);
                 }
             }

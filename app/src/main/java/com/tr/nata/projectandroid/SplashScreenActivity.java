@@ -27,6 +27,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                 String status_login = sharedPref.getString("status_login_string","");
                 String status_user = sharedPref.getString("status_user","");
                 String user_token = sharedPref.getString("user_token","kosong");
+                String fcm_token_user = sharedPref.getString("fcm_token_user","");
 
                 Toast.makeText(SplashScreenActivity.this,"status : "+status_login,Toast.LENGTH_SHORT).show();
 
@@ -34,7 +35,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                     if (status_user.equals("1")){
                         Intent homeIntent = new Intent(SplashScreenActivity.this,HomeActivity.class);
                         startActivity(homeIntent);
-                    }else {
+                    }else if (status_user.equals("0")){
                         Intent homeIntent = new Intent(SplashScreenActivity.this,HomeAdminActivity.class);
                         startActivity(homeIntent);
                     }

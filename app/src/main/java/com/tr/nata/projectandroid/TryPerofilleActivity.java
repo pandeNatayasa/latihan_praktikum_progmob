@@ -69,6 +69,7 @@ public class TryPerofilleActivity extends AppCompatActivity {
         String nama_user_login = sharedPref.getString("nama_user_login","");
         String foto_profille = sharedPref.getString("user_foto_profille","");
         String url = "http://172.17.100.2:8000"+foto_profille;
+        String fcm_token_user = sharedPref.getString("fcm_token_user","");
         Glide.with(this).load(url).into(img_fotoProfille);
         tv_nama_profille.setText(nama_user_login);
 
@@ -132,7 +133,13 @@ public class TryPerofilleActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         SharedPreferences sharedPref = getSharedPreferences("login", Context.MODE_PRIVATE);
+//                        SharedPreferences sharedPrefSave = getSharedPreferences("login", Context.MODE_PRIVATE);
                         sharedPref.edit().clear().commit();
+
+                        SharedPreferences shared = getSharedPreferences("on_back_pressed", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor2 = shared.edit();
+                        editor2.putInt("status_login",0);
+                        editor2.apply();
 
 //                        editor.putString("status_login_string", String.valueOf(response.body().isStatus()));
 //                        editor.putInt("id_user_login",response.body().getDataUser().getId());

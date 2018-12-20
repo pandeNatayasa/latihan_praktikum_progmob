@@ -1,7 +1,9 @@
 package com.tr.nata.projectandroid;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -130,7 +132,10 @@ public class AddUserActivity extends AppCompatActivity{
         String tanggal_lahir=etUserTanggalLahir.getText().toString();
         String status = String.valueOf("0");
 
-        service.addUser(name,email,password,jenis_kelamin,no_telp,tanggal_lahir,status)
+        SharedPreferences sharedPref = getSharedPreferences("fcm_token", Context.MODE_PRIVATE);
+        String fcm_token_user = sharedPref.getString("fcm_token_user","");
+
+        service.addUser(name,email,password,jenis_kelamin,no_telp,tanggal_lahir,status,fcm_token_user)
                 .enqueue(new Callback<Response>() {
                     @Override
                     public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {

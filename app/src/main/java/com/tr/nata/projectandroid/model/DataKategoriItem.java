@@ -63,8 +63,9 @@ public class DataKategoriItem{
 
 	public static class Entry implements BaseColumns {
 		public static final String TABLE_NAME_KATEGORI="category_table";
-		public static final String COLUMN_ID="id";
+		public static final String COLUMN_ID="ID";
 		public static final String COLUMN_KATEGORI="kategori";
+		public static final String COLUMN_LOGO_KATEGORI = "logo_kategori";
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package com.tr.nata.projectandroid;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -82,6 +83,8 @@ public class AdminListFreeLanceActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setTitle(nama_kategori);
 
+        myDb = new DatabaseHelper(this);
+
 //        tv_nama_kategori.setText(nama_kategori);
 
 //        fab_add_job.setOnClickListener(new View.OnClickListener() {
@@ -141,6 +144,7 @@ public class AdminListFreeLanceActivity extends AppCompatActivity {
 //            }
 //        });
 
+        callDataLokal();
         callApi();
     }
 
@@ -155,8 +159,28 @@ public class AdminListFreeLanceActivity extends AppCompatActivity {
                         if (response.isSuccessful()) {
                             Toast.makeText(getApplicationContext(), "success beb admin", Toast.LENGTH_SHORT).show();
                             if (response.body().getDataJasa().size() > 0) {
+                                myDb.deleteJasa(id_kategori);
+
+
                                 dataJasaItems = response.body().getDataJasa();
                                 dataUserItems = response.body().getDataUser();
+
+                                for (DataUserItem dataUserItem:dataUserItems){
+                                    myDb.deleteUser(dataUserItem.getId());
+                                }
+                                for (DataUserItem dataUserItem:dataUserItems){
+                                    myDb.insertDataUser(dataUserItem.getId(),dataUserItem.getName(),dataUserItem.getFoto_profille(),dataUserItem.getEmail(),dataUserItem.getJenisKelamin(),
+                                            dataUserItem.getNoTelp(),dataUserItem.getTanggalLahir());
+
+                                }
+//                                Toast.makeText(getApplicationContext(), "pengalaman kerja : " + dataJasaItems.get(0).getPengalaman_kerja(), Toast.LENGTH_SHORT).show();
+                                for (DataJasaItem dataJasaItem:dataJasaItems){
+                                    boolean hasil = myDb.insertDataJasa(dataJasaItem.getId(),dataJasaItem.getIdKategori(),dataJasaItem.getIdUser(),
+                                            dataJasaItem.getPekerjaan(),dataJasaItem.getUsia(),dataJasaItem.getNoTelp(),dataJasaItem.getEmail(),
+                                            dataJasaItem.getStatus(),dataJasaItem.getStatusValidasi(),dataJasaItem.getAlamat(),dataJasaItem.getPengalaman_kerja(),dataJasaItem.getEstimasi_gaji());
+//                                    Toast.makeText(getApplicationContext(), "hasil " + hasil, Toast.LENGTH_SHORT).show();
+                                }
+
                                 setAdapter();
 
                             }else {
@@ -227,6 +251,42 @@ public class AdminListFreeLanceActivity extends AppCompatActivity {
                     }
                 });
     }
+
+    private void callDataLokal(){
+        int id_kategori = bundle.getInt("id_kategori");
+        dataJasaItems=myDb.selectDatajasa(id_kategori);
+        for (DataJasaItem dataJasaItem:dataJasaItems){
+//            Toast.makeText(getApplicationContext(),"pekerjaan : "+dataJasaItem.getPekerjaan(),Toast.LENGTH_SHORT).show();
+        }
+
+        for (DataJasaItem dataJasaItem:dataJasaItems){
+            Cursor curDataUser = myDb.getDataUser(dataJasaItem.getIdUser());
+            int count = curDataUser.getCount();
+            if (count>0){
+                while (curDataUser.moveToNext()){
+//                    int id = curDataUser.getInt(curDataUser.getColumnIndex(DataUserItem.Entry.COLUMN_ID));
+                    String name = curDataUser.getString(curDataUser.getColumnIndex(DataUserItem.Entry.COLUMN_NAME_USER));
+                    String email = curDataUser.getString(curDataUser.getColumnIndex(DataUserItem.Entry.COLUMN_EMAIL_USER));
+                    String jk = curDataUser.getString(curDataUser.getColumnIndex(DataUserItem.Entry.COLUMN_JK_USER));
+                    String no_telp = curDataUser.getString(curDataUser.getColumnIndex(DataUserItem.Entry.COLUMN_NO_TELP_USER));
+                    String tanggal_lahir = curDataUser.getString(curDataUser.getColumnIndex(DataUserItem.Entry.COLUMN_TANGGAL_LAHIR_USER));
+                    String foto = curDataUser.getString(curDataUser.getColumnIndex(DataUserItem.Entry.COLUMN_FOTO_USER));
+                    DataUserItem temp = new DataUserItem();
+//                    temp.setId(id);
+                    temp.setName(name);
+                    temp.setEmail(email);
+                    temp.setJenisKelamin(jk);
+                    temp.setNoTelp(no_telp);
+                    temp.setTanggalLahir(tanggal_lahir);
+                    temp.setFoto_profille(foto);
+                    dataUserItems.add(temp);
+                }
+            }
+            curDataUser.close();
+        }
+        setAdapter();
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();

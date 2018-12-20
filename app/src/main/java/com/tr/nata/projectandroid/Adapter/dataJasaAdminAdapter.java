@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.tr.nata.projectandroid.Database.DatabaseHelper;
 import com.tr.nata.projectandroid.DetailUserActivity;
 import com.tr.nata.projectandroid.DetailUserInAdminActivity;
@@ -42,9 +43,10 @@ public class dataJasaAdminAdapter extends RecyclerView.Adapter<dataJasaAdminAdap
     private List<DataUserItem> dataUserItems;
     public String user_token;
 
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView tv_nama_user, tv_pekerjaan;
-        public ImageView btn_validasi, btn_hapus;
+        public ImageView btn_validasi, btn_hapus,img_foto_user;
         public CardView card_data_jasa;
         public ApiService service;
         public DatabaseHelper mydb;
@@ -57,6 +59,7 @@ public class dataJasaAdminAdapter extends RecyclerView.Adapter<dataJasaAdminAdap
             service=ApiClient.getApiService();
             mydb=new DatabaseHelper(itemView.getContext());
 
+            img_foto_user=itemView.findViewById(R.id.img_data_jasa_user_inSubHomeAdmin);
             tv_nama_user=itemView.findViewById(R.id.tv_nama_user_inSubHomeAdmin);
             tv_pekerjaan=itemView.findViewById(R.id.tv_pekerjaan_inSubHomeAdmin);
             btn_validasi=itemView.findViewById(R.id.btn_validasi_inSubHomeAdmin);
@@ -94,6 +97,9 @@ public class dataJasaAdminAdapter extends RecyclerView.Adapter<dataJasaAdminAdap
         Log.d("position data jasa","ke-"+position);
         holder.tv_pekerjaan.setText(dataJasa.getPekerjaan());
         holder.tv_nama_user.setText(dataUser.getName());
+
+        String url = "http://172.17.100.2:8000"+dataUser.getFoto_profille();
+        Glide.with(holder.itemView).load(url).into(holder.img_foto_user);
 
         holder.card_data_jasa.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,6 +169,7 @@ public class dataJasaAdminAdapter extends RecyclerView.Adapter<dataJasaAdminAdap
                                                     holder.mydb.deleteJasaOne(dataJasa.getId());
                                                     dataJasaItems.remove(dataJasa);
                                                     notifyDataSetChanged();
+
                                                     Toast.makeText(holder.itemView.getContext(),"delete success",Toast.LENGTH_SHORT).show();
                                                 }else {
                                                     Toast.makeText(holder.itemView.getContext(),"sukses tapi gagal",Toast.LENGTH_SHORT).show();
@@ -210,6 +217,7 @@ public class dataJasaAdminAdapter extends RecyclerView.Adapter<dataJasaAdminAdap
                                                                 response.body().getEstimasiGaji());
                                                         dataJasa.setStatusValidasi(response.body().getStatusValidasi());
                                                         notifyDataSetChanged();
+                                                        holder.btn_validasi.setEnabled(false);
                                                         Toast.makeText(holder.itemView.getContext(),"success",Toast.LENGTH_SHORT).show();
                                                     }else {
                                                         Toast.makeText(holder.itemView.getContext(),"sukses tapi gagal",Toast.LENGTH_SHORT).show();

@@ -33,7 +33,8 @@ public interface ApiService {
     @POST("login")
     Call<ResponseLogin>login(
             @Field("email") String email,
-            @Field("password") String password
+            @Field("password") String password,
+            @Field("fcm_token") String fcm_token
     );
 
     @FormUrlEncoded
@@ -45,7 +46,8 @@ public interface ApiService {
             @Field("jenis_kelamin") String jenis_kelamin,
             @Field("no_telp") String no_telp,
             @Field("tanggal_lahir")String tanggal_lahir,
-            @Field("status")String status
+            @Field("status")String status,
+            @Field("fcm_token") String fcm_token
             );
 
     @FormUrlEncoded

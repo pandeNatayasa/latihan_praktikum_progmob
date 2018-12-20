@@ -58,7 +58,7 @@ public class FragmentHome extends Fragment {
     private RecyclerView recyclerView;
     private kategoriAdapter adapter;
     DatabaseHelper myDb;
-    ImageView home_to_profille,img_home_to_favorite;
+    ImageView home_to_profille;
     private List<ResponseKategori> responseKategoris = new ArrayList<>();
 
     private List<DataKategoriItem> dataKategoriItems = new ArrayList<>();
@@ -74,8 +74,8 @@ public class FragmentHome extends Fragment {
 //        tv_namaUser = view.findViewById(R.id.tv_nama);
         home_to_profille=view.findViewById(R.id.img_profille_home_to_profille);
         toolbar=view.findViewById(R.id.toolbarid);
-        tv_home_to_favorite=view.findViewById(R.id.tv_home_to_favorite);
-        img_home_to_favorite=view.findViewById(R.id.img_home_to_favorite);
+//        tv_home_to_favorite=view.findViewById(R.id.tv_home_to_favorite);
+//        img_home_to_favorite=view.findViewById(R.id.img_home_to_favorite);
 
         service=ApiClient.getApiService();
         myDb=new DatabaseHelper(getActivity());
@@ -103,34 +103,58 @@ public class FragmentHome extends Fragment {
             }
         });
 
-        img_home_to_favorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentManager fm =getFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                FragmentFavorite ff = new FragmentFavorite();
+//        img_home_to_favorite.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                FragmentManager fm =getFragmentManager();
+//                FragmentTransaction ft = fm.beginTransaction();
+//                FragmentFavorite ff = new FragmentFavorite();
 //                BottomNavigationView bottomNavView = (BottomNavigationView)view.findViewById(R.id.btn_nav_menu);
-//                bottomNavView.setSelectedItemId(R.id.nav_favorite);
-//                View view1=bottomNavView.findViewById(R.id.nav_favorite);
-//                view1.performClick();
-                ft.replace(R.id.frag_layout,ff);
-                ft.commit();
-            }
-        });
+////                bottomNavView.setSelectedItemId(R.id.nav_favorite);
+////                View view1=bottomNavView.findViewById(R.id.nav_favorite);
+////                view1.performClick();
+//                Menu menu = bottomNavView.getMenu();
+////                MenuItem menuItem = bottomNavView.getMenu();
+//
+////                BottomNavigationView.O
+////                menu.findItem(R.id.).setIcon();
+////                menu.findItem(R.id.nav_home).setEnabled(false).setChecked(false).setCheckable(false);
+//
+//
+//                MenuItem ha= menu.findItem(R.id.nav_favorite); //setCheckable(true);// setChecked(true);
+//
+//                ha.setEnabled(true).setChecked(true).setCheckable(true);
+//
+////                BottomNavigationView.OnNavigationItemSelectedListener navListener =
+////                        new BottomNavigationView.OnNavigationItemSelectedListener() {
+////                            @Override
+////                            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+////                                menuItem.setChecked(true);
+//////                                menuItem.getItemId(R.id.nav_favorite);
+////                                return true;
+////                            }
+////                        };
+////
+////                bottomNavView.setOnNavigationItemSelectedListener(navListener);
+//
+//                ft.replace(R.id.frag_layout,ff);
+//                ft.commit();
+//            }
+//        });
 
-        tv_home_to_favorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentManager fm =getFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                FragmentFavorite ff = new FragmentFavorite();
-//                BottomNavigationView bottomNavView = (BottomNavigationView)view.findViewById(R.id.btn_nav_menu);
-//                View view1=bottomNavView.findViewById(R.id.nav_favorite);
-//                view1.performClick();
-                ft.replace(R.id.frag_layout,ff);
-                ft.commit();
-            }
-        });
+//        tv_home_to_favorite.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                FragmentManager fm =getFragmentManager();
+//                FragmentTransaction ft = fm.beginTransaction();
+//                FragmentFavorite ff = new FragmentFavorite();
+////                BottomNavigationView bottomNavView = (BottomNavigationView)view.findViewById(R.id.btn_nav_menu);
+////                View view1=bottomNavView.findViewById(R.id.nav_favorite);
+////                view1.performClick();
+//                ft.replace(R.id.frag_layout,ff);
+//                ft.commit();
+//            }
+//        });
 
 //        btn_logout.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -239,7 +263,7 @@ public class FragmentHome extends Fragment {
                             dataKategoriItems=response.body().getDataKategori();
 
                             for (DataKategoriItem dataKategoriItem:dataKategoriItems){
-                                dbHelper.insertDataKategori(dataKategoriItem.getId(),dataKategoriItem.getKategori());
+                                dbHelper.insertDataKategori(dataKategoriItem.getId(),dataKategoriItem.getKategori(),dataKategoriItem.getLogoKategori());
                             }
                             setAdapter();
 //                            recyclerView.notifyAll();
